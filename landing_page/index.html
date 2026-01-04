@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBase Support for SC | 商業施設向けAIコンシェルジュソリューション</title>
+    <meta name="description" content="既存のフロアマップ画像をアップロードするだけで、多言語対応のAIコンシェルジュが誕生。商業施設のインバウンド対応と案内業務を自動化します。">
+
+    <!-- Organic: Preload Critical Assets -->
+    <link rel="preload" as="image" href="assets/hero_bg_illustration.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Organic: Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "GBase Support SC Edition",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Kiosk",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "24"
+      },
+      "description": "Commercial facility digital transformation tool that converts static floor maps into interactive AI concierges."
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Semantic Header -->
+    <header class="gbase-global-header">
+        <div class="gbase-global-header__container">
+            <div class="brand-identity">
+                <span class="brand-identity__name">GBase Support</span>
+                <span class="brand-identity__edition badge--sc">SC Edition</span>
+            </div>
+            <nav class="site-navigation" aria-label="Main Navigation">
+                <ul class="site-navigation__list">
+                    <li><a href="#map-canvas-feature" class="site-navigation__link">機能紹介</a></li>
+                    <li><a href="#success-stories" class="site-navigation__link">導入事例</a></li>
+                    <li><a href="#" class="btn--primary-action">デモを予約</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Article Wrapper for Hero to give it content weight -->
+        <article class="hero-presentation">
+            <figure class="hero-presentation__visual">
+                <img src="assets/hero_bg_illustration.png"
+                    alt="賑わう日本のショッピングモールのイラスト。家族連れが休憩し、インフォメーションカウンターではスタッフが笑顔で対応している。" class="hero-presentation__image"
+                    fetchpriority="high">
+                <div class="hero-presentation__overlay"></div>
+            </figure>
+
+            <section class="hero-presentation__content">
+                <h1 class="hero-title">
+                    フロアマップが、<br>
+                    そのまま<span class="text-highlight--gradient">AIコンシェルジュ</span>に。
+                </h1>
+                <p class="hero-lead">
+                    画像をアップロードするだけ。既存の案内図が、多言語対応のインタラクティブなナビゲーションシステムに生まれ変わります。
+                </p>
+
+                <div class="action-cluster">
+                    <a href="#" class="btn--cta-primary" aria-label="無料でマップをアップロードして試す">無料でマップをアップロード</a>
+                    <a href="#" class="btn--cta-secondary">資料ダウンロード</a>
+                </div>
+            </section>
+        </article>
+
+        <!-- Aside for Pain Points (Breaking Linearity) -->
+        <!-- Using 'aside' correctly here as supplementary contextual info -->
+        <!-- Problem-Solution Matrix (Replaces Market Challenges) -->
+        <section class="problem-solution-matrix" aria-labelledby="matrix-title">
+            <div class="content-container">
+                <header class="matrix-intro">
+                    <h2 id="matrix-title" class="section-heading">SC運営の「限界」を突破する。</h2>
+                    <p class="matrix-intro__sub">現場が抱える具体的な課題と、GBaseが提供する解決策。</p>
+                </header>
+
+                <div class="matrix-grid">
+                    <!-- Card 1: Navigation -->
+                    <article class="split-card">
+                        <div class="split-card__problem">
+                            <!-- Visual: Isometric Confusion -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_nav_problem.png" alt="Confusing Maze" class="visual-img">
+                            </div>
+                            <span class="problem-label">課題</span>
+                            <h3 class="problem-title">「トイレはどこですか？」</h3>
+                            <p class="problem-desc">
+                                単純な場所案内がインフォメーション業務の<strong>40%以上</strong>を占有。
+                            </p>
+                        </div>
+                        <div class="split-card__connector" aria-hidden="true">→</div>
+                        <div class="split-card__solution">
+                            <!-- Visual: Isometric Clear Map -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_nav_solution.png" alt="Clear Map Navigation" class="visual-img">
+                            </div>
+                            <span class="solution-label">GBase</span>
+                            <h3 class="solution-title">フロアマップ連携案内</h3>
+                            <p class="solution-desc">
+                                "Metamap"等のマップシステムと連携し、ルートを直接描画。
+                            </p>
+                            <div class="solution-metric">
+                                <span class="metric-value">50%</span>
+                                <span class="metric-label">有人対応削減</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: Updates -->
+                    <article class="split-card">
+                        <div class="split-card__problem">
+                            <!-- Visual: Isometric Old Calendar -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_updates_problem.png" alt="Outdated Information"
+                                    class="visual-img">
+                            </div>
+                            <span class="problem-label">課題</span>
+                            <h3 class="problem-title">情報の「更新漏れ」</h3>
+                            <p class="problem-desc">
+                                手動更新が追いつかず、「終わったセールが表示される」クレームが多発。
+                            </p>
+                        </div>
+                        <div class="split-card__connector" aria-hidden="true">→</div>
+                        <div class="split-card__solution">
+                            <!-- Visual: Isometric Auto Sync -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_updates_solution.png" alt="Auto Sync" class="visual-img">
+                            </div>
+                            <span class="solution-label">GBase</span>
+                            <h3 class="solution-title">自動クローリング学習</h3>
+                            <p class="solution-desc">
+                                WebサイトやCMSから最新情報を自動で認識・更新。
+                            </p>
+                            <div class="solution-metric">
+                                <span class="metric-value">100%</span>
+                                <span class="metric-label">情報鮮度維持</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: Cost -->
+                    <article class="split-card">
+                        <div class="split-card__problem">
+                            <!-- Visual: Isometric Money Stack -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_cost_problem.png" alt="High Cost" class="visual-img">
+                            </div>
+                            <span class="problem-label">課題</span>
+                            <h3 class="problem-title">アプリ開発の「高コスト」</h3>
+                            <p class="problem-desc">
+                                独自アプリには数千万円が必要だが、肝心のダウンロード数は伸び悩む。
+                            </p>
+                        </div>
+                        <div class="split-card__connector" aria-hidden="true">→</div>
+                        <div class="split-card__solution">
+                            <!-- Visual: Isometric Smartphone -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_cost_solution.png" alt="Low Cost Line Integration"
+                                    class="visual-img">
+                            </div>
+                            <span class="solution-label">GBase</span>
+                            <h3 class="solution-title">LINE公式アカウント連携</h3>
+                            <p class="solution-desc">
+                                国内9,600万人が使うLINEアプリをそのままインターフェースに。
+                            </p>
+                            <div class="solution-metric">
+                                <span class="metric-value">0円</span>
+                                <span class="metric-label">アプリ開発費</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Escalation -->
+                    <article class="split-card">
+                        <div class="split-card__problem">
+                            <!-- Visual: Isometric Broken Bot -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_support_problem.png" alt="AI Anxiety" class="visual-img">
+                            </div>
+                            <span class="problem-label">課題</span>
+                            <h3 class="problem-title">AIへの「不安」</h3>
+                            <p class="problem-desc">
+                                「AIが間違ったことを言ったら？」「たらい回しにされる？」という懸念。
+                            </p>
+                        </div>
+                        <div class="split-card__connector" aria-hidden="true">→</div>
+                        <div class="split-card__solution">
+                            <!-- Visual: Isometric Headset -->
+                            <div class="visual-abstract-img-container">
+                                <img src="assets/visual_support_solution.png" alt="Human Support" class="visual-img">
+                            </div>
+                            <span class="solution-label">GBase</span>
+                            <h3 class="solution-title">シームレス転人工</h3>
+                            <p class="solution-desc">
+                                解決できない場合は、即座にLINE WORKSや電話で人間に通知。
+                            </p>
+                            <div class="solution-metric">
+                                <span class="metric-value">4.5</span>
+                                <span class="metric-label">顧客満足度</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Block: Map Canvas -->
+        <section id="map-canvas-feature" class="product-feature product-feature--map">
+            <div class="content-container layout-split">
+                <div class="product-feature__info">
+                    <span class="feature-tag">キラー機能</span>
+                    <h2 class="feature-heading">Map Canvas テクノロジー</h2>
+                    <h3 class="feature-subheading">"文字"だけでなく、"場所"で案内する。</h3>
+                    <p class="feature-description">
+                        GBase Supportは、あなたの施設のレイアウトを視覚的に理解します。「トイレはどこ？」と聞かれれば、実際のフロアマップ上にルートを光らせて案内します。
+                    </p>
+                    <ul class="benefit-checklist">
+                        <li class="benefit-checklist__item">導入は画像をアップロードするだけ</li>
+                        <li class="benefit-checklist__item">直感的なルート案内</li>
+                        <li class="benefit-checklist__item">モバイル・キオスク両対応</li>
+                    </ul>
+                </div>
+                <figure class="product-feature__visual tilt-effect-container">
+                    <img src="assets/map_canvas_jp.png"
+                        alt="タブレット端末に表示されたMap Canvas UI。現在地から目的地へのルートがネオンのように光って表示されている。" class="glass-frame-image">
+                </figure>
+            </div>
+        </section>
+
+        <!-- Feature Block: Digital Human -->
+        <section class="product-feature product-feature--avatar">
+            <div class="content-container layout-split layout-split--reverse">
+                <figure class="product-feature__visual">
+                    <img src="assets/avatar_agent_jp.png"
+                        alt="GBase Kioskの3Dアバターコンシェルジュ。制服を着た女性キャラクターが親しみやすい笑顔で利用者を迎えている。" class="avatar-image-fit">
+                </figure>
+                <div class="product-feature__info">
+                    <span class="feature-tag">おもてなしAI</span>
+                    <h2 class="feature-heading">デジタルヒューマン・キオスク</h2>
+                    <h3 class="feature-subheading">対話で、もっと身近に。</h3>
+                    <p class="feature-description">
+                        親しみやすい3Dアバターが、24時間365日疲れを知らずにお客様をお出迎えします。音声認識対応で、手荷物がいっぱいのお客様もスムーズに利用可能です。
+                    </p>
+                    <ul class="benefit-checklist">
+                        <li class="benefit-checklist__item">10ヶ国語リアルタイム翻訳</li>
+                        <li class="benefit-checklist__item">音声対話でハンズフリー</li>
+                        <li class="benefit-checklist__item">制服やアバターのカスタマイズ対応</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories (Aside/Section Hybrid) -->
+        <section id="success-stories" class="client-success-stories">
+            <div class="content-container">
+                <h2 class="section-heading">導入実績</h2>
+                <div class="story-grid">
+                    <article class="success-case-card">
+                        <h3 class="success-case-card__client">大規模商業施設 "N" 様</h3>
+                        <p class="success-case-card__metric"><strong>40%</strong> 削減</p>
+                        <blockquote class="success-case-card__quote">
+                            「スタッフがVIP対応や複雑な相談に集中できるようになり、サービス品質が向上しました。」
+                        </blockquote>
+                    </article>
+                    <article class="success-case-card">
+                        <h3 class="success-case-card__client">レストランゾーン "G" 様</h3>
+                        <p class="success-case-card__metric">送客数アップ</p>
+                        <blockquote class="success-case-card__quote">
+                            「お客様の気分（辛いもの、静かな店など）に合わせてAIが提案してくれるので、回遊性が高まりました。」
+                        </blockquote>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="conversion-zone">
+            <h2 class="conversion-zone__title">あなたの施設にも、AIのコンシェルジュを。</h2>
+            <p class="conversion-zone__subtitle">最短24時間で、独自のデモ環境を構築できます。</p>
+            <a href="#" class="btn--cta-xl glow-trigger">無料でデモを作成</a>
+        </div>
+        <div class="site-footer__copyright">
+            <p>&copy; 2026 GBase Support. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Organic: Simple Interaction Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observing semantic sections instead of generic classes
+            const targets = document.querySelectorAll('.hero-title, .hero-lead, .action-cluster, .challenge-unit, .product-feature__info');
+            targets.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
