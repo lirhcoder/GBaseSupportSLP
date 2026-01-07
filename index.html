@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ソリューション | GBase Support - 業界別AIソリューション</title>
     <meta name="description" content="GBase Supportの業界別AIソリューション。商業施設、ホテル、EC、社内DXなど、あなたの業界に最適なAIチャットボットをご提案します。">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "GBase Support",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "商業施設・ホテル・EC向けの多言語対応AIチャットボット。問い合わせ対応を60%削減し、10言語に自動翻訳対応。",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY",
+            "description": "14日間無料トライアル"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Sparticle Inc.",
+            "url": "https://sparticle.com/"
+        },
+        "featureList": [
+            "10言語自動翻訳",
+            "ノーコード運用",
+            "デジタルヒューマン",
+            "24時間365日対応",
+            "ISO27001認証"
+        ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -190,7 +221,7 @@
         /* Hero */
         .hero {
             background: var(--navy);
-            padding: 100px 0 120px;
+            padding: 80px 0 60px;
             position: relative;
             overflow: hidden;
         }
@@ -200,15 +231,21 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 50%;
+            width: 60%;
             height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(13, 115, 119, 0.08) 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(13, 115, 119, 0.12) 100%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 680px;
         }
 
         .hero-label {
@@ -218,27 +255,235 @@
             font-weight: 500;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .hero h1 {
-            font-size: 2.75rem;
+            font-size: 2.5rem;
             color: var(--white);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             line-height: 1.4;
         }
 
+        .hero h1 .highlight {
+            color: var(--accent-light);
+        }
+
         .hero p {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: rgba(255,255,255,0.75);
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             line-height: 1.9;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .btn-cta-primary {
+            background: var(--accent);
+            color: var(--white);
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .btn-cta-primary:hover {
+            background: var(--accent-light);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 14px 24px;
+        }
+
+        .btn-cta-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.8);
+        }
+
+        .hero-note {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .hero-visual {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image-placeholder {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 24px;
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-image-placeholder svg {
+            width: 64px;
+            height: 64px;
+            stroke: rgba(255,255,255,0.3);
+            stroke-width: 1;
+            fill: none;
+            margin-bottom: 16px;
+        }
+
+        .hero-image-placeholder span {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+        }
+
+        .hero-image-placeholder .placeholder-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .hero-image-placeholder {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Metrics Section */
+        .metrics-section {
+            background: var(--white);
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .metric-item {
+            padding: 16px;
+        }
+
+        .metric-value {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-value span {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .metric-value {
+                font-size: 2.25rem;
+            }
+        }
+
+        /* Logo Wall */
+        .logo-wall {
+            background: var(--cream);
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-wall-inner {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .logo-wall-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .logo-list {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .logo-item:hover {
+            opacity: 1;
+        }
+
+        .logo-placeholder {
+            background: var(--border);
+            border-radius: 4px;
+            padding: 8px 20px;
+            color: var(--slate);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .logo-wall-inner {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .logo-list {
+                gap: 24px;
+            }
         }
 
         /* Pain Points */
@@ -717,123 +962,111 @@
             color: var(--navy);
         }
 
-        /* Coming Soon */
-        .coming-soon {
-            background: var(--navy);
+        /* Roadmap Section */
+        .roadmap-section {
+            background: var(--warm-white);
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        .coming-soon .section-title {
-            color: var(--white);
-        }
-
-        .coming-soon .section-desc {
-            color: rgba(255,255,255,0.65);
-        }
-
-        .coming-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .coming-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 32px;
-            position: relative;
-        }
-
-        .coming-label {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent-light);
-            border: 1px solid var(--accent-light);
-            padding: 4px 8px;
-        }
-
-        .coming-icon {
-            width: 44px;
-            height: 44px;
-            border: 1px solid rgba(255,255,255,0.2);
+        .roadmap-inner {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
+            justify-content: space-between;
+            gap: 48px;
         }
 
-        .coming-icon svg {
-            width: 22px;
-            height: 22px;
-            stroke: rgba(255,255,255,0.5);
-            stroke-width: 1.5;
-            fill: none;
+        .roadmap-content {
+            flex: 1;
         }
 
-        .coming-title {
-            font-size: 1.05rem;
-            color: var(--white);
-            margin-bottom: 6px;
-            font-family: 'Noto Serif JP', serif;
+        .roadmap-title {
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin-bottom: 8px;
         }
 
-        .coming-date {
-            color: var(--accent-light);
-            font-size: 0.8rem;
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-
-        .coming-desc {
-            color: rgba(255,255,255,0.6);
+        .roadmap-desc {
             font-size: 0.9rem;
-            margin-bottom: 28px;
-            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
-        .coming-form {
+        .roadmap-list {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .roadmap-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .roadmap-list li strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .roadmap-cta {
+            flex-shrink: 0;
+        }
+
+        .roadmap-cta-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .roadmap-form {
             display: flex;
             gap: 8px;
         }
 
-        .coming-form input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05);
-            color: var(--white);
-            font-size: 0.9rem;
+        .roadmap-form input {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            font-size: 0.85rem;
             font-family: inherit;
+            width: 200px;
         }
 
-        .coming-form input::placeholder {
-            color: rgba(255,255,255,0.4);
-        }
-
-        .coming-form input:focus {
+        .roadmap-form input:focus {
             outline: none;
-            border-color: rgba(255,255,255,0.4);
+            border-color: var(--accent);
         }
 
-        .coming-form button {
-            padding: 12px 20px;
+        .roadmap-form button {
+            padding: 10px 16px;
             border: none;
-            background: var(--accent);
+            background: var(--navy);
             color: var(--white);
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
             transition: background 0.2s;
             font-family: inherit;
-            white-space: nowrap;
         }
 
-        .coming-form button:hover {
-            background: var(--accent-light);
+        .roadmap-form button:hover {
+            background: var(--navy-light);
+        }
+
+        @media (max-width: 768px) {
+            .roadmap-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .roadmap-list {
+                justify-content: center;
+            }
+
+            .roadmap-form {
+                justify-content: center;
+            }
         }
 
         /* Why GBase */
@@ -1101,6 +1334,90 @@
             }
         }
 
+        /* Floating Action Buttons */
+        .floating-actions {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .fab svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .fab-chat {
+            background: var(--accent);
+        }
+
+        .fab-chat svg {
+            stroke: var(--white);
+        }
+
+        .fab-chat:hover {
+            background: var(--accent-light);
+            transform: scale(1.05);
+        }
+
+        .fab-top {
+            background: var(--white);
+            border: 1px solid var(--border);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        .fab-top svg {
+            stroke: var(--navy);
+        }
+
+        .fab-top:hover {
+            background: var(--cream);
+            border-color: var(--navy);
+        }
+
+        .fab-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .floating-actions {
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .fab {
+                width: 48px;
+                height: 48px;
+            }
+
+            .fab svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
         /* Animations */
         .fade-in {
             opacity: 0;
@@ -1139,14 +1456,72 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <span class="hero-label">Industry Solutions</span>
-                <h1>業界課題に応える、<br>AIソリューション</h1>
-                <p>商業施設、ホテル、EC、社内DX。GBase Supportは、各業界の固有課題を理解し、最適なAIチャットボットソリューションをご提供します。</p>
-                <div class="hero-buttons">
-                    <a href="#solutions" class="btn btn-white">ソリューション一覧</a>
-                    <a href="#cases" class="btn btn-ghost">導入事例を見る</a>
-                    <a href="https://cs.gbase.ai/price" class="btn btn-ghost" target="_blank" rel="noopener">料金プラン</a>
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="hero-label">AI Customer Support</span>
+                    <h1>問い合わせ対応を<br><span class="highlight">60%削減</span>する<br>AIコンシェルジュ</h1>
+                    <p>商業施設・ホテル・EC向けの多言語対応AIチャットボット。最短3日で導入、10言語自動翻訳でインバウンド対応も万全。</p>
+                    <div class="hero-buttons">
+                        <a href="https://cs.gbase.ai/register" class="btn btn-cta-primary" target="_blank" rel="noopener">無料で試す</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-cta-secondary" target="_blank" rel="noopener">資料ダウンロード</a>
+                    </div>
+                    <p class="hero-note">14日間無料トライアル・クレジットカード不要</p>
+                </div>
+                <div class="hero-visual">
+                    <!-- TODO: Replace with actual product screenshot -->
+                    <div class="hero-image-placeholder" data-placeholder="product-screenshot">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        <span>製品スクリーンショット</span>
+                        <span class="placeholder-label">推奨サイズ: 800x600px</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics -->
+    <section class="metrics-section">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-value">60<span>%</span></div>
+                    <div class="metric-label">問い合わせ削減</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">10<span>言語</span></div>
+                    <div class="metric-label">自動翻訳対応</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">3<span>日</span></div>
+                    <div class="metric-label">最短導入期間</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">24<span>/7</span></div>
+                    <div class="metric-label">年中無休対応</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Wall -->
+    <section class="logo-wall">
+        <div class="container">
+            <div class="logo-wall-inner">
+                <span class="logo-wall-label">導入企業：</span>
+                <div class="logo-list">
+                    <!-- TODO: Replace with actual customer logos -->
+                    <div class="logo-item" data-placeholder="logo-lumine">
+                        <span class="logo-placeholder">LUMINE</span>
+                    </div>
+                    <div class="logo-item" data-placeholder="logo-newoman">
+                        <span class="logo-placeholder">NEWoMan</span>
+                    </div>
+                    <div class="logo-item" data-placeholder="logo-kakunoshin">
+                        <span class="logo-placeholder">格之進</span>
+                    </div>
+                    <div class="logo-item" data-placeholder="logo-his">
+                        <span class="logo-placeholder">HIS Mobile</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1219,15 +1594,6 @@
                 </span>
                 <h2 class="section-title">業界別ソリューション</h2>
                 <p class="section-desc">GBase Supportの機能を活用して、様々な業界の課題を解決します。</p>
-            </div>
-
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">すべて</button>
-                <button class="filter-btn" data-filter="retail">商業施設</button>
-                <button class="filter-btn" data-filter="travel">観光・空港</button>
-                <button class="filter-btn" data-filter="hotel">ホテル</button>
-                <button class="filter-btn" data-filter="ec">EC・小売</button>
-                <button class="filter-btn" data-filter="enterprise">社内DX</button>
             </div>
 
             <div class="solution-grid">
@@ -1579,61 +1945,24 @@
         </div>
     </section>
 
-    <!-- Coming Soon -->
-    <section class="section coming-soon" id="coming-soon">
+    <!-- Roadmap -->
+    <section class="roadmap-section" id="roadmap">
         <div class="container">
-            <div class="section-header center">
-                <span class="section-label label-coming" style="color: rgba(255,255,255,0.6);">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    開発中
-                </span>
-                <h2 class="section-title">Coming Soon</h2>
-                <p class="section-desc">現在開発中の新機能をご紹介します。リリース時に通知を受け取れます。</p>
-            </div>
-
-            <div class="coming-grid">
-                <!-- Coming 1 -->
-                <div class="coming-card">
-                    <span class="coming-label">予定</span>
-                    <div class="coming-icon">
-                        <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                    </div>
-                    <h3 class="coming-title">フロアマップ連携</h3>
-                    <p class="coming-date">2026年 Q2 リリース予定</p>
-                    <p class="coming-desc">Metamap連携により、AIチャットから店舗の場所を地図で案内。経路ナビゲーションも可能に。</p>
-                    <form class="coming-form">
-                        <input type="email" placeholder="メールアドレス">
-                        <button type="submit">通知を受取</button>
-                    </form>
+            <div class="roadmap-inner">
+                <div class="roadmap-content">
+                    <h2 class="roadmap-title">開発ロードマップ</h2>
+                    <p class="roadmap-desc">GBase Supportは継続的に進化しています。今後のリリース予定をご確認ください。</p>
+                    <ul class="roadmap-list">
+                        <li><strong>Q2 2026:</strong> フロアマップ連携（Metamap対応）</li>
+                        <li><strong>Q3 2026:</strong> 駐車場システム連携</li>
+                        <li><strong>Q4 2026:</strong> 分析ダッシュボード</li>
+                    </ul>
                 </div>
-
-                <!-- Coming 2 -->
-                <div class="coming-card">
-                    <span class="coming-label">予定</span>
-                    <div class="coming-icon">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-                    </div>
-                    <h3 class="coming-title">駐車場システム連携</h3>
-                    <p class="coming-date">2026年 Q3 リリース予定</p>
-                    <p class="coming-desc">駐車時間の自動計算、サービス券案内、精算機位置案内など駐車場関連の問い合わせを自動化。</p>
-                    <form class="coming-form">
-                        <input type="email" placeholder="メールアドレス">
-                        <button type="submit">通知を受取</button>
-                    </form>
-                </div>
-
-                <!-- Coming 3 -->
-                <div class="coming-card">
-                    <span class="coming-label">予定</span>
-                    <div class="coming-icon">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                    </div>
-                    <h3 class="coming-title">分析ダッシュボード</h3>
-                    <p class="coming-date">2026年 Q4 リリース予定</p>
-                    <p class="coming-desc">問い合わせ傾向の可視化、未回答分析、自動レポート生成でデータドリブンな運営を支援。</p>
-                    <form class="coming-form">
-                        <input type="email" placeholder="メールアドレス">
-                        <button type="submit">通知を受取</button>
+                <div class="roadmap-cta">
+                    <p class="roadmap-cta-text">新機能のリリース通知を受け取る</p>
+                    <form class="roadmap-form">
+                        <input type="email" placeholder="メールアドレス" required>
+                        <button type="submit">登録</button>
                     </form>
                 </div>
             </div>
@@ -1655,6 +1984,16 @@
         </div>
     </section>
 
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <button class="fab fab-top" id="backToTop" aria-label="ページトップへ戻る">
+            <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+        </button>
+        <a href="https://cs.gbase.ai/contact" class="fab fab-chat" target="_blank" rel="noopener" aria-label="お問い合わせ">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1674,12 +2013,10 @@
     <script>
         // Filter functionality
         console.log('[GBase] Initializing filters...');
-        const filterBtns = document.querySelectorAll('.filter-btn');
         const selectorBtns = document.querySelectorAll('.selector-btn');
         const solutionCards = document.querySelectorAll('.solution-card');
         let showMoreClicked = false;
 
-        console.log('[GBase] Found', filterBtns.length, 'filter buttons');
         console.log('[GBase] Found', selectorBtns.length, 'selector buttons');
         console.log('[GBase] Found', solutionCards.length, 'solution cards');
 
@@ -1706,36 +2043,12 @@
             console.log('[GBase] Shown:', shown, 'Hidden:', hidden);
         }
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('[GBase] Filter button clicked:', btn.dataset.filter);
-                filterBtns.forEach(b => b.classList.remove('active'));
-                selectorBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                // Sync selector buttons
-                selectorBtns.forEach(b => {
-                    if (b.dataset.filter === btn.dataset.filter) {
-                        b.classList.add('active');
-                    }
-                });
-                filterSolutions(btn.dataset.filter);
-            });
-        });
-
         selectorBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 console.log('[GBase] Selector button clicked:', btn.dataset.filter);
                 selectorBtns.forEach(b => b.classList.remove('active'));
-                filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // Sync filter buttons
-                filterBtns.forEach(b => {
-                    if (b.dataset.filter === btn.dataset.filter) {
-                        b.classList.add('active');
-                    }
-                });
                 filterSolutions(btn.dataset.filter);
                 document.getElementById('solutions').scrollIntoView({ behavior: 'smooth' });
             });
@@ -1908,7 +2221,7 @@
         };
 
         // Track Industry Filter Clicks
-        document.querySelectorAll('.selector-btn, .filter-btn').forEach(btn => {
+        document.querySelectorAll('.selector-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 GBaseAnalytics.track(
                     'industry_filter',
@@ -2032,6 +2345,22 @@
 
         // Expose for debugging
         window.GBaseAnalytics = GBaseAnalytics;
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
     </script>
 </body>
 </html>
