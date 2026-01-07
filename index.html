@@ -241,6 +241,82 @@
             flex-wrap: wrap;
         }
 
+        /* Pain Points */
+        .pain-points {
+            background: var(--warm-white);
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pain-points-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .pain-points-header h2 {
+            font-size: 1.75rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .pain-points-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 28px 24px;
+            text-align: center;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .pain-card:hover {
+            border-color: var(--slate-light);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .pain-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .pain-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .pain-card h3 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .pain-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
         /* Industry Selector */
         .industry-selector {
             background: var(--white);
@@ -765,6 +841,81 @@
             background: var(--white);
         }
 
+        /* How It Works */
+        .how-it-works {
+            background: var(--warm-white);
+            border-top: 1px solid var(--border);
+        }
+
+        .steps-grid {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .step-card {
+            flex: 1;
+            max-width: 320px;
+            text-align: center;
+            padding: 32px 24px;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .step-time {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .step-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 48px;
+            color: var(--slate-light);
+        }
+
+        @media (max-width: 768px) {
+            .steps-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step-connector {
+                padding: 16px 0;
+                transform: rotate(90deg);
+            }
+        }
+
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -903,8 +1054,13 @@
             .case-grid,
             .solution-grid,
             .coming-grid,
-            .feature-grid {
+            .feature-grid,
+            .pain-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .pain-points {
+                padding: 48px 0;
             }
 
             .header-inner {
@@ -972,9 +1128,9 @@
                 </div>
                 <nav class="page-nav" aria-label="ページ内ナビゲーション">
                     <a href="#solutions" class="page-nav-link active">業界別</a>
-                    <a href="#cases" class="page-nav-link">導入事例</a>
-                    <a href="#coming-soon" class="page-nav-link">開発中</a>
                     <a href="#why-gbase" class="page-nav-link">選ばれる理由</a>
+                    <a href="#cases" class="page-nav-link">導入事例</a>
+                    <a href="#how-it-works" class="page-nav-link">導入まで</a>
                 </nav>
             </div>
         </div>
@@ -996,6 +1152,46 @@
         </div>
     </section>
 
+    <!-- Pain Points -->
+    <section class="pain-points" id="pain-points">
+        <div class="container">
+            <div class="pain-points-header">
+                <h2>こんなお悩みはありませんか？</h2>
+                <p>多くの企業様が抱える課題を、GBase Supportが解決します</p>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3>問い合わせ対応に追われ<br>本来業務に集中できない</h3>
+                    <p>同じ質問への繰り返し対応で、スタッフの時間が奪われています</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3>外国人観光客への<br>多言語対応が間に合わない</h3>
+                    <p>インバウンド需要に対応できる人材の確保が難しい状況です</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>営業時間外の問い合わせに<br>対応できず機会損失</h3>
+                    <p>夜間・休日の問い合わせを取りこぼしています</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3>コールセンター外注コストが<br>年々増加している</h3>
+                    <p>人件費の高騰で、サポートコストが経営を圧迫しています</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Industry Selector -->
     <section class="industry-selector">
         <div class="container">
@@ -1008,87 +1204,6 @@
                     <button class="selector-btn" data-filter="hotel">ホテル・旅館</button>
                     <button class="selector-btn" data-filter="ec">EC・小売</button>
                     <button class="selector-btn" data-filter="enterprise">企業・社内DX</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Case Studies -->
-    <section class="section case-studies" id="cases">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label label-verified">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                    導入実績
-                </span>
-                <h2 class="section-title">導入事例</h2>
-                <p class="section-desc">GBase Supportを導入いただいているお客様の事例をご紹介します。</p>
-            </div>
-            <div class="case-grid">
-                <!-- Case 1: ニュウマン高輪 -->
-                <div class="case-card">
-                    <div class="case-image">
-                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    </div>
-                    <div class="case-content">
-                        <span class="case-status">実証実験中</span>
-                        <h3 class="case-title">スマートフォン無人案内</h3>
-                        <p class="case-company">ニュウマン高輪 様</p>
-                        <p class="case-desc">スマートフォン端末を活用した未来型無人案内システム。多言語対応でインバウンド観光客にも対応。</p>
-                        <ul class="case-features">
-                            <li>スマートフォン端末活用</li>
-                            <li>多言語対応（10言語）</li>
-                            <li>館内ナビゲーション連携</li>
-                        </ul>
-                        <a href="https://prtimes.jp/main/html/rd/p/000000209.000003279.html" class="case-link" target="_blank" rel="noopener">
-                            詳細を見る
-                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Case 2: 格之進 -->
-                <div class="case-card">
-                    <div class="case-image">
-                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                    </div>
-                    <div class="case-content">
-                        <span class="case-status">稼働中</span>
-                        <h3 class="case-title">EC×実店舗融合AI</h3>
-                        <p class="case-company">格之進 様</p>
-                        <p class="case-desc">ECサイトでの商品提案・調理方法案内から、実店舗での卓上AIアシスタントまで一貫したサービスを提供。</p>
-                        <ul class="case-features">
-                            <li>商品レコメンド</li>
-                            <li>調理方法ガイド</li>
-                            <li>卓上AIアシスタント</li>
-                        </ul>
-                        <a href="https://kakunosh.in/news/kakunoshin-ai2/" class="case-link" target="_blank" rel="noopener">
-                            詳細を見る
-                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Case 3: HIS Mobile -->
-                <div class="case-card">
-                    <div class="case-image">
-                        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
-                    </div>
-                    <div class="case-content">
-                        <span class="case-status">稼働中</span>
-                        <h3 class="case-title">AI料金コンシェルジュ</h3>
-                        <p class="case-company">HIS Mobile 様</p>
-                        <p class="case-desc">格安SIMの料金プラン提案から申込み手続きまでをAIがサポート。問い合わせ対応を約6割削減。</p>
-                        <ul class="case-features">
-                            <li>最適プラン提案</li>
-                            <li>申込み手続きサポート</li>
-                            <li>問い合わせ6割削減</li>
-                        </ul>
-                        <a href="https://prtimes.jp/main/html/rd/p/000000107.000087269.html" class="case-link" target="_blank" rel="noopener">
-                            詳細を見る
-                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1131,8 +1246,8 @@
                         <li>LINE Bot連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1151,8 +1266,8 @@
                         <li>24時間対応</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1171,8 +1286,8 @@
                         <li>予約システム連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1191,8 +1306,8 @@
                         <li>購入履歴連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1211,8 +1326,8 @@
                         <li><a href="https://onprem.gbase.ai/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">オンプレミス対応</a></li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1231,8 +1346,8 @@
                         <li>混雑状況連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1251,8 +1366,8 @@
                         <li>担当者連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1270,8 +1385,8 @@
                         <li>資料請求連携</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
 
@@ -1289,14 +1404,177 @@
                         <li>家族向け情報提供</li>
                     </ul>
                     <div class="solution-cta">
-                        <a href="#" class="btn btn-primary">詳細を見る</a>
-                        <a href="#" class="btn btn-outline">資料請求</a>
+                        <a href="https://cs.gbase.ai/contact" class="btn btn-primary" target="_blank" rel="noopener">詳細を見る</a>
+                        <a href="https://cs.gbase.ai/contact?type=document" class="btn btn-outline" target="_blank" rel="noopener">資料請求</a>
                     </div>
                 </div>
             </div>
 
             <div class="show-more-container">
                 <button class="show-more-btn" id="showMoreBtn">他のソリューションを見る</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why GBase -->
+    <section class="section why-gbase" id="why-gbase">
+        <div class="container">
+            <div class="section-header center">
+                <h2 class="section-title">選ばれる理由</h2>
+                <p class="section-desc">GBase Supportが多くの企業様に選ばれている理由をご紹介します。</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3 class="feature-title">10言語自動翻訳</h3>
+                    <p class="feature-desc">インバウンド対応が即日可能に。翻訳コストを大幅に削減できます。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                    </div>
+                    <h3 class="feature-title">ノーコード運用</h3>
+                    <p class="feature-desc">エンジニア不要。現場スタッフだけで運用・更新が可能です。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3 class="feature-title">デジタルヒューマン</h3>
+                    <p class="feature-desc">お客様満足度15%向上。親しみやすいAI接客を実現します。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h3 class="feature-title">エンタープライズ対応</h3>
+                    <p class="feature-desc">ISO27001認証取得。<a href="https://onprem.gbase.ai/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">オンプレミス導入</a>も可能です。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section case-studies" id="cases">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label label-verified">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    導入実績
+                </span>
+                <h2 class="section-title">導入事例</h2>
+                <p class="section-desc">様々な業界でGBase Supportをご活用いただいています。</p>
+            </div>
+
+            <div class="case-grid">
+                <!-- Case 1: LUMINE/NEWoMan -->
+                <article class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">稼働中</span>
+                        <h3 class="case-title">スマートフォン端末上での未来型シームレス体験</h3>
+                        <p class="case-company">ニュウマン高輪（LUMINE様）</p>
+                        <p class="case-desc">インバウンド観光客向けの多言語AIコンシェルジュを導入。店舗案内からイベント情報まで、24時間対応を実現。</p>
+                        <ul class="case-features">
+                            <li>多言語対応</li>
+                            <li>店舗検索</li>
+                            <li>24時間対応</li>
+                        </ul>
+                        <a href="https://prtimes.jp/main/html/rd/p/000000209.000003279.html" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Case 2: 格之進 -->
+                <article class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">稼働中</span>
+                        <h3 class="case-title">EC×店舗でAI活用、商品提案から調理指導まで</h3>
+                        <p class="case-company">格之進（熟成肉専門店）</p>
+                        <p class="case-desc">ECサイトでの商品提案、調理方法ガイド、問い合わせ対応を自動化。店舗では卓上AIがお客様をサポート。</p>
+                        <ul class="case-features">
+                            <li>EC連携</li>
+                            <li>商品提案</li>
+                            <li>調理ガイド</li>
+                        </ul>
+                        <a href="https://kakunosh.in/news/kakunoshin-ai2/" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Case 3: HIS Mobile -->
+                <article class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">稼働中</span>
+                        <h3 class="case-title">問い合わせ6割削減、AIがカスタマーサポートを自動化</h3>
+                        <p class="case-company">HIS Mobile様</p>
+                        <p class="case-desc">通信サービスに関する問い合わせ対応を自動化。料金プラン、契約手続き、設定方法などを24時間サポート。</p>
+                        <ul class="case-features">
+                            <li>問い合わせ60%削減</li>
+                            <li>24時間対応</li>
+                            <li>FAQ自動生成</li>
+                        </ul>
+                        <a href="https://prtimes.jp/main/html/rd/p/000000107.000087269.html" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header center">
+                <h2 class="section-title">導入までの3ステップ</h2>
+                <p class="section-desc">最短3日で運用開始。シンプルなステップでAIコンシェルジュを導入できます。</p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">無料相談・ヒアリング</h3>
+                    <p class="step-time">約30分</p>
+                    <p class="step-desc">課題や目標をヒアリングし、最適なソリューションをご提案します。オンラインでも対面でも対応可能です。</p>
+                </div>
+                <div class="step-connector" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">FAQアップロード・初期設定</h3>
+                    <p class="step-time">最短3日</p>
+                    <p class="step-desc">既存のFAQや資料をアップロードするだけ。AIが自動で学習し、回答精度を高めていきます。</p>
+                </div>
+                <div class="step-connector" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">運用開始・継続サポート</h3>
+                    <p class="step-time">運用開始</p>
+                    <p class="step-desc">公開後も専任スタッフが伴走。回答精度の改善や運用ノウハウをご提供します。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1357,50 +1635,6 @@
                         <input type="email" placeholder="メールアドレス">
                         <button type="submit">通知を受取</button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why GBase -->
-    <section class="section why-gbase" id="why-gbase">
-        <div class="container">
-            <div class="section-header center">
-                <h2 class="section-title">選ばれる理由</h2>
-                <p class="section-desc">GBase Supportが多くの企業様に選ばれている理由をご紹介します。</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </div>
-                    <h3 class="feature-title">10言語自動翻訳</h3>
-                    <p class="feature-desc">日本語FAQを自動で多言語化。インバウンド対応に最適です。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
-                    </div>
-                    <h3 class="feature-title">ノーコード運用</h3>
-                    <p class="feature-desc">IT知識不要。ドキュメントをアップロードするだけで学習します。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <h3 class="feature-title">デジタルヒューマン</h3>
-                    <p class="feature-desc">カスタムアバターで親しみやすい接客体験を提供できます。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    </div>
-                    <h3 class="feature-title">エンタープライズ対応</h3>
-                    <p class="feature-desc">ISO27001認証取得。<a href="https://onprem.gbase.ai/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">オンプレミス導入</a>にも対応しています。</p>
                 </div>
             </div>
         </div>
