@@ -1,329 +1,1803 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBase Support for SC | 商業施設向けAIコンシェルジュソリューション</title>
-    <meta name="description" content="既存のフロアマップ画像をアップロードするだけで、多言語対応のAIコンシェルジュが誕生。商業施設のインバウンド対応と案内業務を自動化します。">
-
-    <!-- Organic: Preload Critical Assets -->
-    <link rel="preload" as="image" href="assets/hero_bg_illustration.png">
-
+    <title>ソリューション | GBase Support - 業界別AIソリューション</title>
+    <meta name="description" content="GBase Supportの業界別AIソリューション。商業施設、ホテル、EC、社内DXなど、あなたの業界に最適なAIチャットボットをご提案します。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2840;
+            --navy-light: #2d3a52;
+            --charcoal: #374151;
+            --slate: #64748b;
+            --slate-light: #94a3b8;
+            --accent: #0d7377;
+            --accent-light: #14919b;
+            --cream: #fafaf9;
+            --warm-white: #f5f5f4;
+            --border: #e5e5e5;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --white: #ffffff;
+        }
 
-    <!-- Organic: Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "GBase Support SC Edition",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web, Kiosk",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "JPY",
-        "availability": "https://schema.org/InStock"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "24"
-      },
-      "description": "Commercial facility digital transformation tool that converts static floor maps into interactive AI concierges."
-    }
-    </script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 15px;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* Sub-page Header */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb-separator {
+            color: var(--slate-light);
+            font-size: 0.75rem;
+        }
+
+        .breadcrumb-current {
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        .page-nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .page-nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .page-nav-link:hover {
+            color: var(--navy);
+        }
+
+        .page-nav-link.active {
+            color: var(--navy);
+            border-bottom-color: var(--accent);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--navy-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--navy);
+            border: 1px solid var(--navy);
+        }
+
+        .btn-outline:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--navy);
+        }
+
+        .btn-white:hover {
+            background: var(--cream);
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--navy);
+            padding: 100px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(13, 115, 119, 0.08) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            color: var(--accent-light);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            color: var(--white);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 40px;
+            line-height: 1.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Industry Selector */
+        .industry-selector {
+            background: var(--white);
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .selector-inner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .selector-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .selector-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .selector-btn {
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .selector-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        .selector-btn.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+
+        /* Section */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-header.center {
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .label-verified {
+            color: var(--accent);
+        }
+
+        .label-available {
+            color: var(--navy);
+        }
+
+        .label-coming {
+            color: var(--slate);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            max-width: 560px;
+            font-size: 0.95rem;
+        }
+
+        .section-header.center .section-desc {
+            margin: 0 auto;
+        }
+
+        /* Case Studies */
+        .case-studies {
+            background: var(--white);
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .case-card {
+            border: 1px solid var(--border);
+            background: var(--white);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .case-card:hover {
+            border-color: var(--slate-light);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+        }
+
+        .case-image {
+            height: 180px;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+        }
+
+        .case-image svg {
+            position: relative;
+            z-index: 1;
+            width: 48px;
+            height: 48px;
+            stroke: rgba(255,255,255,0.3);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .case-content {
+            padding: 28px;
+        }
+
+        .case-status {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 4px 10px;
+            margin-bottom: 16px;
+        }
+
+        .case-title {
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .case-company {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .case-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .case-features {
+            list-style: none;
+            margin: 0 0 20px 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .case-features li {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: var(--warm-white);
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+        }
+
+        .case-link {
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+
+        .case-link:hover {
+            gap: 10px;
+        }
+
+        .case-link svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Solutions */
+        .solutions {
+            background: var(--cream);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        .filter-btn.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: var(--white);
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .solution-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            padding: 32px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .solution-card:hover {
+            border-color: var(--slate-light);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+        }
+
+        .solution-card.hidden,
+        .solution-card.hidden-solution {
+            display: none;
+        }
+
+        .solution-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .solution-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--navy);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .solution-status {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+        }
+
+        .status-featured {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .status-available {
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            background: transparent;
+        }
+
+        .solution-title {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .solution-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .solution-features {
+            list-style: none;
+            margin-bottom: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .solution-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding: 6px 0;
+        }
+
+        .solution-features li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        .solution-cta {
+            display: flex;
+            gap: 10px;
+        }
+
+        .solution-cta .btn {
+            flex: 1;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+        }
+
+        .show-more-container {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .show-more-btn {
+            padding: 14px 32px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .show-more-btn:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        /* Coming Soon */
+        .coming-soon {
+            background: var(--navy);
+        }
+
+        .coming-soon .section-title {
+            color: var(--white);
+        }
+
+        .coming-soon .section-desc {
+            color: rgba(255,255,255,0.65);
+        }
+
+        .coming-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .coming-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 32px;
+            position: relative;
+        }
+
+        .coming-label {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            border: 1px solid var(--accent-light);
+            padding: 4px 8px;
+        }
+
+        .coming-icon {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .coming-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: rgba(255,255,255,0.5);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .coming-title {
+            font-size: 1.05rem;
+            color: var(--white);
+            margin-bottom: 6px;
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .coming-date {
+            color: var(--accent-light);
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .coming-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .coming-form {
+            display: flex;
+            gap: 8px;
+        }
+
+        .coming-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: var(--white);
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .coming-form input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .coming-form input:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .coming-form button {
+            padding: 12px 20px;
+            border: none;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .coming-form button:hover {
+            background: var(--accent-light);
+        }
+
+        /* Why GBase */
+        .why-gbase {
+            background: var(--white);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 24px 16px;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--navy);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--navy);
+            padding: 80px 0;
+        }
+
+        .cta-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 1.75rem;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: var(--slate-light);
+            padding: 48px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--slate-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .case-grid,
+            .solution-grid,
+            .coming-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 64px 0;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .case-grid,
+            .solution-grid,
+            .coming-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 0;
+            }
+
+            .page-nav {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-nav-link {
+                font-size: 0.8rem;
+            }
+
+            .selector-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .selector-buttons {
+                overflow-x: auto;
+                width: 100%;
+                padding-bottom: 8px;
+                flex-wrap: nowrap;
+            }
+
+            .selector-btn {
+                white-space: nowrap;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-
 <body>
-
-    <!-- Semantic Header -->
-    <header class="gbase-global-header">
-        <div class="gbase-global-header__container">
-            <div class="brand-identity">
-                <span class="brand-identity__name">GBase Support</span>
-                <span class="brand-identity__edition badge--sc">SC Edition</span>
+    <!-- Sub-page Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-left">
+                    <nav class="breadcrumb" aria-label="パンくずリスト">
+                        <a href="https://cs.gbase.ai/" target="_blank" rel="noopener">GBase Support</a>
+                        <span class="breadcrumb-separator" aria-hidden="true">›</span>
+                        <span class="breadcrumb-current">ソリューション</span>
+                    </nav>
+                </div>
+                <nav class="page-nav" aria-label="ページ内ナビゲーション">
+                    <a href="#solutions" class="page-nav-link active">業界別</a>
+                    <a href="#cases" class="page-nav-link">導入事例</a>
+                    <a href="#coming-soon" class="page-nav-link">開発中</a>
+                    <a href="#why-gbase" class="page-nav-link">選ばれる理由</a>
+                </nav>
             </div>
-            <nav class="site-navigation" aria-label="Main Navigation">
-                <ul class="site-navigation__list">
-                    <li><a href="#map-canvas-feature" class="site-navigation__link">機能紹介</a></li>
-                    <li><a href="#success-stories" class="site-navigation__link">導入事例</a></li>
-                    <li><a href="#" class="btn--primary-action">デモを予約</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
-    <main>
-        <!-- Article Wrapper for Hero to give it content weight -->
-        <article class="hero-presentation">
-            <figure class="hero-presentation__visual">
-                <img src="assets/hero_bg_illustration.png"
-                    alt="賑わう日本のショッピングモールのイラスト。家族連れが休憩し、インフォメーションカウンターではスタッフが笑顔で対応している。" class="hero-presentation__image"
-                    fetchpriority="high">
-                <div class="hero-presentation__overlay"></div>
-            </figure>
-
-            <section class="hero-presentation__content">
-                <h1 class="hero-title">
-                    フロアマップが、<br>
-                    そのまま<span class="text-highlight--gradient">AIコンシェルジュ</span>に。
-                </h1>
-                <p class="hero-lead">
-                    画像をアップロードするだけ。既存の案内図が、多言語対応のインタラクティブなナビゲーションシステムに生まれ変わります。
-                </p>
-
-                <div class="action-cluster">
-                    <a href="#" class="btn--cta-primary" aria-label="無料でマップをアップロードして試す">無料でマップをアップロード</a>
-                    <a href="#" class="btn--cta-secondary">資料ダウンロード</a>
-                </div>
-            </section>
-        </article>
-
-        <!-- Aside for Pain Points (Breaking Linearity) -->
-        <!-- Using 'aside' correctly here as supplementary contextual info -->
-        <!-- Problem-Solution Matrix (Replaces Market Challenges) -->
-        <section class="problem-solution-matrix" aria-labelledby="matrix-title">
-            <div class="content-container">
-                <header class="matrix-intro">
-                    <h2 id="matrix-title" class="section-heading">SC運営の「限界」を突破する。</h2>
-                    <p class="matrix-intro__sub">現場が抱える具体的な課題と、GBaseが提供する解決策。</p>
-                </header>
-
-                <div class="matrix-grid">
-                    <!-- Card 1: Navigation -->
-                    <article class="split-card">
-                        <div class="split-card__problem">
-                            <!-- Visual: Isometric Confusion -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_nav_problem.png" alt="Confusing Maze" class="visual-img">
-                            </div>
-                            <span class="problem-label">課題</span>
-                            <h3 class="problem-title">「トイレはどこですか？」</h3>
-                            <p class="problem-desc">
-                                単純な場所案内がインフォメーション業務の<strong>40%以上</strong>を占有。
-                            </p>
-                        </div>
-                        <div class="split-card__connector" aria-hidden="true">→</div>
-                        <div class="split-card__solution">
-                            <!-- Visual: Isometric Clear Map -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_nav_solution.png" alt="Clear Map Navigation" class="visual-img">
-                            </div>
-                            <span class="solution-label">GBase</span>
-                            <h3 class="solution-title">フロアマップ連携案内</h3>
-                            <p class="solution-desc">
-                                "Metamap"等のマップシステムと連携し、ルートを直接描画。
-                            </p>
-                            <div class="solution-metric">
-                                <span class="metric-value">50%</span>
-                                <span class="metric-label">有人対応削減</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 2: Updates -->
-                    <article class="split-card">
-                        <div class="split-card__problem">
-                            <!-- Visual: Isometric Old Calendar -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_updates_problem.png" alt="Outdated Information"
-                                    class="visual-img">
-                            </div>
-                            <span class="problem-label">課題</span>
-                            <h3 class="problem-title">情報の「更新漏れ」</h3>
-                            <p class="problem-desc">
-                                手動更新が追いつかず、「終わったセールが表示される」クレームが多発。
-                            </p>
-                        </div>
-                        <div class="split-card__connector" aria-hidden="true">→</div>
-                        <div class="split-card__solution">
-                            <!-- Visual: Isometric Auto Sync -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_updates_solution.png" alt="Auto Sync" class="visual-img">
-                            </div>
-                            <span class="solution-label">GBase</span>
-                            <h3 class="solution-title">自動クローリング学習</h3>
-                            <p class="solution-desc">
-                                WebサイトやCMSから最新情報を自動で認識・更新。
-                            </p>
-                            <div class="solution-metric">
-                                <span class="metric-value">100%</span>
-                                <span class="metric-label">情報鮮度維持</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 3: Cost -->
-                    <article class="split-card">
-                        <div class="split-card__problem">
-                            <!-- Visual: Isometric Money Stack -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_cost_problem.png" alt="High Cost" class="visual-img">
-                            </div>
-                            <span class="problem-label">課題</span>
-                            <h3 class="problem-title">アプリ開発の「高コスト」</h3>
-                            <p class="problem-desc">
-                                独自アプリには数千万円が必要だが、肝心のダウンロード数は伸び悩む。
-                            </p>
-                        </div>
-                        <div class="split-card__connector" aria-hidden="true">→</div>
-                        <div class="split-card__solution">
-                            <!-- Visual: Isometric Smartphone -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_cost_solution.png" alt="Low Cost Line Integration"
-                                    class="visual-img">
-                            </div>
-                            <span class="solution-label">GBase</span>
-                            <h3 class="solution-title">LINE公式アカウント連携</h3>
-                            <p class="solution-desc">
-                                国内9,600万人が使うLINEアプリをそのままインターフェースに。
-                            </p>
-                            <div class="solution-metric">
-                                <span class="metric-value">0円</span>
-                                <span class="metric-label">アプリ開発費</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 4: Escalation -->
-                    <article class="split-card">
-                        <div class="split-card__problem">
-                            <!-- Visual: Isometric Broken Bot -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_support_problem.png" alt="AI Anxiety" class="visual-img">
-                            </div>
-                            <span class="problem-label">課題</span>
-                            <h3 class="problem-title">AIへの「不安」</h3>
-                            <p class="problem-desc">
-                                「AIが間違ったことを言ったら？」「たらい回しにされる？」という懸念。
-                            </p>
-                        </div>
-                        <div class="split-card__connector" aria-hidden="true">→</div>
-                        <div class="split-card__solution">
-                            <!-- Visual: Isometric Headset -->
-                            <div class="visual-abstract-img-container">
-                                <img src="assets/visual_support_solution.png" alt="Human Support" class="visual-img">
-                            </div>
-                            <span class="solution-label">GBase</span>
-                            <h3 class="solution-title">シームレス転人工</h3>
-                            <p class="solution-desc">
-                                解決できない場合は、即座にLINE WORKSや電話で人間に通知。
-                            </p>
-                            <div class="solution-metric">
-                                <span class="metric-value">4.5</span>
-                                <span class="metric-label">顧客満足度</span>
-                            </div>
-                        </div>
-                    </article>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-label">Industry Solutions</span>
+                <h1>業界課題に応える、<br>AIソリューション</h1>
+                <p>商業施設、ホテル、EC、社内DX。GBase Supportは、各業界の固有課題を理解し、最適なAIチャットボットソリューションをご提供します。</p>
+                <div class="hero-buttons">
+                    <a href="#solutions" class="btn btn-white">ソリューション一覧</a>
+                    <a href="#cases" class="btn btn-ghost">導入事例を見る</a>
+                    <a href="https://cs.gbase.ai/price" class="btn btn-ghost" target="_blank" rel="noopener">料金プラン</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Feature Block: Map Canvas -->
-        <section id="map-canvas-feature" class="product-feature product-feature--map">
-            <div class="content-container layout-split">
-                <div class="product-feature__info">
-                    <span class="feature-tag">キラー機能</span>
-                    <h2 class="feature-heading">Map Canvas テクノロジー</h2>
-                    <h3 class="feature-subheading">"文字"だけでなく、"場所"で案内する。</h3>
-                    <p class="feature-description">
-                        GBase Supportは、あなたの施設のレイアウトを視覚的に理解します。「トイレはどこ？」と聞かれれば、実際のフロアマップ上にルートを光らせて案内します。
-                    </p>
-                    <ul class="benefit-checklist">
-                        <li class="benefit-checklist__item">導入は画像をアップロードするだけ</li>
-                        <li class="benefit-checklist__item">直感的なルート案内</li>
-                        <li class="benefit-checklist__item">モバイル・キオスク両対応</li>
+    <!-- Industry Selector -->
+    <section class="industry-selector">
+        <div class="container">
+            <div class="selector-inner">
+                <span class="selector-label">業界で絞り込む：</span>
+                <div class="selector-buttons">
+                    <button class="selector-btn active" data-filter="all">すべて</button>
+                    <button class="selector-btn" data-filter="retail">商業施設・SC</button>
+                    <button class="selector-btn" data-filter="travel">観光・インバウンド</button>
+                    <button class="selector-btn" data-filter="hotel">ホテル・旅館</button>
+                    <button class="selector-btn" data-filter="ec">EC・小売</button>
+                    <button class="selector-btn" data-filter="enterprise">企業・社内DX</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section case-studies" id="cases">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label label-verified">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    導入実績
+                </span>
+                <h2 class="section-title">導入事例</h2>
+                <p class="section-desc">GBase Supportを導入いただいているお客様の事例をご紹介します。</p>
+            </div>
+            <div class="case-grid">
+                <!-- Case 1: ニュウマン高輪 -->
+                <div class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">実証実験中</span>
+                        <h3 class="case-title">スマートフォン無人案内</h3>
+                        <p class="case-company">ニュウマン高輪 様</p>
+                        <p class="case-desc">スマートフォン端末を活用した未来型無人案内システム。多言語対応でインバウンド観光客にも対応。</p>
+                        <ul class="case-features">
+                            <li>スマートフォン端末活用</li>
+                            <li>多言語対応（10言語）</li>
+                            <li>館内ナビゲーション連携</li>
+                        </ul>
+                        <a href="https://prtimes.jp/main/html/rd/p/000000209.000003279.html" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Case 2: 格之進 -->
+                <div class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">稼働中</span>
+                        <h3 class="case-title">EC×実店舗融合AI</h3>
+                        <p class="case-company">格之進 様</p>
+                        <p class="case-desc">ECサイトでの商品提案・調理方法案内から、実店舗での卓上AIアシスタントまで一貫したサービスを提供。</p>
+                        <ul class="case-features">
+                            <li>商品レコメンド</li>
+                            <li>調理方法ガイド</li>
+                            <li>卓上AIアシスタント</li>
+                        </ul>
+                        <a href="https://kakunosh.in/news/kakunoshin-ai2/" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Case 3: HIS Mobile -->
+                <div class="case-card">
+                    <div class="case-image">
+                        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+                    </div>
+                    <div class="case-content">
+                        <span class="case-status">稼働中</span>
+                        <h3 class="case-title">AI料金コンシェルジュ</h3>
+                        <p class="case-company">HIS Mobile 様</p>
+                        <p class="case-desc">格安SIMの料金プラン提案から申込み手続きまでをAIがサポート。問い合わせ対応を約6割削減。</p>
+                        <ul class="case-features">
+                            <li>最適プラン提案</li>
+                            <li>申込み手続きサポート</li>
+                            <li>問い合わせ6割削減</li>
+                        </ul>
+                        <a href="https://prtimes.jp/main/html/rd/p/000000107.000087269.html" class="case-link" target="_blank" rel="noopener">
+                            詳細を見る
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions -->
+    <section class="section solutions" id="solutions">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label label-available">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg>
+                    対応可能
+                </span>
+                <h2 class="section-title">業界別ソリューション</h2>
+                <p class="section-desc">GBase Supportの機能を活用して、様々な業界の課題を解決します。</p>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">すべて</button>
+                <button class="filter-btn" data-filter="retail">商業施設</button>
+                <button class="filter-btn" data-filter="travel">観光・空港</button>
+                <button class="filter-btn" data-filter="hotel">ホテル</button>
+                <button class="filter-btn" data-filter="ec">EC・小売</button>
+                <button class="filter-btn" data-filter="enterprise">社内DX</button>
+            </div>
+
+            <div class="solution-grid">
+                <!-- Solution 1 -->
+                <div class="solution-card" data-category="retail">
+                    <span class="solution-status status-featured">注目</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <h3 class="solution-title">商業施設AIコンシェルジュ</h3>
+                    <p class="solution-desc">ショッピングセンター・駅ビル向けの多言語対応AI案内システム</p>
+                    <ul class="solution-features">
+                        <li>10言語自動翻訳対応</li>
+                        <li>店舗検索・フロア案内</li>
+                        <li>イベント情報の自動更新</li>
+                        <li>LINE Bot連携</li>
                     </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
                 </div>
-                <figure class="product-feature__visual tilt-effect-container">
-                    <img src="assets/map_canvas_jp.png"
-                        alt="タブレット端末に表示されたMap Canvas UI。現在地から目的地へのルートがネオンのように光って表示されている。" class="glass-frame-image">
-                </figure>
-            </div>
-        </section>
 
-        <!-- Feature Block: Digital Human -->
-        <section class="product-feature product-feature--avatar">
-            <div class="content-container layout-split layout-split--reverse">
-                <figure class="product-feature__visual">
-                    <img src="assets/avatar_agent_jp.png"
-                        alt="GBase Kioskの3Dアバターコンシェルジュ。制服を着た女性キャラクターが親しみやすい笑顔で利用者を迎えている。" class="avatar-image-fit">
-                </figure>
-                <div class="product-feature__info">
-                    <span class="feature-tag">おもてなしAI</span>
-                    <h2 class="feature-heading">デジタルヒューマン・キオスク</h2>
-                    <h3 class="feature-subheading">対話で、もっと身近に。</h3>
-                    <p class="feature-description">
-                        親しみやすい3Dアバターが、24時間365日疲れを知らずにお客様をお出迎えします。音声認識対応で、手荷物がいっぱいのお客様もスムーズに利用可能です。
-                    </p>
-                    <ul class="benefit-checklist">
-                        <li class="benefit-checklist__item">10ヶ国語リアルタイム翻訳</li>
-                        <li class="benefit-checklist__item">音声対話でハンズフリー</li>
-                        <li class="benefit-checklist__item">制服やアバターのカスタマイズ対応</li>
+                <!-- Solution 2 -->
+                <div class="solution-card" data-category="travel">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
+                    </div>
+                    <h3 class="solution-title">空港・観光施設案内</h3>
+                    <p class="solution-desc">インバウンド観光客向けの多言語ナビゲーションAI</p>
+                    <ul class="solution-features">
+                        <li>10言語リアルタイム翻訳</li>
+                        <li>フライト情報連携</li>
+                        <li>施設内ナビゲーション</li>
+                        <li>24時間対応</li>
                     </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Success Stories (Aside/Section Hybrid) -->
-        <section id="success-stories" class="client-success-stories">
-            <div class="content-container">
-                <h2 class="section-heading">導入実績</h2>
-                <div class="story-grid">
-                    <article class="success-case-card">
-                        <h3 class="success-case-card__client">大規模商業施設 "N" 様</h3>
-                        <p class="success-case-card__metric"><strong>40%</strong> 削減</p>
-                        <blockquote class="success-case-card__quote">
-                            「スタッフがVIP対応や複雑な相談に集中できるようになり、サービス品質が向上しました。」
-                        </blockquote>
-                    </article>
-                    <article class="success-case-card">
-                        <h3 class="success-case-card__client">レストランゾーン "G" 様</h3>
-                        <p class="success-case-card__metric">送客数アップ</p>
-                        <blockquote class="success-case-card__quote">
-                            「お客様の気分（辛いもの、静かな店など）に合わせてAIが提案してくれるので、回遊性が高まりました。」
-                        </blockquote>
-                    </article>
+                <!-- Solution 3 -->
+                <div class="solution-card" data-category="hotel">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    </div>
+                    <h3 class="solution-title">ホテルAIコンシェルジュ</h3>
+                    <p class="solution-desc">宿泊施設向けの多言語対応24時間AIアシスタント</p>
+                    <ul class="solution-features">
+                        <li>客室サービス案内</li>
+                        <li>周辺観光情報</li>
+                        <li>多言語対応</li>
+                        <li>予約システム連携</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <!-- Solution 4 -->
+                <div class="solution-card" data-category="ec">
+                    <span class="solution-status status-featured">注目</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    </div>
+                    <h3 class="solution-title">EC×店舗融合サポート</h3>
+                    <p class="solution-desc">オンラインとオフラインを繋ぐ統合カスタマーサポートAI</p>
+                    <ul class="solution-features">
+                        <li>商品提案・レコメンド</li>
+                        <li>在庫確認・取り置き</li>
+                        <li>オムニチャネル対応</li>
+                        <li>購入履歴連携</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <!-- Solution 5 -->
+                <div class="solution-card" data-category="enterprise">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3 class="solution-title">社内ナレッジBot</h3>
+                    <p class="solution-desc">企業内の問い合わせを自動化するAIヘルプデスク</p>
+                    <ul class="solution-features">
+                        <li>社内文書からFAQ自動生成</li>
+                        <li>人事・IT・総務対応</li>
+                        <li>部門別アクセス制御</li>
+                        <li><a href="https://onprem.gbase.ai/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">オンプレミス対応</a></li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <!-- Solution 6 -->
+                <div class="solution-card" data-category="retail">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h3 class="solution-title">地下街・駅施設案内</h3>
+                    <p class="solution-desc">複雑な地下空間のナビゲーションに特化したAI</p>
+                    <ul class="solution-features">
+                        <li>フロアマップ連携</li>
+                        <li>迷子対策・経路案内</li>
+                        <li>多言語対応</li>
+                        <li>混雑状況連携</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <!-- Hidden solutions -->
+                <div class="solution-card hidden-solution" data-category="retail">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    </div>
+                    <h3 class="solution-title">百貨店VIPサービス</h3>
+                    <p class="solution-desc">外商顧客向けのパーソナライズドAIコンシェルジュ</p>
+                    <ul class="solution-features">
+                        <li>VIP顧客専用対応</li>
+                        <li>購買履歴活用</li>
+                        <li>24時間対応</li>
+                        <li>担当者連携</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <div class="solution-card hidden-solution" data-category="enterprise">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <h3 class="solution-title">教育・スクール案内</h3>
+                    <p class="solution-desc">入学希望者・保護者向けの24時間FAQ対応AI</p>
+                    <ul class="solution-features">
+                        <li>入学案内自動応答</li>
+                        <li>カリキュラム説明</li>
+                        <li>イベント情報案内</li>
+                        <li>資料請求連携</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
+                </div>
+
+                <div class="solution-card hidden-solution" data-category="enterprise">
+                    <span class="solution-status status-available">対応可能</span>
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3 class="solution-title">医療・介護サポート</h3>
+                    <p class="solution-desc">患者・ご家族向けの情報提供AIアシスタント</p>
+                    <ul class="solution-features">
+                        <li>診療案内・予約</li>
+                        <li>症状事前問診</li>
+                        <li>介護サービス説明</li>
+                        <li>家族向け情報提供</li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#" class="btn btn-primary">詳細を見る</a>
+                        <a href="#" class="btn btn-outline">資料請求</a>
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
+
+            <div class="show-more-container">
+                <button class="show-more-btn" id="showMoreBtn">他のソリューションを見る</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon -->
+    <section class="section coming-soon" id="coming-soon">
+        <div class="container">
+            <div class="section-header center">
+                <span class="section-label label-coming" style="color: rgba(255,255,255,0.6);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    開発中
+                </span>
+                <h2 class="section-title">Coming Soon</h2>
+                <p class="section-desc">現在開発中の新機能をご紹介します。リリース時に通知を受け取れます。</p>
+            </div>
+
+            <div class="coming-grid">
+                <!-- Coming 1 -->
+                <div class="coming-card">
+                    <span class="coming-label">予定</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                    </div>
+                    <h3 class="coming-title">フロアマップ連携</h3>
+                    <p class="coming-date">2026年 Q2 リリース予定</p>
+                    <p class="coming-desc">Metamap連携により、AIチャットから店舗の場所を地図で案内。経路ナビゲーションも可能に。</p>
+                    <form class="coming-form">
+                        <input type="email" placeholder="メールアドレス">
+                        <button type="submit">通知を受取</button>
+                    </form>
+                </div>
+
+                <!-- Coming 2 -->
+                <div class="coming-card">
+                    <span class="coming-label">予定</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <h3 class="coming-title">駐車場システム連携</h3>
+                    <p class="coming-date">2026年 Q3 リリース予定</p>
+                    <p class="coming-desc">駐車時間の自動計算、サービス券案内、精算機位置案内など駐車場関連の問い合わせを自動化。</p>
+                    <form class="coming-form">
+                        <input type="email" placeholder="メールアドレス">
+                        <button type="submit">通知を受取</button>
+                    </form>
+                </div>
+
+                <!-- Coming 3 -->
+                <div class="coming-card">
+                    <span class="coming-label">予定</span>
+                    <div class="coming-icon">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3 class="coming-title">分析ダッシュボード</h3>
+                    <p class="coming-date">2026年 Q4 リリース予定</p>
+                    <p class="coming-desc">問い合わせ傾向の可視化、未回答分析、自動レポート生成でデータドリブンな運営を支援。</p>
+                    <form class="coming-form">
+                        <input type="email" placeholder="メールアドレス">
+                        <button type="submit">通知を受取</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why GBase -->
+    <section class="section why-gbase" id="why-gbase">
+        <div class="container">
+            <div class="section-header center">
+                <h2 class="section-title">選ばれる理由</h2>
+                <p class="section-desc">GBase Supportが多くの企業様に選ばれている理由をご紹介します。</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3 class="feature-title">10言語自動翻訳</h3>
+                    <p class="feature-desc">日本語FAQを自動で多言語化。インバウンド対応に最適です。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                    </div>
+                    <h3 class="feature-title">ノーコード運用</h3>
+                    <p class="feature-desc">IT知識不要。ドキュメントをアップロードするだけで学習します。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3 class="feature-title">デジタルヒューマン</h3>
+                    <p class="feature-desc">カスタムアバターで親しみやすい接客体験を提供できます。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h3 class="feature-title">エンタープライズ対応</h3>
+                    <p class="feature-desc">ISO27001認証取得。<a href="https://onprem.gbase.ai/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">オンプレミス導入</a>にも対応しています。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-inner">
+                <h2>まずは14日間、無料でお試しください</h2>
+                <p>クレジットカード不要。すべての機能をお試しいただけます。</p>
+                <div class="cta-buttons">
+                    <a href="https://cs.gbase.ai/register" class="btn btn-white" target="_blank" rel="noopener">無料トライアルを始める</a>
+                    <a href="https://cs.gbase.ai/manual" class="btn btn-ghost" target="_blank" rel="noopener">マニュアルを見る</a>
+                    <a href="https://cs.gbase.ai/contact" class="btn btn-ghost" target="_blank" rel="noopener">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="site-footer">
-        <div class="conversion-zone">
-            <h2 class="conversion-zone__title">あなたの施設にも、AIのコンシェルジュを。</h2>
-            <p class="conversion-zone__subtitle">最短24時間で、独自のデモ環境を構築できます。</p>
-            <a href="#" class="btn--cta-xl glow-trigger">無料でデモを作成</a>
-        </div>
-        <div class="site-footer__copyright">
-            <p>&copy; 2026 GBase Support. All rights reserved.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-copy">&copy; 2026 Sparticle Inc. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="https://cs.gbase.ai/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>
+                    <a href="https://cs.gbase.ai/terms" target="_blank" rel="noopener">利用規約</a>
+                    <a href="https://blog.gbase.ai/support/release-notes/" target="_blank" rel="noopener">リリースノート</a>
+                    <a href="https://cs.gbase.ai/blog" target="_blank" rel="noopener">ブログ</a>
+                    <a href="https://sparticle.com/" target="_blank" rel="noopener">会社概要</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Organic: Simple Interaction Observer
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
+        // Filter functionality
+        console.log('[GBase] Initializing filters...');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const selectorBtns = document.querySelectorAll('.selector-btn');
+        const solutionCards = document.querySelectorAll('.solution-card');
+        let showMoreClicked = false;
+
+        console.log('[GBase] Found', filterBtns.length, 'filter buttons');
+        console.log('[GBase] Found', selectorBtns.length, 'selector buttons');
+        console.log('[GBase] Found', solutionCards.length, 'solution cards');
+
+        function filterSolutions(filter) {
+            console.log('[GBase] Filtering by:', filter);
+            let shown = 0, hidden = 0;
+            solutionCards.forEach(card => {
+                const isHiddenSolution = card.classList.contains('hidden-solution');
+                const matchesFilter = filter === 'all' || card.dataset.category === filter;
+
+                // Skip hidden-solution cards if "show more" hasn't been clicked
+                if (isHiddenSolution && !showMoreClicked) {
+                    return;
+                }
+
+                if (matchesFilter) {
+                    card.style.display = '';
+                    shown++;
+                } else {
+                    card.style.display = 'none';
+                    hidden++;
+                }
+            });
+            console.log('[GBase] Shown:', shown, 'Hidden:', hidden);
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('[GBase] Filter button clicked:', btn.dataset.filter);
+                filterBtns.forEach(b => b.classList.remove('active'));
+                selectorBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Sync selector buttons
+                selectorBtns.forEach(b => {
+                    if (b.dataset.filter === btn.dataset.filter) {
+                        b.classList.add('active');
                     }
                 });
-            }, { threshold: 0.1 });
-
-            // Observing semantic sections instead of generic classes
-            const targets = document.querySelectorAll('.hero-title, .hero-lead, .action-cluster, .challenge-unit, .product-feature__info');
-            targets.forEach(el => observer.observe(el));
+                filterSolutions(btn.dataset.filter);
+            });
         });
+
+        selectorBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('[GBase] Selector button clicked:', btn.dataset.filter);
+                selectorBtns.forEach(b => b.classList.remove('active'));
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Sync filter buttons
+                filterBtns.forEach(b => {
+                    if (b.dataset.filter === btn.dataset.filter) {
+                        b.classList.add('active');
+                    }
+                });
+                filterSolutions(btn.dataset.filter);
+                document.getElementById('solutions').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        console.log('[GBase] Filter initialization complete');
+
+        // Show more functionality
+        const showMoreBtn = document.getElementById('showMoreBtn');
+
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', () => {
+                showMoreClicked = true;
+                document.querySelectorAll('.hidden-solution').forEach(card => {
+                    card.style.display = '';
+                    card.classList.remove('hidden-solution');
+                });
+                showMoreBtn.style.display = 'none';
+            });
+        }
+
+        // Scroll animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => {
+            // Check if element is already in viewport on page load
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+            }
+            observer.observe(el);
+        });
+
+        // Page navigation active state
+        const pageNavLinks = document.querySelectorAll('.page-nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        // Click handler for immediate active state update
+        pageNavLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                pageNavLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Scroll-based active state update
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    pageNavLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+
+        sections.forEach(section => navObserver.observe(section));
+
+        // ========================================
+        // Analytics Tracking System
+        // ========================================
+        const GBaseAnalytics = {
+            // Configuration
+            config: {
+                debug: true,  // Set to false in production
+                endpoint: null,  // Set your API endpoint here: 'https://api.example.com/track'
+                ga4MeasurementId: null  // Set your GA4 ID here: 'G-XXXXXXXXXX'
+            },
+
+            // Track an event
+            track: function(category, action, label, value = null) {
+                const event = {
+                    timestamp: new Date().toISOString(),
+                    page: 'solutions',
+                    category: category,
+                    action: action,
+                    label: label,
+                    value: value,
+                    url: window.location.href,
+                    referrer: document.referrer,
+                    userAgent: navigator.userAgent
+                };
+
+                // Debug logging
+                if (this.config.debug) {
+                    console.log('[GBase Analytics]', event);
+                }
+
+                // Send to GA4 if configured
+                if (this.config.ga4MeasurementId && typeof gtag === 'function') {
+                    gtag('event', action, {
+                        event_category: category,
+                        event_label: label,
+                        value: value
+                    });
+                }
+
+                // Send to custom API if configured
+                if (this.config.endpoint) {
+                    fetch(this.config.endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(event)
+                    }).catch(err => console.error('Analytics error:', err));
+                }
+
+                // Store locally for analysis
+                this.storeLocal(event);
+            },
+
+            // Store events locally
+            storeLocal: function(event) {
+                try {
+                    const stored = JSON.parse(localStorage.getItem('gbase_analytics') || '[]');
+                    stored.push(event);
+                    // Keep last 100 events
+                    if (stored.length > 100) stored.shift();
+                    localStorage.setItem('gbase_analytics', JSON.stringify(stored));
+                } catch (e) {}
+            },
+
+            // Get stored analytics
+            getReport: function() {
+                const events = JSON.parse(localStorage.getItem('gbase_analytics') || '[]');
+                const report = {
+                    totalEvents: events.length,
+                    byCategory: {},
+                    byAction: {},
+                    byLabel: {},
+                    timeline: []
+                };
+
+                events.forEach(e => {
+                    // Count by category
+                    report.byCategory[e.category] = (report.byCategory[e.category] || 0) + 1;
+                    // Count by action
+                    report.byAction[e.action] = (report.byAction[e.action] || 0) + 1;
+                    // Count by label
+                    if (e.label) {
+                        report.byLabel[e.label] = (report.byLabel[e.label] || 0) + 1;
+                    }
+                });
+
+                // Sort by count
+                report.topPainPoints = Object.entries(report.byLabel)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10);
+
+                console.table(report.topPainPoints);
+                return report;
+            },
+
+            // Clear stored data
+            clear: function() {
+                localStorage.removeItem('gbase_analytics');
+                console.log('[GBase Analytics] Data cleared');
+            }
+        };
+
+        // Track Industry Filter Clicks
+        document.querySelectorAll('.selector-btn, .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                GBaseAnalytics.track(
+                    'industry_filter',
+                    'filter_click',
+                    btn.dataset.filter || btn.textContent.trim()
+                );
+            });
+        });
+
+        // Track Solution Card Interactions
+        document.querySelectorAll('.solution-card').forEach(card => {
+            const title = card.querySelector('.solution-title')?.textContent || 'Unknown';
+            const category = card.dataset.category || 'unknown';
+
+            // Track card view (when visible)
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        GBaseAnalytics.track('solution', 'view', title);
+                        cardObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            cardObserver.observe(card);
+
+            // Track CTA clicks within card
+            card.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    GBaseAnalytics.track(
+                        'solution',
+                        'cta_click',
+                        title,
+                        btn.textContent.trim()
+                    );
+                });
+            });
+        });
+
+        // Track Case Study Clicks
+        document.querySelectorAll('.case-card').forEach(card => {
+            const title = card.querySelector('.case-title')?.textContent || 'Unknown';
+            const company = card.querySelector('.case-company')?.textContent || 'Unknown';
+
+            card.querySelector('.case-link')?.addEventListener('click', () => {
+                GBaseAnalytics.track('case_study', 'detail_click', `${company} - ${title}`);
+            });
+        });
+
+        // Track Coming Soon Interest
+        document.querySelectorAll('.coming-card').forEach(card => {
+            const title = card.querySelector('.coming-title')?.textContent || 'Unknown';
+
+            // Track visibility (interest indicator)
+            const comingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        GBaseAnalytics.track('coming_soon', 'view', title);
+                        comingObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            comingObserver.observe(card);
+        });
+
+        // Track Email Signup
+        const emailForm = document.querySelector('.email-form');
+        if (emailForm) {
+            emailForm.addEventListener('submit', (e) => {
+                GBaseAnalytics.track('conversion', 'email_signup', 'coming_soon_notification');
+            });
+        }
+
+        // Track CTA Button Clicks
+        document.querySelectorAll('.cta-section .btn, .hero-buttons .btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                GBaseAnalytics.track(
+                    'conversion',
+                    'cta_click',
+                    btn.textContent.trim()
+                );
+            });
+        });
+
+        // Track Page Navigation
+        document.querySelectorAll('.page-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                GBaseAnalytics.track(
+                    'navigation',
+                    'section_click',
+                    link.textContent.trim()
+                );
+            });
+        });
+
+        // Track "Show More" click
+        const showMoreBtnTrack = document.querySelector('.show-more-btn');
+        if (showMoreBtnTrack) {
+            showMoreBtnTrack.addEventListener('click', () => {
+                GBaseAnalytics.track('engagement', 'show_more_click', 'solutions');
+            });
+        }
+
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        window.addEventListener('scroll', () => {
+            const scrollPercent = Math.round(
+                (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+            );
+            if (scrollPercent > maxScrollDepth && scrollPercent % 25 === 0) {
+                maxScrollDepth = scrollPercent;
+                GBaseAnalytics.track('engagement', 'scroll_depth', `${scrollPercent}%`);
+            }
+        });
+
+        // Track time on page
+        let startTime = Date.now();
+        window.addEventListener('beforeunload', () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000);
+            GBaseAnalytics.track('engagement', 'time_on_page', 'seconds', timeSpent);
+        });
+
+        // Expose for debugging
+        window.GBaseAnalytics = GBaseAnalytics;
     </script>
 </body>
-
 </html>
