@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(frontend-design:frontend-design)",
+      "WebFetch(domain:cs.gbase.ai)",
+      "WebFetch(domain:gbase.ai)",
+      "WebFetch(domain:prtimes.jp)",
+      "Bash(ls:*)",
+      "Bash(git mv:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}

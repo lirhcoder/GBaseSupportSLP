@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GBase for NSSOL x DOCOMO Strategy</title>
+    <meta name="description"
+        content="NSSOL様向け特別提案：NTTドコモ様の「CX最大化」と「店舗DX」を加速させる、LLMアプリケーション・オーケストレーション基盤「GBase Support」のご案内。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+    <style>
+        :root {
+            /* Hybrid Palette: DOCOMO Red + NSSOL Blue */
+            --docomo-red: #CC0033;
+            /* Corporate Red approximation */
+            --nssol-blue: #0044CC;
+            /* Corporate Blue approximation */
+            --nssol-light: #F0F4FF;
+            --neutral-dark: #1A1A1A;
+            --neutral-gray: #666666;
+            --white: #FFFFFF;
+            --bg-base: #FAFAFA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--neutral-dark);
+            background: var(--bg-base);
+            line-height: 1.8;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Noto Serif JP', serif;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Components */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .badge-strategy {
+            background: var(--neutral-dark);
+            color: var(--white);
+        }
+
+        .badge-red {
+            background: var(--docomo-red);
+            color: var(--white);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #FFF 50%, var(--nssol-light) 100%);
+            padding: 120px 0 80px;
+            border-bottom: 4px solid var(--docomo-red);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            color: var(--neutral-dark);
+        }
+
+        .hero h1 .highlight {
+            color: var(--docomo-red);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(204, 0, 51, 0.1);
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--neutral-gray);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        /* Synergy Section */
+        .synergy {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .synergy-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .company-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 20px 40px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            color: var(--neutral-gray);
+        }
+
+        .synergy-plus {
+            font-size: 2rem;
+            color: var(--neutral-gray);
+            opacity: 0.3;
+        }
+
+        .gbase-card {
+            background: var(--neutral-dark);
+            color: var(--white);
+            padding: 20px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .gbase-card::before {
+            content: 'The Missing Link';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--docomo-red);
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* Strategy Grid */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .strategy-card {
+            border: 1px solid #E5E5E5;
+            padding: 32px;
+            border-radius: 12px;
+            background: var(--white);
+        }
+
+        .strategy-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            background: var(--nssol-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+
+        .strategy-list li {
+            margin-bottom: 12px;
+            list-style: none;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .strategy-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--nssol-blue);
+            font-weight: bold;
+        }
+
+        /* Use Case Highlight */
+        .usecase-section {
+            background: #111;
+            color: #fff;
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .usecase-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .usecase-content {
+            flex: 1;
+        }
+
+        .usecase-visual {
+            flex: 1;
+        }
+
+        .chat-ui-mock {
+            background: #fff;
+            color: #333;
+            border-radius: 16px;
+            padding: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .chat-bubble {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .bubble-bot {
+            background: #f0f0f0;
+            border-bottom-left-radius: 2px;
+        }
+
+        .bubble-user {
+            background: var(--docomo-red);
+            color: white;
+            border-bottom-right-radius: 2px;
+            margin-left: auto;
+            width: fit-content;
+        }
+
+        .plan-card {
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            background: #fff;
+        }
+
+        .plan-name {
+            font-weight: bold;
+            color: var(--docomo-red);
+            font-size: 1rem;
+        }
+
+        .plan-detail {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Roadmap */
+        .roadmap-section {
+            padding: 80px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .phase {
+            font-weight: 700;
+            color: var(--nssol-blue);
+            min-width: 100px;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 80px 0;
+            background: var(--nssol-light);
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="container">
+            <span class="badge badge-strategy">NSSOL Internal Strategy Brief</span>
+            <h1>
+                NTTドコモ様の<br>
+                「<span class="highlight">CX最大化</span>」と「<span class="highlight">店舗DX</span>」を加速させる<br>
+                次世代AIオーケストレーション基盤
+            </h1>
+            <p>
+                「tsuzumi」をはじめとするドコモ様保有のLLM資産を、<br>
+                実際の顧客接点（Web/店舗）で”使えるサービス”に変えるための<br>
+                ラストワンマイル・アプリケーション基盤のご提案です。
+            </p>
+        </div>
+    </section>
+
+    <!-- The Problem / Gap -->
+    <section class="synergy">
+        <div class="container">
+            <h2 style="text-align:center; margin-bottom:40px; font-size:1.8rem;">The Missing Link</h2>
+            <div class="synergy-box">
+                <div class="company-logo" style="border:1px solid #ccc;">Core LLM<br><span
+                        style="color:#666; font-size:0.9rem;">(tsuzumi / Azure OpenAI)</span></div>
+                <div class="synergy-plus">+</div>
+                <div class="gbase-card">
+                    GBase Support<br>
+                    <span style="font-weight:400; font-size:0.8rem; opacity:0.8;">Orchestration & UX Layer</span>
+                </div>
+                <div class="synergy-plus">=</div>
+                <div class="company-logo" style="border:2px solid var(--docomo-red); color:var(--docomo-red);">
+                    顧客感動体験<br><span style="font-size:0.9rem;">(Real CX Value)</span></div>
+            </div>
+
+            <p style="text-align:center; max-width:800px; margin:0 auto; color:#666;">
+                NSSOL様がドコモ様に提案すべきは「新しいLLM」ではありません。<br>
+                すでに保有されている高性能なLLMを、<strong>「いかに早く」「いかに使いやすく」現場（店舗・Web）に実装するか</strong>という<br>
+                <strong>"アプリケーション・デリバリー能力"</strong>です。
+            </p>
+        </div>
+    </section>
+
+    <!-- Strategy Details -->
+    <section class="container" style="padding-bottom:100px;">
+        <div class="strategy-grid">
+            <div class="strategy-card">
+                <h3>
+                    <div class="icon-box">🧠</div> LLM Agnostic Strategy
+                </h3>
+                <p style="font-size:0.9rem; color:#666; margin-bottom:16px;">
+                    GBaseはバックエンドのLLMを選びません。
+                </p>
+                <ul class="strategy-list">
+                    <li>ドコモ様独自の「tsuzumi」への接続が可能（※API連携）</li>
+                    <li>用途に応じてGPT-4oやClaude 4.5 Sonnetを使い分ける「モデル・ルーター」機能</li>
+                    <li>NSSOL様は<strong>「LLMの選定コンサル」から「実装」まで</strong>を一気通貫で提案可能</li>
+                </ul>
+            </div>
+            <div class="strategy-card">
+                <h3>
+                    <div class="icon-box">🏪</div> Shop DX (店舗省力化)
+                </h3>
+                <p style="font-size:0.9rem; color:#666; margin-bottom:16px;">
+                    深刻な店舗スタッフ不足を「AIアバターキオスク」で解決。
+                </p>
+                <ul class="strategy-list">
+                    <li>来店時の初期ヒアリング（用件伺い）を完全無人化</li>
+                    <li>簡単なお手続きや操作説明をAIが代行</li>
+                    <li><strong>「2025年問題(労働力不足×超高齢化)」に対する具体的ソリューション</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Use Case -->
+    <section class="usecase-section">
+        <div class="container usecase-container">
+            <div class="usecase-content">
+                <span class="badge badge-red">Use Case: eximo/irumo Migration</span>
+                <h2 style="font-size:2.5rem; margin-bottom:24px;">複雑な料金プラン診断を、<br>トップセールス並みの精度で。</h2>
+                <p style="opacity:0.8; margin-bottom:32px;">
+                    「ahamo」「eximo」「irumo」...複雑化するプラン体系は、顧客にとっても、新人スタッフにとっても大きな負担です。<br>
+                    GBase Supportは、ドコモ公式サイトの膨大なプラン規定書（PDF/Web）を独自RAG技術で学習。<br>
+                    ユーザーの利用状況（データ量、通話頻度、家族構成）を聞き出し、<strong>「あなたに最適なプランはこれ」</strong>と断言します。
+                </p>
+                <div style="padding:16px; border:1px solid rgba(255,255,255,0.2); border-radius:8px;">
+                    <strong>For NSSOL:</strong><br>
+                    単なるチャットボットではなく、<strong>「My docomo」データ連携を含む大規模SI案件</strong>への入り口として機能します。
+                </div>
+            </div>
+            <div class="usecase-visual">
+                <div class="chat-ui-mock">
+                    <div class="chat-bubble bubble-bot">
+                        現在の月間データ使用量は平均でどのくらいですか？また、ご家族でドコモをご利用の方は何名いらっしゃいますか？
+                    </div>
+                    <div class="chat-bubble bubble-user">
+                        だいたい8GBくらいです。家族は私含めて3人です。
+                    </div>
+                    <div class="chat-bubble bubble-bot">
+                        承知いたしました。それでしたら、現在ご契約中のギガライトよりも、こちらのプランがお得になる可能性が高いです。
+                        <div class="plan-card">
+                            <div class="plan-name">irumo (9GB)</div>
+                            <div class="plan-detail">月額: 2,090円〜 (ドコモ光セット割適用時)</div>
+                        </div>
+                        <div style="font-size:0.8rem; margin-top:8px; color:#666;">
+                            ※eximoと比較して、年間約15,000円の節約になります。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feasibility Solution -->
+    <section class="container" style="padding: 80px 24px;">
+        <h2 style="text-align:center; margin-bottom:16px;">Feasibility & Process Innovation</h2>
+        <p style="text-align:center; margin-bottom:60px; color:#666;">導入による業務プロセスの激変と、定量的ROI試算</p>
+
+        <!-- Scenario A -->
+        <div style="margin-bottom:80px;">
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+                <span class="badge badge-red" style="font-size:1rem; padding:8px 16px;">Scenario A</span>
+                <h3 style="margin:0;">複雑料金プランの見直し (eximo/irumo)</h3>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:40px;">
+                <!-- As-Is/To-Be Table -->
+                <div>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:24px;">
+                        <tr style="border-bottom:2px solid #eee;">
+                            <th style="text-align:left; padding:12px; color:#999;">Step</th>
+                            <th style="text-align:left; padding:12px;">As-Is (Human Only)</th>
+                            <th style="text-align:left; padding:12px; color:var(--nssol-blue); font-weight:bold;">To-Be
+                                (GBase)</th>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:12px; font-weight:bold;">現状把握</td>
+                            <td style="padding:12px;">ALADIN端末で3ヶ月分の履歴を目視確認<br><span style="color:#d00;">(Avg.
+                                    15min)</span></td>
+                            <td style="padding:12px;">API連携で瞬時にデータ取得・正規化<br><span
+                                    style="color:var(--nssol-blue); font-weight:bold;">(Avg. 3sec)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:12px; font-weight:bold;">プラン選定</td>
+                            <td style="padding:12px;">スタッフの知識・経験に依存</td>
+                            <td style="padding:12px;">最適解を自動提示 (RAG)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:12px; font-weight:bold;">説明・クロージング</td>
+                            <td style="padding:12px;">手書きメモ等で試算結果を説明</td>
+                            <td style="padding:12px;">タブレット画面で視覚的に比較提示</td>
+                        </tr>
+                    </table>
+                    <div
+                        style="background:#f0f8ff; padding:16px; border-left:4px solid var(--nssol-blue); border-radius:4px;">
+                        <strong>ROI Impact:</strong><br>
+                        1件あたりの接客時間を <span style="font-size:1.2rem; font-weight:bold; color:var(--docomo-red);">45分 →
+                            15分</span> に短縮。<br>
+                        （削減率: 66% / 創出可能売上: +2件/日）
+                    </div>
+                </div>
+
+                <!-- Mermaid Diagram -->
+                <div style="background:white; padding:20px; border:1px solid #eee; border-radius:8px;">
+                    <div class="mermaid">
+                        sequenceDiagram
+                        participant Customer as 顧客
+                        participant Staff as スタッフ
+                        participant GBase as "GBase(AI)"
+                        participant Legacy as "ALADIN(基幹)"
+
+                        Note over Customer, Staff: "従来フロー (As-Is)"
+                        Customer->>Staff: "料金安くしたい"
+                        Staff->>Legacy: "履歴検索・目視確認 (15min)"
+                        Legacy-->>Staff: "生データ表示"
+                        Staff->>Staff: "電卓で比較計算 (10min)"
+                        Staff->>Customer: "提案説明"
+
+                        Note over Customer, Staff: "GBase導入後 (To-Be)"
+                        Customer->>GBase: "料金安くしたい(Voice)"
+                        GBase->>Legacy: "API参照"
+                        Legacy-->>GBase: "履歴データ"
+                        GBase->>GBase: "最適プラン・割引判定 (1sec)"
+                        GBase->>Customer: "比較グラフ提示"
+                        Customer->>Staff: "これに変えます"
+                        Staff->>Legacy: "契約変更処理"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario B -->
+        <div>
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+                <span class="badge badge-strategy" style="font-size:1rem; padding:8px 16px;">Scenario B</span>
+                <h3 style="margin:0;">シニア層スマホ教室・操作サポート</h3>
+            </div>
+
+            <p style="margin-bottom:24px;">
+                収益を生まない「操作説明」業務をデジタルヒューマン・キオスクへオフロード。<br>
+                「順番待ち」のストレスを解消し、スタッフは「販売」に集中。
+            </p>
+
+            <div class="mermaid">
+                flowchart LR
+                subgraph AsIs ["As-Is: 全てスタッフ対応"]
+                direction TB
+                A["来店: LINEが分からない"] --> B{"スタッフ空き?"}
+                B -- No --> C["待ち時間発生 (クレーム)"]
+                B -- Yes --> D["マンツーマン指導 (0円)"]
+                D --> E["本来の営業機会損失"]
+                style E fill:#ffcccc,stroke:#d00
+                end
+
+                subgraph ToBe ["To-Be: GBase Kiosk"]
+                direction TB
+                K["Kiosk: どうされましたか?"] --> L{"内容判定"}
+                L -- 操作説明 --> M["画面共有で視覚ガイド"]
+                L -- 故障/契約 --> N["整理券発券 & スタッフ連携"]
+                M --> O["自己解決 (スタッフ稼働 0)"]
+                style M fill:#e6f3ff,stroke:#0044cc
+                style N fill:#e6f3ff,stroke:#0044cc
+                style O fill:#ccffcc,stroke:#00aa00
+                end
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive: AI Kiosk Strategy -->
+    <section class="container" style="padding: 0 24px 80px;">
+        <div
+            style="background:var(--white); border:1px solid #eee; border-radius:12px; padding:40px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+            <span class="badge badge-strategy">Strategic Focus</span>
+            <h2 style="margin-bottom:24px;">Why "AI Kiosk"? (店舗DXの核心)</h2>
+
+            <!-- Layout: Stacked for larger diagram -->
+            <div>
+                <!-- Text Content -->
+                <div style="margin-bottom: 40px;">
+                    <div
+                        style="background:#f0f8ff; padding:20px; border-left:4px solid var(--nssol-blue); margin-bottom:24px; border-radius:4px;">
+                        <h4 style="margin:0 0 8px 0; color:var(--nssol-blue);">💰 For NSSOL Sales Team: Why this wins?
+                        </h4>
+                        <ul style="margin:0; padding-left:20px; font-size:0.9rem;">
+                            <li><strong>Zero CAPEX Proposal</strong>: 「ハード購入不要」なので、ドコモ様社内の決裁ハードルが極めて低い。</li>
+                            <li><strong>Immediate Delivery</strong>: ハード製造リードタイム(数ヶ月)が不要。承認翌週からMDM配信で全店展開可能。</li>
+                            <li><strong>Risk Free</strong>: 万が一の撤退時も「巨大な粗大ゴミ」が発生しません。</li>
+                        </ul>
+                    </div>
+
+                    <h3 style="font-size:1.2rem; margin-bottom:16px; color:var(--nssol-blue);">1. 既存資産を「AI Kiosk」へ
+                        (Software-Defined)
+                    </h3>
+                    <p style="margin-bottom:24px; color:#666;">
+                        新たな専用筐体の導入は必須ではありません。GBaseは<strong>既存の店舗用タブレット(iPad等)やカウンターのモニター</strong>にインストールするだけで、
+                        即座に「AIコンシェルジュ」として機能します。<br>
+                        この<strong>「ソフトウェア定義型」</strong>アプローチにより、設備投資を最小限に抑え、全店舗への即時展開が可能です。
+                    </p>
+
+                    <h3 style="font-size:1.2rem; margin-bottom:16px; color:var(--nssol-blue);">2. GBaseとの技術連携
+                        (Device Agnostic)</h3>
+                    <p style="margin-bottom:16px; color:#666;">
+                        GBaseはデバイスを選びません。まずはタブレットでスモールスタートし、将来的には専用Kiosk筐体への組み込みも可能です。
+                    </p>
+                    <ul class="strategy-list" style="margin-left:20px; font-size:0.9rem;">
+                        <li><strong>Tablet Mode (Primary)</strong>: 既存iPad等を活用。設備投資(0円)で全店舗へ即時展開。</li>
+                        <li><strong>High-End Kiosk (Future)</strong>: フラッグシップ店向けに、高性能マイク・発券機を備えた専用筐体を開発可能。</li>
+                    </ul>
+                </div>
+
+                <!-- Integration Diagram -->
+                <div style="background:#fafafa; padding:40px; border-radius:8px; text-align:center;">
+                    <h4 style="margin-bottom:24px; font-size:1.1rem; color:#666;">Architecture Diagram: GBase as the
+                        Orchestration Core</h4>
+                    <div class="mermaid">
+                        flowchart BT
+                        subgraph Hardware ["Device Strategy (Software Defined)"]
+                        Tablet["既存タブレット (Primary)"]
+                        Monitor["カウンターモニター"]
+                        Kiosk["専用Kiosk (Future Option)"]
+                        end
+
+                        subgraph Brain ["GBase Core (Cloud/Edge)"]
+                        STT["Speech-to-Text"]
+                        LLM{"Orchestrator"}
+                        TTS["Text-to-Speech"]
+                        Avatar["Avatar Engine"]
+                        end
+
+                        subgraph Backend ["Docomo Systems"]
+                        Tsuzumi["tsuzumi (LLM)"]
+                        Aladin["ALADIN (API)"]
+                        end
+
+                        Tablet --> STT
+                        Monitor --> STT
+                        Kiosk --> STT
+                        STT --> LLM
+                        LLM -- "API Request" --> Aladin
+                        Aladin -- "User Data" --> LLM
+                        LLM -- "Prompt" --> Tsuzumi
+                        Tsuzumi -- "Answer" --> LLM
+                        LLM --> TTS
+                        LLM --> Avatar
+                        TTS --> Tablet
+                        TTS --> Monitor
+                        TTS --> Kiosk
+                        Avatar --> Tablet
+                        Avatar --> Monitor
+                        Avatar --> Kiosk
+
+                        style Hardware fill:#f9f9f9,stroke:#666
+                        style Brain fill:#e6f3ff,stroke:#0044cc
+                        style Backend fill:#ffe6e6,stroke:#cc0033
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reliability / Failover -->
+            <div style="margin-top:60px; padding-top:40px; border-top:1px solid #eee;">
+                <h3 style="font-size:1.4rem; margin-bottom:24px;">Technical Reliability: <span
+                        style="color:var(--nssol-blue);">Circuit Breaker Architecture</span></h3>
+                <p style="margin-bottom:24px; color:#666;">
+                    「AIが止まったら業務も止まる」というリスクを回避します。<br>
+                    GBaseはヘルスチェック機能を内蔵し、AIサービスの遅延や障害を検知すると、<strong>自動的に既存のWeb/アプリ画面（Legacy Mode）へ切り替わります。</strong>
+                </p>
+
+                <div style="background:#fff; border:1px solid #ccc; padding:20px; border-radius:8px;">
+                    <h4 style="text-align:center; font-size:1rem; margin-bottom:16px;">Automatic Fallback Flow</h4>
+                    <div class="mermaid">
+                        flowchart TD
+                        Start["User Action (Touch/Voice)"] --> Check{"System Health Check"}
+
+                        subgraph AI_Path ["Normal Mode (AI Active)"]
+                        direction TB
+                        Check -- "Healthy" --> STT["Voice Recog"]
+                        STT --> LLM["GBase/Tsuzumi"]
+                        LLM --> UI["Avatar Response"]
+                        end
+
+                        subgraph Legacy_Path ["既存システム (Existing Assets)"]
+                        direction TB
+                        Check -- "Error / Timeout" --> Circuit["Circuit Breaker"]
+                        Circuit --> Static["My docomo (Existing Web)"]
+                        Static --> Staff["Staff Call Button"]
+                        end
+
+                        LLM -.->|"Timeout (3s)"| Circuit
+
+                        style AI_Path fill:#e6f3ff,stroke:#0044cc
+                        style Legacy_Path fill:#fff0f0,stroke:#cc0000
+                        style Circuit fill:#ffcccc,stroke:#d00,stroke-width:2px
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:40px; padding-top:40px; border-top:1px solid #eee;">
+                <h3 style="font-size:1.4rem; margin-bottom:24px;">Future Roadmap: <span
+                        style="color:var(--docomo-red);">無人店舗への道</span></h3>
+                <div style="display:flex; gap:24px;">
+                    <div style="flex:1; background:#f5f5f5; padding:20px; border-radius:8px;">
+                        <strong style="color:var(--nssol-blue);">Phase 1: Hybrid</strong>
+                        <p style="font-size:0.9rem; margin-top:8px;">
+                            <strong>「AI + スタッフ」</strong><br>
+                            Kioskが受付と用件切り分けを担当。難しい案件だけスタッフにエスカレーション。<br>
+                            <em>Result: スタッフ数 30%削減</em>
+                        </p>
+                    </div>
+                    <div style="flex:1; background:#f5f5f5; padding:20px; border-radius:8px;">
+                        <strong style="color:var(--nssol-blue);">Phase 2: Remote</strong>
+                        <p style="font-size:0.9rem; margin-top:8px;">
+                            <strong>「AI + 遠隔人間」</strong><br>
+                            もしAIが答えられない場合、本部のエキスパートが「にアバターに憑依」して遠隔接客。<br>
+                            <em>Result: 専門スタッフの全店シェアリング</em>
+                        </p>
+                    </div>
+                    <div
+                        style="flex:1; background:var(--nssol-light); border:1px solid var(--nssol-blue); padding:20px; border-radius:8px;">
+                        <strong style="color:var(--docomo-red);">Phase 3: Unmanned</strong>
+                        <p style="font-size:0.9rem; margin-top:8px;">
+                            <strong>「完全無人サテライト」</strong><br>
+                            スーパーや駅ナカに「GBase Kiosk」だけを設置。契約からSIM発行まで完結。<br>
+                            <em>Result: 店舗コスト 90%削減 / customer touchpoint 10倍</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NSSOL Action Plan -->
+    <section class="roadmap-section container">
+        <h2 style="text-align:center; margin-bottom:60px;">Proposal Roadmap</h2>
+
+        <div class="timeline-item">
+            <div class="phase">Phase 1<br><span style="font-size:0.8rem; font-weight:normal;">Immediate</span></div>
+            <div>
+                <h3>POC: Shop Assistant Avatar</h3>
+                <p>NSSOL東京本社内のデモスペース、またはドコモショップ旗艦店にて、GBase搭載のデジタルヒューマン・キオスクを設置。<br>
+                    「tsuzumi」連携の技術検証(Feasibility Study)を実施。</p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="phase">Phase 2<br><span style="font-size:0.8rem; font-weight:normal;">3 Months</span></div>
+            <div>
+                <h3>Web Integration (My docomo)</h3>
+                <p>ユーザーの契約情報(My docomo API)と連携し、パーソナライズされたプラン提案を行う「AIコンシェルジュ」をWeb展開。<br>
+                    <strong>コールセンター入電数の15%削減</strong>をKPIに設定。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>NSSOL × GBase Support</h2>
+            <p style="margin-bottom:32px;">NTTドコモ様の「中期経営戦略2025」を、共に実現しましょう。</p>
+            <button
+                style="background:var(--nssol-blue); color:white; padding:16px 48px; border:none; border-radius:4px; font-weight:bold; font-size:1.1rem; cursor:pointer;">
+                技術連携・POCについて問い合わせる
+            </button>
+        </div>
+    </section>
+
+</body>
+
+</html>
