@@ -276,120 +276,67 @@
             </div>
         </div>
 
-        <!-- 5大課題 Section - Editorial Style -->
-        <div class="w-full px-4 md:px-10 lg:px-40 py-20 bg-white">
-            <div class="max-w-[960px] w-full mx-auto">
+        <!-- 5大課題 Section - Compact Visual -->
+        <div class="w-full px-4 md:px-10 lg:px-40 py-16 bg-gray-50">
+            <div class="max-w-[1200px] w-full mx-auto">
                 <!-- Section Header -->
-                <div class="mb-16">
-                    <p class="text-sm text-text-secondary-light tracking-wider mb-3">INDUSTRY CHALLENGES</p>
-                    <h2 class="text-3xl md:text-4xl font-black text-text-main-light leading-tight">
-                        商業施設が今、<br>直面している課題
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-text-main-light">
+                        こんな課題、ありませんか？
                     </h2>
                 </div>
 
-                <!-- Challenge List -->
-                <div class="space-y-0">
-                    <!-- Challenge 1 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 py-8 border-t border-gray-200">
-                        <div>
-                            <span class="text-xs font-bold text-text-secondary-light tracking-wider">01</span>
-                            <h3 class="text-xl font-bold text-text-main-light mt-1 mb-3">案内所の待ち時間</h3>
-                            <p class="text-text-secondary-light leading-relaxed">
-                                待ち時間5分を超えると<strong class="text-text-main-light">約50%の顧客が離脱</strong>。繁忙期には対応が追いつかず、スタッフの疲弊と顧客満足度の低下を招く。
-                            </p>
-                            <p class="text-xs text-text-secondary-light mt-3">
-                                <a href="https://waitwhile.com/blog/consumer-survey-waiting-in-line-2024/" target="_blank" class="hover:text-primary">出典: Waitwhile 2024調査 ↗</a>
-                            </p>
+                <!-- Challenge Cards - Horizontal -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div class="bg-white rounded-xl p-5 text-center border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl text-gray-600">schedule</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-full p-5 bg-primary/5 rounded-lg border-l-4 border-primary">
-                                <p class="text-sm font-bold text-primary mb-1">GBase Supportなら</p>
-                                <p class="text-text-main-light">AIが即時応答。待ち時間ゼロで70%の問い合わせを自動解決。</p>
-                            </div>
-                        </div>
+                        <p class="font-bold text-text-main-light text-sm mb-1">待ち時間</p>
+                        <p class="text-xs text-text-secondary-light">5分超で50%離脱</p>
                     </div>
 
-                    <!-- Challenge 2 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 py-8 border-t border-gray-200">
-                        <div>
-                            <span class="text-xs font-bold text-text-secondary-light tracking-wider">02</span>
-                            <h3 class="text-xl font-bold text-text-main-light mt-1 mb-3">多言語対応の限界</h3>
-                            <p class="text-text-secondary-light leading-relaxed">
-                                年間<strong class="text-text-main-light">3,687万人</strong>の訪日客。10言語以上をカバーできる通訳スタッフの確保は現実的に不可能。
-                            </p>
-                            <p class="text-xs text-text-secondary-light mt-3">
-                                <a href="https://www.jnto.go.jp/statistics/data/visitors-statistics/" target="_blank" class="hover:text-primary">出典: JNTO 訪日外客統計 ↗</a>
-                            </p>
+                    <div class="bg-white rounded-xl p-5 text-center border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl text-gray-600">translate</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-full p-5 bg-primary/5 rounded-lg border-l-4 border-primary">
-                                <p class="text-sm font-bold text-primary mb-1">GBase Supportなら</p>
-                                <p class="text-text-main-light">10言語にリアルタイム対応。追加スタッフ不要で国際ゲストをおもてなし。</p>
-                            </div>
-                        </div>
+                        <p class="font-bold text-text-main-light text-sm mb-1">多言語対応</p>
+                        <p class="text-xs text-text-secondary-light">通訳確保が困難</p>
                     </div>
 
-                    <!-- Challenge 3 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 py-8 border-t border-gray-200">
-                        <div>
-                            <span class="text-xs font-bold text-text-secondary-light tracking-wider">03</span>
-                            <h3 class="text-xl font-bold text-text-main-light mt-1 mb-3">24時間対応できない</h3>
-                            <p class="text-text-secondary-light leading-relaxed">
-                                営業時間外は完全に対応不可。夜間・早朝の問い合わせは翌日対応となり、機会損失が発生。24時間体制には莫大な人件費が必要。
-                            </p>
+                    <div class="bg-white rounded-xl p-5 text-center border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl text-gray-600">dark_mode</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-full p-5 bg-primary/5 rounded-lg border-l-4 border-primary">
-                                <p class="text-sm font-bold text-primary mb-1">GBase Supportなら</p>
-                                <p class="text-text-main-light">365日24時間、AIが自動対応。深夜でも顧客を逃さない。</p>
-                            </div>
-                        </div>
+                        <p class="font-bold text-text-main-light text-sm mb-1">営業時間外</p>
+                        <p class="text-xs text-text-secondary-light">24h対応は高コスト</p>
                     </div>
 
-                    <!-- Challenge 4 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 py-8 border-t border-gray-200">
-                        <div>
-                            <span class="text-xs font-bold text-text-secondary-light tracking-wider">04</span>
-                            <h3 class="text-xl font-bold text-text-main-light mt-1 mb-3">FAQ運用の負担</h3>
-                            <p class="text-text-secondary-light leading-relaxed">
-                                店舗入れ替え、営業時間変更、イベント情報…。FAQの更新が追いつかず、古い情報が顧客の不満を生む。専任担当者が必要。
-                            </p>
+                    <div class="bg-white rounded-xl p-5 text-center border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl text-gray-600">edit_note</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-full p-5 bg-primary/5 rounded-lg border-l-4 border-primary">
-                                <p class="text-sm font-bold text-primary mb-1">GBase Supportなら</p>
-                                <p class="text-text-main-light">URLを登録するだけで自動学習。更新作業から解放。</p>
-                            </div>
-                        </div>
+                        <p class="font-bold text-text-main-light text-sm mb-1">FAQ更新</p>
+                        <p class="text-xs text-text-secondary-light">運用負担が大きい</p>
                     </div>
 
-                    <!-- Challenge 5 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 py-8 border-t border-gray-200 border-b">
-                        <div>
-                            <span class="text-xs font-bold text-text-secondary-light tracking-wider">05</span>
-                            <h3 class="text-xl font-bold text-text-main-light mt-1 mb-3">導入コストが高すぎる</h3>
-                            <p class="text-text-secondary-light leading-relaxed">
-                                従来型デジタルサイネージは<strong class="text-text-main-light">数十〜数百万円</strong>。導入に数ヶ月、保守費用も継続発生。IT部門の工数も逼迫。
-                            </p>
-                            <p class="text-xs text-text-secondary-light mt-3">
-                                <a href="https://www.ricoh.co.jp/products/line-up/digital-signage/column/market-price" target="_blank" class="hover:text-primary">出典: リコー デジタルサイネージ価格相場 ↗</a>
-                            </p>
+                    <div class="bg-white rounded-xl p-5 text-center border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all col-span-2 md:col-span-1">
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-2xl text-gray-600">payments</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-full p-5 bg-primary/5 rounded-lg border-l-4 border-primary">
-                                <p class="text-sm font-bold text-primary mb-1">GBase Supportなら</p>
-                                <p class="text-text-main-light">iPad1台で即日稼働。専用筐体不要、月額定額で予算管理も簡単。</p>
-                            </div>
-                        </div>
+                        <p class="font-bold text-text-main-light text-sm mb-1">導入コスト</p>
+                        <p class="text-xs text-text-secondary-light">数百万円の初期投資</p>
                     </div>
                 </div>
 
-                <!-- CTA -->
-                <div class="mt-12 text-center">
-                    <a href="#core-features" class="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors font-bold">
-                        <span>機能を詳しく見る</span>
-                        <span class="material-symbols-outlined">arrow_downward</span>
-                    </a>
+                <!-- Solution Arrow -->
+                <div class="mt-10 text-center">
+                    <div class="inline-flex flex-col items-center">
+                        <span class="material-symbols-outlined text-3xl text-primary animate-bounce">keyboard_double_arrow_down</span>
+                        <a href="#core-features" class="mt-2 text-primary font-bold hover:text-primary-dark transition-colors">
+                            GBase Supportがすべて解決
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
