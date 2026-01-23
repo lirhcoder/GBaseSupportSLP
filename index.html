@@ -1,0 +1,1385 @@
+﻿<!DOCTYPE html>
+<html class="light scroll-smooth" lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ソリューション | GBase Support - 業界別AIソリューション</title>
+    <meta name="description" content="GBase Supportの業界別AIソリューション。商業施設、ホテル、EC、社内DXなど、あなたの業界に最適なAIチャットボットをご提案します。">
+    <!-- Custom 3D Transform Styles -->
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .perspective-2000 {
+            perspective: 2000px;
+        }
+
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+    </style>
+    <script>
+        function toggleFlip(id) {
+            const card = document.getElementById(id);
+            if (card) {
+                card.classList.toggle('rotate-y-180');
+            }
+        }
+    </script>
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "GBase Support",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "商業施設・ホテル・EC向けの多言語対応AIチャットボット。問い合わせ対応を60%削減し、10言語に自動翻訳対応。",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "description": "14日間無料トライアル" },
+        "provider": { "@type": "Organization", "name": "Sparticle Inc.", "url": "https://sparticle.com/" }
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee862b", // Orange from code.html
+                        "primary-dark": "#d9731e",
+                        "navy": "#1a2840", // Preserving some original brand colors for distinct elements if needed
+                        "background-light": "#f8f7f6", // From reference
+                        "background-dark": "#221810",
+                        "text-main-light": "#1b140d",
+                        "text-main-dark": "#fcfaf8",
+                        "text-secondary-light": "#666666",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2f2219",
+                        "border-light": "#e7dacf",
+                        "border-dark": "#4a3b32"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans JP", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "Noto Sans JP", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-body text-text-main-light dark:text-text-main-dark transition-colors duration-200">
+
+    <!-- Top Navigation -->
+    <div
+        class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-surface-light/95 backdrop-blur-sm">
+        <div class="px-4 md:px-10 lg:px-40 flex justify-center">
+            <div class="flex h-16 w-full max-w-[1200px] items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="https://cs.gbase.ai/"
+                        class="flex items-center hover:opacity-80 transition-opacity">
+                        <img src="https://cs.gbase.ai/title-logo.png" alt="GBase Support" class="h-8 w-auto" />
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 justify-end gap-6 items-center">
+                    <nav class="flex items-center gap-6">
+                        <a href="https://cs.gbase.ai/"
+                            class="text-sm font-medium hover:text-primary transition-colors">ホーム</a>
+                        <a href="https://cs.gbase.ai/price"
+                            class="text-sm font-medium hover:text-primary transition-colors">料金</a>
+                        <a href="https://cs.gbase.ai/contact"
+                            class="text-sm font-medium hover:text-primary transition-colors">お問い合わせ</a>
+                        <a href="https://docs.gbase.ai/user-manual/quickstart"
+                            class="text-sm font-medium hover:text-primary transition-colors" target="_blank">マニュアル</a>
+                        <a href="https://cs.gbase.ai/blog"
+                            class="text-sm font-medium hover:text-primary transition-colors">ブログ</a>
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
+                                製品 <span class="material-symbols-outlined text-sm">expand_more</span>
+                            </button>
+                            <div class="absolute right-0 top-full pt-2 hidden group-hover:block w-56">
+                                <div
+                                    class="bg-white border boundary-light rounded-lg shadow-xl p-2 flex flex-col gap-1">
+                                    <a href="https://gbase.ai/"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-bold">GBase</div>
+                                        <div class="text-xs text-text-secondary-light">AIナレッジエージェント</div>
+                                    </a>
+                                    <a href="https://cs.gbase.ai/"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light bg-primary/5">
+                                        <div class="font-bold text-primary">GBase Support</div>
+                                        <div class="text-xs text-text-secondary-light">顧客サポートAIエージェント</div>
+                                    </a>
+                                    <a href="https://subtitles.felo.me/"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-bold">Felo Subtitles</div>
+                                        <div class="text-xs text-text-secondary-light">多言語字幕会議エージェント</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="flex items-center gap-3">
+                        <a href="https://admin.gbase.ai/login"
+                            class="text-sm font-medium hover:text-primary transition-colors">ログイン</a>
+                        <a href="https://admin.gbase.ai/register"
+                            class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-bold shadow-sm">
+                            無料で試す →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex flex-col items-center w-full">
+
+        <!-- Hero Section -->
+        <div class="w-full px-4 md:px-10 lg:px-40 py-16 md:py-24 flex justify-center bg-surface-light">
+            <div class="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="flex flex-col gap-6 text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 w-fit">
+                        <span class="material-symbols-outlined text-primary text-sm">smart_toy</span>
+                        <span class="text-primary text-xs font-bold uppercase tracking-wider">AI Concierge for Business</span>
+                    </div>
+                    <h1
+                        class="text-4xl md:text-5xl lg:text-5xl font-black leading-tight tracking-[-0.033em] text-text-main-light">
+                        案内所の問い合わせを<br>
+                        <span class="text-primary">70%削減</span>
+                    </h1>
+                    <p class="text-lg text-text-secondary-light leading-relaxed max-w-xl">
+                        最短<strong>1週間</strong>で導入、専用端末<strong>不要</strong>。<br>
+                        店舗検索から在庫確認、多言語対応まで。<br>
+                        NEWoMan高輪が実証したAIコンシェルジュを、あなたの施設にも。
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-2">
+                        <a href="https://admin.gbase.ai/"
+                            class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-base font-bold shadow-lg shadow-primary/20">
+                            14日間無料トライアル開始
+                        </a>
+                        <a href="#lead-magnet"
+                            class="flex items-center justify-center rounded-lg h-12 px-8 bg-white border border-border-light hover:border-primary transition-colors text-text-main-light text-base font-bold">
+                            導入事例PDFを入手
+                        </a>
+                    </div>
+                </div>
+                <!-- Language Selector -->
+                <div class="relative w-full">
+                    <div class="bg-white rounded-2xl shadow-2xl border border-border-light p-6 md:p-8">
+                        <!-- Header -->
+                        <div class="text-center mb-6">
+                            <p class="text-lg font-bold text-text-main-light mb-1">Live Demo</p>
+                            <p class="text-sm text-text-secondary-light">言語を選択して体験</p>
+                        </div>
+                        <!-- Language Grid -->
+                        <div class="grid grid-cols-5 gap-3 md:gap-4">
+                            <button onclick="openWidgetModal('ja')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇯🇵</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">日本語</span>
+                            </button>
+                            <button onclick="openWidgetModal('en')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇺🇸</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">English</span>
+                            </button>
+                            <button onclick="openWidgetModal('zh-CN')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇨🇳</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">简体中文</span>
+                            </button>
+                            <button onclick="openWidgetModal('zh-TW')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇹🇼</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">繁體中文</span>
+                            </button>
+                            <button onclick="openWidgetModal('ko')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇰🇷</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">한국어</span>
+                            </button>
+                            <button onclick="openWidgetModal('th')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇹🇭</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">ไทย</span>
+                            </button>
+                            <button onclick="openWidgetModal('vi')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇻🇳</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">Tiếng Việt</span>
+                            </button>
+                            <button onclick="openWidgetModal('id')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇮🇩</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">Indonesia</span>
+                            </button>
+                            <button onclick="openWidgetModal('fr')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇫🇷</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">Français</span>
+                            </button>
+                            <button onclick="openWidgetModal('es')" class="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-primary/5 hover:scale-105 transition-all cursor-pointer group">
+                                <span class="text-3xl md:text-4xl">🇪🇸</span>
+                                <span class="text-xs font-medium text-text-secondary-light group-hover:text-primary">Español</span>
+                            </button>
+                        </div>
+                        <!-- Hint -->
+                        <div class="mt-6 text-center">
+                            <p class="text-xs text-text-secondary-light flex items-center justify-center gap-1">
+                                <span class="material-symbols-outlined text-primary text-sm">touch_app</span>
+                                国旗をクリックしてAIコンシェルジュを体験
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Section -->
+        <div class="w-full border-y border-border-light bg-white py-12">
+            <div class="max-w-[1200px] w-full mx-auto px-4 md:px-10 lg:px-40">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-text-main-light">
+                    <div class="p-4">
+                        <p class="text-5xl font-black text-primary mb-1">70<span class="text-2xl font-bold text-primary/70">%</span></p>
+                        <p class="text-sm font-medium text-text-secondary-light">案内所・電話対応削減</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-5xl font-black text-primary mb-1">10<span class="text-2xl font-bold text-primary/70">+</span></p>
+                        <p class="text-sm font-medium text-text-secondary-light">多言語対応 (Inbound)</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-5xl font-black text-primary mb-1">0<span class="text-2xl font-bold text-primary/70">円</span></p>
+                        <p class="text-sm font-medium text-text-secondary-light">専用筐体コスト (iPad対応)</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-5xl font-black text-primary mb-1">24<span class="text-2xl font-bold text-primary/70">h</span></p>
+                        <p class="text-sm font-medium text-text-secondary-light">365日 無人対応</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5大課題 Section -->
+        <div class="w-full px-4 md:px-10 lg:px-40 py-20 bg-background-light">
+            <div class="max-w-[1200px] w-full mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-red-600 font-bold tracking-wider uppercase text-sm mb-2 block">Industry Challenges</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-text-main-light mb-4">百貨店・商業施設が直面する<br class="md:hidden"> <span class="text-red-600">5大課題</span></h2>
+                    <p class="text-text-secondary-light text-lg">業界標準を上回る課題をGBase Supportで一挙解決</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 課題1: 案内所・電話対応負担 -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="text-5xl font-black text-red-200">01</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-red-500 font-bold">深刻度</span>
+                                <div class="flex gap-0.5 mt-1">
+                                    <div class="w-3 h-2 rounded-sm bg-red-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-red-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-red-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-red-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-red-200"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main-light mb-3">案内所・電話対応負担</h3>
+                        <div class="mb-4 p-3 bg-red-50 rounded-lg">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-red-700">5分超で離脱率</span>
+                                <a href="https://waitwhile.com/blog/consumer-survey-waiting-in-line-2024/" target="_blank" class="font-bold text-red-600 hover:underline flex items-center gap-1">
+                                    約50%
+                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                            </div>
+                            <div class="w-full bg-red-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-text-secondary-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                待ち時間5分で1/3が離脱
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                電話対応がスタッフを圧迫
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                                繁忙期に対応不能
+                            </li>
+                        </ul>
+                        <p class="text-xs text-text-secondary-light mt-3">出典: <a href="https://waitwhile.com/blog/consumer-survey-waiting-in-line-2024/" target="_blank" class="text-primary hover:underline">Waitwhile 2024調査</a></p>
+                    </div>
+
+                    <!-- 課題2: 多言語対応限界 -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="text-5xl font-black text-orange-200">02</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-orange-500 font-bold">深刻度</span>
+                                <div class="flex gap-0.5 mt-1">
+                                    <div class="w-3 h-2 rounded-sm bg-orange-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-orange-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-orange-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-orange-200"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-orange-200"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main-light mb-3">多言語対応限界</h3>
+                        <div class="mb-4 p-3 bg-orange-50 rounded-lg">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-orange-700">2024年訪日客</span>
+                                <a href="https://www.jnto.go.jp/statistics/data/visitors-statistics/" target="_blank" class="font-bold text-orange-600 hover:underline flex items-center gap-1">
+                                    3,687万人
+                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                            </div>
+                            <div class="w-full bg-orange-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-text-secondary-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                10言語以上カバー不可
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                通訳スタッフ確保困難
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                国際ゲスト満足度低下
+                            </li>
+                        </ul>
+                        <p class="text-xs text-text-secondary-light mt-3">出典: <a href="https://www.jnto.go.jp/statistics/data/visitors-statistics/" target="_blank" class="text-primary hover:underline">JNTO 訪日外客統計</a></p>
+                    </div>
+
+                    <!-- 課題3: 24時間対応不可能 -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="text-5xl font-black text-purple-200">03</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-purple-500 font-bold">深刻度</span>
+                                <div class="flex gap-0.5 mt-1">
+                                    <div class="w-3 h-2 rounded-sm bg-purple-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-purple-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-purple-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-purple-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-purple-200"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main-light mb-3">24時間対応不可能</h3>
+                        <div class="mb-4 p-3 bg-purple-50 rounded-lg">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-purple-700">営業時間外</span>
+                                <span class="font-bold text-purple-600">対応ゼロ</span>
+                            </div>
+                            <div class="w-full bg-purple-200 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-text-secondary-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                                夜間・早朝は無人営業
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                                緊急問い合わせ翌日対応
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                                人件費が経営を圧迫
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 課題4: FAQ運用過多 -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="text-5xl font-black text-blue-200">04</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-blue-500 font-bold">深刻度</span>
+                                <div class="flex gap-0.5 mt-1">
+                                    <div class="w-3 h-2 rounded-sm bg-blue-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-blue-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-blue-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-blue-200"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-blue-200"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main-light mb-3">FAQ運用過多</h3>
+                        <div class="mb-4 p-3 bg-blue-50 rounded-lg">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-blue-700">更新頻度</span>
+                                <span class="font-bold text-blue-600">常時必要</span>
+                            </div>
+                            <div class="w-full bg-blue-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-text-secondary-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                FAQ陳腐化が常態化
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                新店舗情報の反映遅延
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                                専任担当者が必要
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 課題5: 導入ハードル高 -->
+                    <div class="bg-white rounded-2xl p-6 border border-border-light shadow-sm hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="text-5xl font-black text-emerald-200">05</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-emerald-500 font-bold">深刻度</span>
+                                <div class="flex gap-0.5 mt-1">
+                                    <div class="w-3 h-2 rounded-sm bg-emerald-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-emerald-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-emerald-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-emerald-500"></div>
+                                    <div class="w-3 h-2 rounded-sm bg-emerald-500"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-text-main-light mb-3">導入ハードル高</h3>
+                        <div class="mb-4 p-3 bg-emerald-50 rounded-lg">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-emerald-700">従来型端末</span>
+                                <a href="https://www.ricoh.co.jp/products/line-up/digital-signage/column/market-price" target="_blank" class="font-bold text-emerald-600 hover:underline flex items-center gap-1">
+                                    数十〜数百万円
+                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                                </a>
+                            </div>
+                            <div class="w-full bg-emerald-200 rounded-full h-2">
+                                <div class="bg-emerald-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-text-secondary-light">
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                導入に数ヶ月必要
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                保守費用が継続発生
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                IT部門の工数逼迫
+                            </li>
+                        </ul>
+                        <p class="text-xs text-text-secondary-light mt-3">出典: <a href="https://www.ricoh.co.jp/products/line-up/digital-signage/column/market-price" target="_blank" class="text-primary hover:underline">リコー デジタルサイネージ価格相場</a></p>
+                    </div>
+                </div>
+
+                <!-- GBaseで解決 -->
+                <div class="mt-12 text-center">
+                    <a href="#core-features" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer group">
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                        <span class="font-bold text-primary">GBase Supportがすべて解決</span>
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- コア3機能 Section -->
+        <div id="core-features" class="w-full px-4 md:px-10 lg:px-40 py-20 bg-surface-light border-y border-border-light">
+            <div class="max-w-[1200px] w-full mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Core Features</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-text-main-light mb-4">コア<span class="text-primary">3</span>機能で業務を革新</h2>
+                    <p class="text-text-secondary-light text-lg">地図・FAQ・音声対話で顧客体験3倍向上</p>
+                </div>
+
+                <div class="space-y-16">
+                    <!-- 機能1: フロアマップ・ナビゲーション（テキスト左、GIF右） -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        <div class="order-2 lg:order-1">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-100 text-red-600 text-xs font-bold">
+                                    <span class="material-symbols-outlined text-sm">check</span>
+                                    案内所負担を解決
+                                </span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-text-main-light mb-4">フロアマップ・ナビゲーション</h3>
+                            <p class="text-text-secondary-light mb-6 text-lg leading-relaxed">現在地から目的地までの最短ルートを、3Dマップと直感的な矢印でご案内。「子供の靴」など曖昧な要望からも最適な店舗を提案します。</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-orange-600 text-sm">check</span>
+                                    </span>
+                                    現在地からの最短ルート案内
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-orange-600 text-sm">check</span>
+                                    </span>
+                                    エレベーター優先等のルート設定
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-orange-600 text-sm">check</span>
+                                    </span>
+                                    曖昧な要望から店舗を提案
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="order-1 lg:order-2 flex justify-center">
+                            <!-- Video: フロアマップデモ（手機フレーム） -->
+                            <div class="relative w-[180px] md:w-[220px] cursor-pointer group" onclick="openVideoModal('./assets/shopmap-new.mp4')">
+                                <!-- Phone Frame -->
+                                <div class="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl group-hover:scale-105 transition-transform">
+                                    <!-- Phone Notch -->
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-gray-900 rounded-b-xl z-10"></div>
+                                    <!-- Phone Screen -->
+                                    <div class="relative rounded-[1.5rem] overflow-hidden bg-black aspect-[9/19]">
+                                        <video
+                                            src="./assets/shopmap-new.mp4"
+                                            alt="フロアマップ・ナビゲーション デモ"
+                                            class="w-full h-full object-cover"
+                                            autoplay
+                                            loop
+                                            muted
+                                            playsinline
+                                            data-feature="floor-map">
+                                        </video>
+                                        <!-- Expand hint -->
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">fullscreen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative glow -->
+                                <div class="absolute -inset-4 bg-orange-400/20 rounded-[3rem] blur-2xl -z-10"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 機能2: FAQ・施設案内AI（GIF左、テキスト右） -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        <div class="order-1 flex justify-center">
+                            <!-- Video: FAQ対応デモ（手機フレーム） -->
+                            <div class="relative w-[180px] md:w-[220px] cursor-pointer group" onclick="openVideoModal('./assets/faq.mp4')">
+                                <!-- Phone Frame -->
+                                <div class="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl group-hover:scale-105 transition-transform">
+                                    <!-- Phone Notch -->
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-gray-900 rounded-b-xl z-10"></div>
+                                    <!-- Phone Screen -->
+                                    <div class="relative rounded-[1.5rem] overflow-hidden bg-black aspect-[9/19]">
+                                        <video
+                                            src="./assets/faq.mp4"
+                                            alt="FAQ・施設案内AI デモ"
+                                            class="w-full h-full object-cover"
+                                            autoplay
+                                            loop
+                                            muted
+                                            playsinline
+                                            data-feature="faq-ai">
+                                        </video>
+                                        <!-- Expand hint -->
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">fullscreen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative glow -->
+                                <div class="absolute -inset-4 bg-indigo-400/20 rounded-[3rem] blur-2xl -z-10"></div>
+                            </div>
+                        </div>
+                        <div class="order-2">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-100 text-blue-600 text-xs font-bold">
+                                    <span class="material-symbols-outlined text-sm">check</span>
+                                    FAQ運用過多を解決
+                                </span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-text-main-light mb-4">FAQ・施設案内AI</h3>
+                            <p class="text-text-secondary-light mb-6 text-lg leading-relaxed">「トイレはどこ？」「営業時間は？」など、頻繁に寄せられる質問をAIが自動対応。スタッフは接客に集中できます。</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-indigo-600 text-sm">check</span>
+                                    </span>
+                                    AIが回答困難なら有人へ即座転送
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-indigo-600 text-sm">check</span>
+                                    </span>
+                                    LINE WORKS・電話連携
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-indigo-600 text-sm">check</span>
+                                    </span>
+                                    自動学習で回答精度向上
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 機能3: 音声対話（テキスト左、GIF右） -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                        <div class="order-2 lg:order-1">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
+                                    <span class="material-symbols-outlined text-sm">check</span>
+                                    多言語対応を解決
+                                </span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-text-main-light mb-4">音声対話</h3>
+                            <p class="text-text-secondary-light mb-6 text-lg leading-relaxed">キーボード入力は不要。話しかけるだけで、AIが意図を理解し的確に案内。高齢者や外国人観光客にも優しいインターフェースです。</p>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-purple-600 text-sm">check</span>
+                                    </span>
+                                    ハンズフリー操作
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-purple-600 text-sm">check</span>
+                                    </span>
+                                    騒がしい場所でも正確認識
+                                </li>
+                                <li class="flex items-center gap-3 text-text-main-light">
+                                    <span class="size-6 rounded-full bg-purple-100 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-purple-600 text-sm">check</span>
+                                    </span>
+                                    10言語以上のリアルタイム翻訳
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="order-1 lg:order-2 flex justify-center">
+                            <!-- Video: 音声対話デモ（手機フレーム） -->
+                            <div class="relative w-[180px] md:w-[220px] cursor-pointer group" onclick="openVideoModal('./assets/realtime.mp4')">
+                                <!-- Phone Frame -->
+                                <div class="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl group-hover:scale-105 transition-transform">
+                                    <!-- Phone Notch -->
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-gray-900 rounded-b-xl z-10"></div>
+                                    <!-- Phone Screen -->
+                                    <div class="relative rounded-[1.5rem] overflow-hidden bg-black aspect-[9/19]">
+                                        <video
+                                            src="./assets/realtime.mp4"
+                                            alt="音声対話 デモ"
+                                            class="w-full h-full object-cover"
+                                            autoplay
+                                            loop
+                                            muted
+                                            playsinline
+                                            data-feature="voice">
+                                        </video>
+                                        <!-- Expand hint -->
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">fullscreen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Decorative glow -->
+                                <div class="absolute -inset-4 bg-purple-400/20 rounded-[3rem] blur-2xl -z-10"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- その他の強力機能 Section -->
+        <div class="w-full px-4 md:px-10 lg:px-40 py-20 bg-background-light">
+            <div class="max-w-[1200px] w-full mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">More Features</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-text-main-light mb-4">その他の<span class="text-primary">強力</span>機能</h2>
+                    <p class="text-text-secondary-light text-lg">LINE・オンプレ・駐車場等、多角的DX支援</p>
+                </div>
+
+                <!-- Bento Grid Layout - Minimal Style -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[140px]">
+                    <!-- 商品検索 (大卡片 - 2x2) Static UI -->
+                    <div class="col-span-2 row-span-2 bg-white rounded-2xl border border-border-light relative overflow-hidden group hover:shadow-xl hover:border-primary/30 transition-all">
+                        <div class="h-full flex flex-col">
+                            <!-- Header -->
+                            <div class="p-4 border-b border-border-light">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div>
+                                        <span class="text-xs font-bold text-primary">FEATURED</span>
+                                        <h4 class="font-bold text-lg text-text-main-light">商品検索AI</h4>
+                                    </div>
+                                    <span class="material-symbols-outlined text-2xl text-primary/60">search</span>
+                                </div>
+                                <!-- Static Search Bar -->
+                                <div class="flex items-center gap-2 bg-background-light rounded-lg px-3 py-2">
+                                    <span class="material-symbols-outlined text-text-secondary-light text-lg">search</span>
+                                    <span class="text-sm text-text-main-light">赤いワンピース</span>
+                                </div>
+                            </div>
+                            <!-- Static Results -->
+                            <div class="flex-1 p-3 bg-background-light/50 overflow-hidden">
+                                <p class="text-xs text-text-secondary-light mb-1.5">3店舗で見つかりました</p>
+                                <div class="space-y-1.5">
+                                    <!-- Result 1 -->
+                                    <div class="bg-white rounded-lg p-1.5 flex items-center gap-2 shadow-sm border border-border-light">
+                                        <div class="size-8 bg-rose-100 rounded flex items-center justify-center text-rose-400 shrink-0">
+                                            <span class="material-symbols-outlined text-base">checkroom</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[11px] font-medium text-text-main-light truncate">フローラルワンピース</p>
+                                            <p class="text-[9px] text-text-secondary-light">ZARA • 2F</p>
+                                        </div>
+                                        <span class="text-[11px] font-bold text-primary">¥5,990</span>
+                                    </div>
+                                    <!-- Result 2 -->
+                                    <div class="bg-white rounded-lg p-1.5 flex items-center gap-2 shadow-sm border border-border-light">
+                                        <div class="size-8 bg-red-100 rounded flex items-center justify-center text-red-400 shrink-0">
+                                            <span class="material-symbols-outlined text-base">checkroom</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[11px] font-medium text-text-main-light truncate">サマードレス 赤</p>
+                                            <p class="text-[9px] text-text-secondary-light">H&M • 3F</p>
+                                        </div>
+                                        <span class="text-[11px] font-bold text-primary">¥3,999</span>
+                                    </div>
+                                    <!-- Result 3 -->
+                                    <div class="bg-white rounded-lg p-1.5 flex items-center gap-2 shadow-sm border border-border-light">
+                                        <div class="size-8 bg-pink-100 rounded flex items-center justify-center text-pink-400 shrink-0">
+                                            <span class="material-symbols-outlined text-base">checkroom</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-[11px] font-medium text-text-main-light truncate">Aラインドレス</p>
+                                            <p class="text-[9px] text-text-secondary-light">UNIQLO • 1F</p>
+                                        </div>
+                                        <span class="text-[11px] font-bold text-primary">¥2,990</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 在庫確認 -->
+                    <div class="bg-white rounded-2xl p-4 border border-border-light hover:shadow-lg hover:border-primary/30 transition-all group flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-primary/70 mb-2">inventory_2</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">在庫確認</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">POS連携でリアルタイム表示</p>
+                        <p class="text-[10px] text-primary font-medium mt-2">在庫切れ回避 →</p>
+                    </div>
+
+                    <!-- 迷子・SOS -->
+                    <div class="bg-white rounded-2xl p-4 border border-border-light hover:shadow-lg hover:border-primary/30 transition-all group flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-primary/70 mb-2">notifications_active</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">迷子・SOS</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">警備員へワンタップ通知</p>
+                        <p class="text-[10px] text-primary font-medium mt-2">即座対応 →</p>
+                    </div>
+
+                    <!-- クーポン配信 -->
+                    <div class="bg-white rounded-2xl p-4 border border-border-light hover:shadow-lg hover:border-primary/30 transition-all group flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-primary/70 mb-2">loyalty</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">クーポン配信</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">会話内容に合わせ自動配信</p>
+                        <p class="text-[10px] text-primary font-medium mt-2">購買促進 →</p>
+                    </div>
+
+                    <!-- 防災・防犯 -->
+                    <div class="bg-white rounded-2xl p-4 border border-border-light hover:shadow-lg hover:border-primary/30 transition-all group flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-primary/70 mb-2">security</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">防災・防犯</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">10言語で避難誘導対応</p>
+                        <p class="text-[10px] text-primary font-medium mt-2">安全確保 →</p>
+                    </div>
+
+                    <!-- LINE連携 (横長カード) -->
+                    <div class="col-span-2 bg-white rounded-2xl p-4 border border-border-light relative overflow-hidden group hover:shadow-xl hover:border-primary/30 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="size-12 bg-[#06C755]/10 rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="#06C755">
+                                    <path d="M12 2C6.48 2 2 5.82 2 10.5c0 2.55 1.25 4.84 3.23 6.47V22l4.11-2.26c.86.14 1.75.26 2.66.26 5.52 0 10-3.82 10-8.5S17.52 2 12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-base text-text-main-light mb-0.5">LINE公式アカウント連携</h4>
+                                <p class="text-text-secondary-light text-xs">友だち追加で継続的な関係構築。プッシュ通知でリピーター獲得</p>
+                            </div>
+                            <div class="shrink-0">
+                                <span class="inline-flex items-center gap-1 text-[11px] text-[#06C755] font-medium">
+                                    <span class="material-symbols-outlined text-sm">trending_up</span>
+                                    リピート率向上
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- オンプレミス -->
+                    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 relative overflow-hidden group hover:shadow-lg hover:border-slate-300 transition-all flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-slate-500 mb-2">dns</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">オンプレミス</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">自社サーバーでセキュア運用</p>
+                        <div class="flex items-center gap-1 mt-2">
+                            <span class="material-symbols-outlined text-slate-400 text-sm">lock</span>
+                            <p class="text-[10px] text-slate-500 font-medium">金融・医療対応</p>
+                        </div>
+                    </div>
+
+                    <!-- 駐車場連携 -->
+                    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 relative overflow-hidden group hover:shadow-lg hover:border-slate-300 transition-all flex flex-col">
+                        <span class="material-symbols-outlined text-2xl text-slate-500 mb-2">local_parking</span>
+                        <h4 class="font-bold text-text-main-light text-sm mb-1">駐車場連携</h4>
+                        <p class="text-[11px] text-text-secondary-light flex-1">空車案内から精算まで</p>
+                        <div class="flex items-center gap-1 mt-2">
+                            <span class="material-symbols-outlined text-slate-400 text-sm">directions_car</span>
+                            <p class="text-[10px] text-slate-500 font-medium">満車ストレス軽減</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEWoMan高輪 導入成功事例 Section -->
+        <div id="case-study" class="w-full px-4 md:px-10 lg:px-40 py-20 bg-surface-light border-y border-border-light">
+            <div class="max-w-[1200px] w-full mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Case Study</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-text-main-light mb-4">NEWoMan高輪 <span class="text-primary">導入成功事例</span></h2>
+                    <p class="text-text-secondary-light text-lg">ルミネが実証した70%対応削減の実績</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- 左側: 画像 - スタッフと顧客の連携イメージ -->
+                    <div class="relative">
+                        <div class="flex items-center justify-center gap-4 md:gap-6">
+                            <!-- 管理画面 (スタッフ側) -->
+                            <div class="relative flex-1 max-w-[280px]">
+                                <div class="bg-gray-800 rounded-lg p-1 shadow-2xl">
+                                    <div class="bg-gray-700 rounded-t px-2 py-1 flex items-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                                        <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                                        <span class="w-2 h-2 rounded-full bg-green-400"></span>
+                                    </div>
+                                    <img src="./assets/管理画面.png" alt="管理画面" class="w-full h-auto rounded-b">
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <p class="text-sm font-bold text-text-main-light">スタッフ管理画面</p>
+                                    <p class="text-xs text-text-secondary-light">会話履歴をリアルタイム確認</p>
+                                </div>
+                            </div>
+
+                            <!-- 接続アイコン -->
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-xl">sync_alt</span>
+                                </div>
+                                <p class="text-xs text-primary font-medium">連携</p>
+                            </div>
+
+                            <!-- スマホ (顧客側) -->
+                            <div class="relative w-[120px] md:w-[140px]">
+                                <div class="bg-gray-900 rounded-[1.5rem] p-1.5 shadow-2xl">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-4 bg-gray-900 rounded-b-lg z-10"></div>
+                                    <div class="rounded-[1.2rem] overflow-hidden bg-white aspect-[9/19]">
+                                        <img src="./assets/スマホ.png" alt="スマホで質問" class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <p class="text-sm font-bold text-text-main-light">お客様スマホ</p>
+                                    <p class="text-xs text-text-secondary-light">どこでもAIに質問</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- キャプション -->
+                        <div class="mt-6 bg-primary/5 rounded-xl p-4 border border-primary/20 text-center">
+                            <p class="text-sm text-text-main-light">
+                                <span class="text-primary font-bold">案内所に行かなくてもOK</span> — お客様は自分のスマホで質問、スタッフは管理画面で対応状況を把握
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 右側: 成果 -->
+                    <div class="space-y-8">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white rounded-xl p-6 border border-border-light shadow-sm text-center">
+                                <p class="text-4xl font-black text-primary mb-2">70<span class="text-xl">%</span></p>
+                                <p class="text-sm text-text-secondary-light font-medium">案内所対応削減</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 border border-border-light shadow-sm text-center">
+                                <p class="text-4xl font-black text-primary mb-2">92<span class="text-xl">%</span></p>
+                                <p class="text-sm text-text-secondary-light font-medium">顧客満足度</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 border border-border-light shadow-sm text-center">
+                                <p class="text-4xl font-black text-primary mb-2">10<span class="text-xl">+</span></p>
+                                <p class="text-sm text-text-secondary-light font-medium">多言語対応</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 border border-border-light shadow-sm text-center">
+                                <p class="text-4xl font-black text-primary mb-2">24<span class="text-xl">h</span></p>
+                                <p class="text-sm text-text-secondary-light font-medium">365日対応</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-primary/5 rounded-xl p-6 border border-primary/20">
+                            <p class="text-text-main-light leading-relaxed">
+                                <span class="text-primary font-bold">「導入初月から効果を実感」</span><br>
+                                案内所への問い合わせが大幅に減少し、スタッフは接客に集中できるようになりました。特にインバウンド対応では、多言語AIが活躍しています。
+                            </p>
+                            <p class="text-sm text-text-secondary-light mt-4">— ルミネ NEWoMan高輪 運営担当者</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="https://admin.gbase.ai/register"
+                                class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-base font-bold shadow-lg shadow-primary/20">
+                                14日間無料トライアル開始
+                            </a>
+                            <a href="#lead-magnet"
+                                class="flex items-center justify-center rounded-lg h-12 px-8 bg-white border border-border-light hover:border-primary transition-colors text-text-main-light text-base font-bold">
+                                詳しい事例PDFを入手
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 案例后引导 -->
+                <div class="mt-12 text-center">
+                    <a href="#lead-magnet" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer group">
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                        <span class="font-bold text-primary">詳しい資料をダウンロード</span>
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lead Magnet Section -->
+        <div id="lead-magnet" class="w-full px-4 md:px-10 lg:px-40 py-20 bg-gradient-to-br from-primary/5 to-orange-50">
+            <div class="max-w-[1000px] w-full mx-auto">
+                <div class="bg-white rounded-3xl shadow-xl border border-border-light overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 左側: コンテンツ説明 -->
+                        <div class="p-8 lg:p-12 flex flex-col justify-center">
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold w-fit mb-4">
+                                <span class="material-symbols-outlined text-sm">download</span>
+                                無料ダウンロード
+                            </span>
+                            <h2 class="text-2xl md:text-3xl font-black text-text-main-light mb-4">
+                                商業施設AI導入<br>成功事例集
+                            </h2>
+                            <p class="text-text-secondary-light mb-6">
+                                NEWoMan高輪をはじめとする導入事例と、70%対応削減を実現した具体的な運用方法をまとめたPDF資料です。
+                            </p>
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-center gap-3 text-sm text-text-main-light">
+                                    <span class="material-symbols-outlined text-primary">check_circle</span>
+                                    導入前後の比較データ
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-text-main-light">
+                                    <span class="material-symbols-outlined text-primary">check_circle</span>
+                                    ROI計算シート付き
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-text-main-light">
+                                    <span class="material-symbols-outlined text-primary">check_circle</span>
+                                    導入チェックリスト
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 右側: フォーム -->
+                        <div class="bg-background-light p-8 lg:p-12 flex flex-col justify-center">
+                            <form class="space-y-4" action="https://cs.gbase.ai/contact" method="get">
+                                <div>
+                                    <label class="block text-sm font-bold text-text-main-light mb-2">会社名 <span class="text-red-500">*</span></label>
+                                    <input type="text" name="company" required
+                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        placeholder="株式会社〇〇">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-text-main-light mb-2">お名前 <span class="text-red-500">*</span></label>
+                                    <input type="text" name="name" required
+                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        placeholder="山田 太郎">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-text-main-light mb-2">メールアドレス <span class="text-red-500">*</span></label>
+                                    <input type="email" name="email" required
+                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        placeholder="example@company.co.jp">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-text-main-light mb-2">電話番号</label>
+                                    <input type="tel" name="phone"
+                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        placeholder="03-1234-5678">
+                                </div>
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center gap-2 rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/20 mt-6">
+                                    <span class="material-symbols-outlined">download</span>
+                                    無料で資料をダウンロード
+                                </button>
+                                <p class="text-xs text-text-secondary-light text-center mt-4">
+                                    ご入力いただいた情報は<a href="https://cs.gbase.ai/privacy-policy" class="text-primary hover:underline">プライバシーポリシー</a>に基づき適切に管理いたします。
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section - 百貨店・商業施設向け -->
+        <div class="w-full px-4 md:px-10 lg:px-40 py-20 bg-surface-light">
+            <div class="max-w-[1000px] w-full mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">FAQ</span>
+                    <h2 class="text-3xl font-black text-text-main-light">百貨店・商業施設向け<br class="md:hidden">よくあるご質問</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- QA Item 1 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">百貨店のフロアマップ連携は可能ですか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                はい、既存のフロアマップ画像や3Dマップデータを取り込み、現在地から目的地までのルート案内が可能です。エレベーター・エスカレーター優先など、お客様に合わせたルート設定もできます。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- QA Item 2 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">テナント情報の更新は簡単ですか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                各テナントのWebサイトやInstagram、PDFカタログを自動でクロールし、最新情報を常に反映します。新店舗オープンや閉店情報も、管理画面から即座に反映可能です。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- QA Item 3 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">インバウンド（訪日外国人）対応はできますか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                英語、中国語（簡体・繁体）、韓国語、タイ語、ベトナム語など10言語以上に自動対応。免税カウンターの場所、外貨両替、Wi-Fi情報なども多言語で案内できます。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- QA Item 4 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">既存のPOS・在庫システムと連携できますか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                はい、主要なPOSシステムや在庫管理システムとAPI連携が可能です。リアルタイムの在庫状況をお客様に案内でき、「行ってみたら売り切れ」を防止します。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- QA Item 5 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">専用端末・キオスク筐体は必要ですか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                不要です。iPad、既存のサイネージ、またはお客様自身のスマートフォン（LINE/Webブラウザ）で動作します。高額な専用端末への投資なしで導入できます。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- QA Item 6 -->
+                    <div class="bg-white rounded-xl p-8 border border-border-light shadow-sm flex flex-col gap-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-black">
+                                Q</div>
+                            <h3 class="font-bold text-lg text-text-main-light pt-1">導入までの期間はどれくらいですか？</h3>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="shrink-0 size-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-black">
+                                A</div>
+                            <p class="text-text-secondary-light leading-relaxed pt-1">
+                                テナント情報（PDF/Web）を読み込ませるだけで、最短1週間で構築完了。従来のシステムと比較して、導入期間を大幅に短縮できます。14日間の無料トライアルもご用意しています。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ末尾CTA -->
+                <div class="mt-12 text-center">
+                    <div class="inline-flex flex-col sm:flex-row items-center gap-4 p-6 bg-white rounded-2xl border border-border-light shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-2xl">help_center</span>
+                            </div>
+                            <p class="text-text-main-light font-medium">まだ疑問がありますか？</p>
+                        </div>
+                        <a href="https://cs.gbase.ai/contact"
+                            class="flex items-center justify-center gap-2 rounded-lg h-12 px-6 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-bold">
+                            <span class="material-symbols-outlined text-lg">support_agent</span>
+                            専門スタッフに相談する
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FAQ后引导 -->
+                <div class="mt-8 text-center">
+                    <a href="#final-cta" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer group">
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                        <span class="font-bold text-primary">今すぐ始める</span>
+                        <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div id="final-cta" class="w-full px-4 md:px-10 lg:px-40 py-24 bg-background-dark text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-primary/10 opacity-30 pattern-grid"></div>
+            <div class="max-w-[960px] mx-auto text-center relative z-10">
+                <p class="text-primary font-bold text-sm uppercase tracking-wider mb-4">NEWoMan高輪と同じAIを導入</p>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">今日から案内所の負担を<br class="md:hidden"><span class="text-primary">70%削減</span></h2>
+                <p class="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+                    14日間の無料トライアルで、効果を実感してください。<br>
+                    専用端末不要・クレジットカード登録不要・最短1週間で導入完了。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://admin.gbase.ai/"
+                        class="flex items-center justify-center rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/30">
+                        14日間無料トライアル開始
+                    </a>
+                    <a href="#lead-magnet"
+                        class="flex items-center justify-center rounded-lg h-14 px-8 bg-transparent border border-gray-600 hover:border-white hover:bg-white/5 transition-colors text-white text-lg font-bold">
+                        導入事例PDFを入手
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Footer -->
+        <footer class="w-full bg-background-light pt-16 pb-8 border-t border-border-light">
+            <div class="w-full px-4 md:px-10 lg:px-40 flex justify-center">
+                <div class="max-w-[1200px] w-full grid grid-cols-2 lg:grid-cols-5 gap-8">
+                    <!-- SNS -->
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-bold text-text-main-light">SNS</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://x.com/GBaseHub" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">X</a></li>
+                            <li><a href="https://www.youtube.com/@sparticle_gbase" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">YouTube</a>
+                            </li>
+                            <li><a href="https://note.com/sparticle_gbase" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">Note</a>
+                            </li>
+                            <li><a href="https://discord.gg/zrA7SrHkDa" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">Discord</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Products -->
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-bold text-text-main-light">製品</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://gbase.ai" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">GBase</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai"
+                                    class="text-sm text-text-secondary-light hover:text-primary font-bold text-primary">GBase
+                                    Support</a></li>
+                            <li><a href="https://subtitles.felo.me" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">Felo
+                                    Subtitles</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Resources -->
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-bold text-text-main-light">リソース</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://cs.gbase.ai/blog"
+                                    class="text-sm text-text-secondary-light hover:text-primary">ブログ</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai/blog/release-notes/"
+                                    class="text-sm text-text-secondary-light hover:text-primary">リリースノート</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Company -->
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-bold text-text-main-light">企業情報</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://sparticle.com" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">会社概要</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai/contact"
+                                    class="text-sm text-text-secondary-light hover:text-primary">お問い合わせ</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai/privacy-policy"
+                                    class="text-sm text-text-secondary-light hover:text-primary">プライバシーポリシー</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Legal -->
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-bold text-text-main-light">GBase</h3>
+                        <ul class="flex flex-col gap-2 mb-4">
+                            <li><a href="https://cs.gbase.ai/terms-of-use"
+                                    class="text-sm text-text-secondary-light hover:text-primary">利用規約</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai/legal/specific-based"
+                                    class="text-sm text-text-secondary-light hover:text-primary">特定商取引法に基づく表記</a>
+                            </li>
+                        </ul>
+                        <h3 class="font-bold text-text-main-light">GBase On-Premises</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://cs.gbase.ai/on-premises/maintenance-support-service-specification"
+                                    class="text-sm text-text-secondary-light hover:text-primary">保守サポートサービス要項書</a>
+                            </li>
+                            <li><a href="https://cs.gbase.ai/on-premises/terms-of-use"
+                                    class="text-sm text-text-secondary-light hover:text-primary">利用規約</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="max-w-[1200px] mx-auto mt-12 pt-8 border-t border-border-light text-center text-sm text-text-secondary-light">
+                © <span id="copyright-year"></span> Sparticle Inc. All rights reserved.
+            </div>
+            <script>
+                document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            </script>
+        </footer>
+
+    </main>
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4" onclick="closeVideoModal()">
+        <div class="relative max-w-sm w-full" onclick="event.stopPropagation()">
+            <button onclick="closeVideoModal()" class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+            <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+                <div class="rounded-[2rem] overflow-hidden bg-black aspect-[9/19]">
+                    <video id="modal-video" class="w-full h-full object-cover" loop muted playsinline controls></video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openVideoModal(videoSrc) {
+            const modal = document.getElementById('video-modal');
+            const video = document.getElementById('modal-video');
+            video.src = videoSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            video.play();
+        }
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const video = document.getElementById('modal-video');
+            video.pause();
+            video.src = '';
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        function openWidgetModal(lang) {
+            const modal = document.getElementById('widget-modal');
+            const iframe = document.getElementById('widget-iframe');
+            iframe.src = 'https://gbase.ai/widget-page/a182ac3e-0552-4fc0-aced-cd995e5f91c2?lang=' + lang;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeWidgetModal() {
+            const modal = document.getElementById('widget-modal');
+            const iframe = document.getElementById('widget-iframe');
+            iframe.src = '';
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+
+    <!-- Widget Modal -->
+    <div id="widget-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4" onclick="closeWidgetModal()">
+        <div class="relative w-full max-w-[360px]" onclick="event.stopPropagation()">
+            <button onclick="closeWidgetModal()" class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+            <div class="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-6 bg-gray-900 rounded-b-xl z-10"></div>
+                <div class="rounded-[2rem] overflow-hidden bg-white aspect-[9/19]">
+                    <iframe id="widget-iframe" class="w-full h-full border-0" allow="microphone" title="GBase Support Demo"></iframe>
+                </div>
+            </div>
+            <p class="text-center text-white/70 text-sm mt-4">「話しかけて」をクリックして体験</p>
+        </div>
+    </div>
+</body>
+
+</html>
