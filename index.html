@@ -100,63 +100,134 @@
         class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-surface-light/95 backdrop-blur-sm">
         <div class="px-4 md:px-10 lg:px-40 flex justify-center">
             <div class="flex h-16 w-full max-w-[1200px] items-center justify-between">
-                <div class="flex items-center gap-3">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
                     <a href="https://cs.gbase.ai/"
                         class="flex items-center hover:opacity-80 transition-opacity">
                         <img src="https://cs.gbase.ai/title-logo.png" alt="GBase Support" class="h-8 w-auto" />
                     </a>
                 </div>
-                <div class="hidden md:flex flex-1 justify-end gap-6 items-center">
-                    <nav class="flex items-center gap-6">
-                        <a href="https://cs.gbase.ai/"
-                            class="text-sm font-medium hover:text-primary transition-colors">ホーム</a>
-                        <a href="https://cs.gbase.ai/price"
-                            class="text-sm font-medium hover:text-primary transition-colors">料金</a>
-                        <a href="https://cs.gbase.ai/contact"
-                            class="text-sm font-medium hover:text-primary transition-colors">お問い合わせ</a>
-                        <a href="https://docs.gbase.ai/user-manual/quickstart"
-                            class="text-sm font-medium hover:text-primary transition-colors" target="_blank">マニュアル</a>
-                        <a href="https://cs.gbase.ai/blog"
-                            class="text-sm font-medium hover:text-primary transition-colors">ブログ</a>
+                <!-- Center Navigation -->
+                <div class="hidden md:flex items-center gap-8">
+                    <nav class="flex items-center gap-8">
                         <div class="relative group">
                             <button
-                                class="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
-                                製品 <span class="material-symbols-outlined text-sm">expand_more</span>
+                                class="flex items-center gap-1 text-sm font-medium text-text-main-light hover:text-primary transition-colors py-5 border-b-2 border-primary">
+                                ソリューション
                             </button>
-                            <div class="absolute right-0 top-full pt-2 hidden group-hover:block w-56">
-                                <div
-                                    class="bg-white border boundary-light rounded-lg shadow-xl p-2 flex flex-col gap-1">
-                                    <a href="https://gbase.ai/"
+                            <div class="absolute left-0 top-full pt-2 hidden group-hover:block w-56">
+                                <div class="bg-white border border-border-light rounded-lg shadow-xl p-2 flex flex-col gap-1">
+                                    <a href="#case-study"
                                         class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
-                                        <div class="font-bold">GBase</div>
-                                        <div class="text-xs text-text-secondary-light">AIナレッジエージェント</div>
+                                        <div class="font-medium">商業施設・百貨店</div>
                                     </a>
-                                    <a href="https://cs.gbase.ai/"
-                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light bg-primary/5">
-                                        <div class="font-bold text-primary">GBase Support</div>
-                                        <div class="text-xs text-text-secondary-light">顧客サポートAIエージェント</div>
-                                    </a>
-                                    <a href="https://subtitles.felo.me/"
+                                    <a href="#core-features"
                                         class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
-                                        <div class="font-bold">Felo Subtitles</div>
-                                        <div class="text-xs text-text-secondary-light">多言語字幕会議エージェント</div>
+                                        <div class="font-medium">ホテル・旅館</div>
+                                    </a>
+                                    <a href="#core-features"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-medium">EC・オンラインストア</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-sm font-medium text-text-main-light hover:text-primary transition-colors py-5 border-b-2 border-transparent">
+                                製品／機能
+                            </button>
+                            <div class="absolute left-0 top-full pt-2 hidden group-hover:block w-64">
+                                <div class="bg-white border border-border-light rounded-lg shadow-xl p-2 flex flex-col gap-1">
+                                    <a href="index.html#feature-floormap"
+                                        class="block px-4 py-2 text-sm hover:bg-primary/5 rounded text-text-main-light">
+                                        <div class="font-bold">フロアマップ・ナビゲーション</div>
+                                        <div class="text-xs text-text-secondary-light">3Dマップで目的地まで案内</div>
+                                    </a>
+                                    <a href="index.html#feature-faq"
+                                        class="block px-4 py-2 text-sm hover:bg-primary/5 rounded text-text-main-light">
+                                        <div class="font-bold">FAQ・施設案内AI</div>
+                                        <div class="text-xs text-text-secondary-light">よくある質問を自動対応</div>
+                                    </a>
+                                    <a href="index.html#feature-realtime"
+                                        class="block px-4 py-2 text-sm hover:bg-primary/5 rounded text-text-main-light">
+                                        <div class="font-bold">リアルタイム会話</div>
+                                        <div class="text-xs text-text-secondary-light">10言語以上の音声対話</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://cs.gbase.ai/price"
+                            class="text-sm font-medium text-text-main-light hover:text-primary transition-colors py-5 border-b-2 border-transparent">料金</a>
+                        <div class="relative group">
+                            <button
+                                class="flex items-center gap-1 text-sm font-medium text-text-main-light hover:text-primary transition-colors py-5 border-b-2 border-transparent">
+                                リソース
+                            </button>
+                            <div class="absolute left-0 top-full pt-2 hidden group-hover:block w-56">
+                                <div class="bg-white border border-border-light rounded-lg shadow-xl p-2 flex flex-col gap-1">
+                                    <a href="https://cs.gbase.ai/blog"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-medium">ブログ</div>
+                                    </a>
+                                    <a href="https://docs.gbase.ai/user-manual/quickstart" target="_blank"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-medium">マニュアル</div>
+                                    </a>
+                                    <a href="https://cs.gbase.ai/blog/release-notes/"
+                                        class="block px-4 py-2 text-sm hover:bg-background-light rounded text-text-main-light">
+                                        <div class="font-medium">リリースノート</div>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </nav>
-                    <div class="flex items-center gap-3">
-                        <a href="https://admin.gbase.ai/login"
-                            class="text-sm font-medium hover:text-primary transition-colors">ログイン</a>
-                        <a href="https://admin.gbase.ai/register"
-                            class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-bold shadow-sm">
-                            無料で試す →
-                        </a>
-                    </div>
                 </div>
+                <!-- Right Side CTAs -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="https://admin.gbase.ai/"
+                        class="text-sm font-medium text-text-main-light hover:text-primary transition-colors">ログイン</a>
+                    <a href="register.html"
+                        class="flex items-center justify-center rounded-full h-10 px-5 border border-border-light hover:border-text-main-light transition-colors text-text-main-light text-sm font-medium">
+                        無料ではじめる
+                    </a>
+                    <a href="https://cs.gbase.ai/contact"
+                        class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all text-white text-sm font-medium">
+                        お問い合わせ
+                    </a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-2xl text-text-main-light">menu</span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface-light border-t border-border-light">
+            <div class="px-4 py-4 flex flex-col gap-4">
+                <a href="#case-study" class="text-sm font-medium text-text-main-light">ソリューション</a>
+                <a href="#core-features" class="text-sm font-medium text-text-main-light">製品／機能</a>
+                <a href="https://cs.gbase.ai/price" class="text-sm font-medium text-text-main-light">料金</a>
+                <a href="https://cs.gbase.ai/blog" class="text-sm font-medium text-text-main-light">リソース</a>
+                <hr class="border-border-light">
+                <a href="https://admin.gbase.ai/" class="text-sm font-medium text-text-main-light">ログイン</a>
+                <a href="register.html"
+                    class="flex items-center justify-center rounded-full h-10 px-5 border border-border-light text-text-main-light text-sm font-medium">
+                    無料ではじめる
+                </a>
+                <a href="https://cs.gbase.ai/contact"
+                    class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium">
+                    お問い合わせ
+                </a>
             </div>
         </div>
     </div>
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
 
     <main class="flex flex-col items-center w-full">
 
@@ -179,11 +250,11 @@
                         NEWoMan高輪が実証したAIコンシェルジュを、あなたの施設にも。
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 mt-2">
-                        <a href="https://admin.gbase.ai/"
+                        <a href="register.html"
                             class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-base font-bold shadow-lg shadow-primary/20">
                             14日間無料トライアル開始
                         </a>
-                        <a href="#lead-magnet"
+                        <a href="download.html"
                             class="flex items-center justify-center rounded-lg h-12 px-8 bg-white border border-border-light hover:border-primary transition-colors text-text-main-light text-base font-bold">
                             導入事例PDFを入手
                         </a>
@@ -347,12 +418,12 @@
                 <div class="text-center mb-16">
                     <span class="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Core Features</span>
                     <h2 class="text-3xl md:text-4xl font-black text-text-main-light mb-4">コア<span class="text-primary">3</span>機能で業務を革新</h2>
-                    <p class="text-text-secondary-light text-lg">地図・FAQ・音声対話で顧客体験3倍向上</p>
+                    <p class="text-text-secondary-light text-lg">地図・FAQ・リアルタイム会話で顧客体験3倍向上</p>
                 </div>
 
                 <div class="space-y-16">
                     <!-- 機能1: フロアマップ・ナビゲーション（テキスト左、GIF右） -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div id="feature-floormap" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center scroll-mt-20">
                         <div class="order-2 lg:order-1">
                             <div class="flex items-center gap-3 mb-4">
                                 <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-100 text-red-600 text-xs font-bold">
@@ -415,7 +486,7 @@
                     </div>
 
                     <!-- 機能2: FAQ・施設案内AI（GIF左、テキスト右） -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div id="feature-faq" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center scroll-mt-20">
                         <div class="order-1 flex justify-center">
                             <!-- Video: FAQ対応デモ（手機フレーム） -->
                             <div class="relative w-[180px] md:w-[220px] cursor-pointer group" onclick="openVideoModal('./assets/faq.mp4')">
@@ -477,8 +548,8 @@
                         </div>
                     </div>
 
-                    <!-- 機能3: 音声対話（テキスト左、GIF右） -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <!-- 機能3: リアルタイム会話（テキスト左、GIF右） -->
+                    <div id="feature-realtime" class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center scroll-mt-20">
                         <div class="order-2 lg:order-1">
                             <div class="flex items-center gap-3 mb-4">
                                 <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
@@ -486,7 +557,7 @@
                                     多言語対応を解決
                                 </span>
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold text-text-main-light mb-4">音声対話</h3>
+                            <h3 class="text-2xl md:text-3xl font-bold text-text-main-light mb-4">リアルタイム会話</h3>
                             <p class="text-text-secondary-light mb-6 text-lg leading-relaxed">キーボード入力は不要。話しかけるだけで、AIが意図を理解し的確に案内。高齢者や外国人観光客にも優しいインターフェースです。</p>
                             <ul class="space-y-3">
                                 <li class="flex items-center gap-3 text-text-main-light">
@@ -510,7 +581,7 @@
                             </ul>
                         </div>
                         <div class="order-1 lg:order-2 flex justify-center">
-                            <!-- Video: 音声対話デモ（手機フレーム） -->
+                            <!-- Video: リアルタイム会話デモ（手機フレーム） -->
                             <div class="relative w-[180px] md:w-[220px] cursor-pointer group" onclick="openVideoModal('./assets/realtime.mp4')">
                                 <!-- Phone Frame -->
                                 <div class="relative bg-gray-900 rounded-[2rem] p-2 shadow-2xl group-hover:scale-105 transition-transform">
@@ -520,7 +591,7 @@
                                     <div class="relative rounded-[1.5rem] overflow-hidden bg-black aspect-[9/19]">
                                         <video
                                             src="./assets/realtime.mp4"
-                                            alt="音声対話 デモ"
+                                            alt="リアルタイム会話 デモ"
                                             class="w-full h-full object-cover"
                                             autoplay
                                             loop
@@ -782,11 +853,11 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="https://admin.gbase.ai/register"
+                            <a href="register.html"
                                 class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-base font-bold shadow-lg shadow-primary/20">
                                 14日間無料トライアル開始
                             </a>
-                            <a href="#lead-magnet"
+                            <a href="download.html"
                                 class="flex items-center justify-center rounded-lg h-12 px-8 bg-white border border-border-light hover:border-primary transition-colors text-text-main-light text-base font-bold">
                                 詳しい事例PDFを入手
                             </a>
@@ -796,85 +867,11 @@
 
                 <!-- 案例后引导 -->
                 <div class="mt-12 text-center">
-                    <a href="#lead-magnet" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer group">
+                    <a href="download.html" class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer group">
                         <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
                         <span class="font-bold text-primary">詳しい資料をダウンロード</span>
                         <span class="material-symbols-outlined text-primary group-hover:animate-bounce">arrow_downward</span>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Lead Magnet Section -->
-        <div id="lead-magnet" class="w-full px-4 md:px-10 lg:px-40 py-20 bg-gradient-to-br from-primary/5 to-orange-50">
-            <div class="max-w-[1000px] w-full mx-auto">
-                <div class="bg-white rounded-3xl shadow-xl border border-border-light overflow-hidden">
-                    <div class="grid grid-cols-1 lg:grid-cols-2">
-                        <!-- 左側: コンテンツ説明 -->
-                        <div class="p-8 lg:p-12 flex flex-col justify-center">
-                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold w-fit mb-4">
-                                <span class="material-symbols-outlined text-sm">download</span>
-                                無料ダウンロード
-                            </span>
-                            <h2 class="text-2xl md:text-3xl font-black text-text-main-light mb-4">
-                                商業施設AI導入<br>成功事例集
-                            </h2>
-                            <p class="text-text-secondary-light mb-6">
-                                NEWoMan高輪をはじめとする導入事例と、70%対応削減を実現した具体的な運用方法をまとめたPDF資料です。
-                            </p>
-                            <ul class="space-y-3 mb-6">
-                                <li class="flex items-center gap-3 text-sm text-text-main-light">
-                                    <span class="material-symbols-outlined text-primary">check_circle</span>
-                                    導入前後の比較データ
-                                </li>
-                                <li class="flex items-center gap-3 text-sm text-text-main-light">
-                                    <span class="material-symbols-outlined text-primary">check_circle</span>
-                                    ROI計算シート付き
-                                </li>
-                                <li class="flex items-center gap-3 text-sm text-text-main-light">
-                                    <span class="material-symbols-outlined text-primary">check_circle</span>
-                                    導入チェックリスト
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- 右側: フォーム -->
-                        <div class="bg-background-light p-8 lg:p-12 flex flex-col justify-center">
-                            <form class="space-y-4" action="https://cs.gbase.ai/contact" method="get">
-                                <div>
-                                    <label class="block text-sm font-bold text-text-main-light mb-2">会社名 <span class="text-red-500">*</span></label>
-                                    <input type="text" name="company" required
-                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        placeholder="株式会社〇〇">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-text-main-light mb-2">お名前 <span class="text-red-500">*</span></label>
-                                    <input type="text" name="name" required
-                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        placeholder="山田 太郎">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-text-main-light mb-2">メールアドレス <span class="text-red-500">*</span></label>
-                                    <input type="email" name="email" required
-                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        placeholder="example@company.co.jp">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-text-main-light mb-2">電話番号</label>
-                                    <input type="tel" name="phone"
-                                        class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        placeholder="03-1234-5678">
-                                </div>
-                                <button type="submit"
-                                    class="w-full flex items-center justify-center gap-2 rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/20 mt-6">
-                                    <span class="material-symbols-outlined">download</span>
-                                    無料で資料をダウンロード
-                                </button>
-                                <p class="text-xs text-text-secondary-light text-center mt-4">
-                                    ご入力いただいた情報は<a href="https://cs.gbase.ai/privacy-policy" class="text-primary hover:underline">プライバシーポリシー</a>に基づき適切に管理いたします。
-                                </p>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1031,11 +1028,11 @@
                     専用端末不要・クレジットカード登録不要・最短1週間で導入完了。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="https://admin.gbase.ai/"
+                    <a href="register.html"
                         class="flex items-center justify-center rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/30">
                         14日間無料トライアル開始
                     </a>
-                    <a href="#lead-magnet"
+                    <a href="download.html"
                         class="flex items-center justify-center rounded-lg h-14 px-8 bg-transparent border border-gray-600 hover:border-white hover:bg-white/5 transition-colors text-white text-lg font-bold">
                         導入事例PDFを入手
                     </a>
@@ -1048,100 +1045,93 @@
         <!-- Footer -->
         <footer class="w-full bg-background-light pt-16 pb-8 border-t border-border-light">
             <div class="w-full px-4 md:px-10 lg:px-40 flex justify-center">
-                <div class="max-w-[1200px] w-full grid grid-cols-2 lg:grid-cols-5 gap-8">
-                    <!-- SNS -->
+                <div class="max-w-[1200px] w-full grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+                    <!-- GBase Support Column -->
                     <div class="flex flex-col gap-4">
-                        <h3 class="font-bold text-text-main-light">SNS</h3>
+                        <h3 class="font-bold text-text-main-light">GBase Support</h3>
                         <ul class="flex flex-col gap-2">
-                            <li><a href="https://x.com/GBaseHub" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">X</a></li>
-                            <li><a href="https://www.youtube.com/@sparticle_gbase" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">YouTube</a>
-                            </li>
-                            <li><a href="https://note.com/sparticle_gbase" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">Note</a>
-                            </li>
-                            <li><a href="https://discord.gg/zrA7SrHkDa" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">Discord</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Products -->
-                    <div class="flex flex-col gap-4">
-                        <h3 class="font-bold text-text-main-light">製品</h3>
-                        <ul class="flex flex-col gap-2">
-                            <li><a href="https://gbase.ai" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">GBase</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai"
-                                    class="text-sm text-text-secondary-light hover:text-primary font-bold text-primary">GBase
-                                    Support</a></li>
-                            <li><a href="https://subtitles.felo.me" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">Felo
-                                    Subtitles</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Resources -->
-                    <div class="flex flex-col gap-4">
-                        <h3 class="font-bold text-text-main-light">リソース</h3>
-                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://cs.gbase.ai/"
+                                    class="text-sm text-text-secondary-light hover:text-primary">トップ</a></li>
+                            <li><a href="https://gbase.ai/#features"
+                                    class="text-sm text-text-secondary-light hover:text-primary">製品概要</a></li>
+                            <li><a href="#case-study"
+                                    class="text-sm text-text-secondary-light hover:text-primary">ソリューション一覧</a></li>
+                            <li><a href="https://cs.gbase.ai/contact"
+                                    class="text-sm text-text-secondary-light hover:text-primary">コンサルティング向け</a></li>
+                            <li><a href="https://cs.gbase.ai/price"
+                                    class="text-sm text-text-secondary-light hover:text-primary">料金プラン</a></li>
                             <li><a href="https://cs.gbase.ai/blog"
-                                    class="text-sm text-text-secondary-light hover:text-primary">ブログ</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai/blog/release-notes/"
-                                    class="text-sm text-text-secondary-light hover:text-primary">リリースノート</a>
-                            </li>
+                                    class="text-sm text-text-secondary-light hover:text-primary">ブログ・資料</a></li>
+                            <li><a href="https://cs.gbase.ai/contact"
+                                    class="text-sm text-text-secondary-light hover:text-primary">お問い合わせ</a></li>
+                            <li><a href="https://admin.gbase.ai/"
+                                    class="text-sm text-text-secondary-light hover:text-primary">ログイン</a></li>
                         </ul>
                     </div>
 
-                    <!-- Company -->
+                    <!-- Sparticle について Column -->
                     <div class="flex flex-col gap-4">
-                        <h3 class="font-bold text-text-main-light">企業情報</h3>
+                        <h3 class="font-bold text-text-main-light">Sparticle について</h3>
                         <ul class="flex flex-col gap-2">
                             <li><a href="https://sparticle.com" target="_blank"
-                                    class="text-sm text-text-secondary-light hover:text-primary">会社概要</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai/contact"
-                                    class="text-sm text-text-secondary-light hover:text-primary">お問い合わせ</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai/privacy-policy"
-                                    class="text-sm text-text-secondary-light hover:text-primary">プライバシーポリシー</a>
-                            </li>
+                                    class="text-sm text-text-secondary-light hover:text-primary">会社概要</a></li>
+                            <li><a href="https://www.sparticle.com/ja/recruit" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">採用情報</a></li>
+                        </ul>
+
+                        <h3 class="font-bold text-text-main-light mt-6">その他のプロダクト</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li><a href="https://gbase.ai/" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">GBase（AIナレッジエージェント）</a></li>
+                            <li><a href="https://subtitles.felo.me/" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">Felo Subtitles（多言語字幕会議エージェント）</a></li>
+                            <li><a href="https://gtm.gbase.ai/" target="_blank"
+                                    class="text-sm text-text-secondary-light hover:text-primary">GBase GTM（顧客リーチAIエージェント）</a></li>
                         </ul>
                     </div>
 
-                    <!-- Legal -->
-                    <div class="flex flex-col gap-4">
-                        <h3 class="font-bold text-text-main-light">GBase</h3>
-                        <ul class="flex flex-col gap-2 mb-4">
-                            <li><a href="https://cs.gbase.ai/terms-of-use"
-                                    class="text-sm text-text-secondary-light hover:text-primary">利用規約</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai/legal/specific-based"
-                                    class="text-sm text-text-secondary-light hover:text-primary">特定商取引法に基づく表記</a>
-                            </li>
-                        </ul>
-                        <h3 class="font-bold text-text-main-light">GBase On-Premises</h3>
-                        <ul class="flex flex-col gap-2">
-                            <li><a href="https://cs.gbase.ai/on-premises/maintenance-support-service-specification"
-                                    class="text-sm text-text-secondary-light hover:text-primary">保守サポートサービス要項書</a>
-                            </li>
-                            <li><a href="https://cs.gbase.ai/on-premises/terms-of-use"
-                                    class="text-sm text-text-secondary-light hover:text-primary">利用規約</a>
-                            </li>
-                        </ul>
+                    <!-- Spacer for layout -->
+                    <div class="hidden md:block"></div>
+
+                    <!-- Brand & Social Column -->
+                    <div class="flex flex-col gap-4 col-span-2 md:col-span-1">
+                        <!-- Logo -->
+                        <a href="https://cs.gbase.ai/" class="flex items-center hover:opacity-80 transition-opacity">
+                            <img src="https://cs.gbase.ai/title-logo.png" alt="GBase Support" class="h-8 w-auto" />
+                        </a>
+                        <p class="text-xs text-text-secondary-light">© Sparticle / GBase, All rights reserved.</p>
+
+                        <!-- Social Icons -->
+                        <div class="flex items-center gap-3 mt-2">
+                            <a href="https://x.com/GBaseHub" target="_blank"
+                                class="w-10 h-10 rounded-full border border-border-light flex items-center justify-center text-text-secondary-light hover:text-primary hover:border-primary transition-colors">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                            <a href="https://linkedin.com/company/sparticle" target="_blank"
+                                class="w-10 h-10 rounded-full border border-border-light flex items-center justify-center text-text-secondary-light hover:text-primary hover:border-primary transition-colors">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="https://note.com/sparticle_gbase" target="_blank"
+                                class="w-10 h-10 rounded-full border border-border-light flex items-center justify-center text-text-secondary-light hover:text-primary hover:border-primary transition-colors font-bold text-sm">
+                                n
+                            </a>
+                        </div>
+
+                        <!-- Legal Links -->
+                        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-xs text-text-secondary-light">
+                            <a href="https://cs.gbase.ai/terms-of-use" class="hover:text-primary">利用規約</a>
+                            <span class="text-border-light">·</span>
+                            <a href="https://cs.gbase.ai/privacy-policy" class="hover:text-primary">プライバシーポリシー</a>
+                            <span class="text-border-light">·</span>
+                            <a href="https://cs.gbase.ai/security" class="hover:text-primary">セキュリティ</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div
-                class="max-w-[1200px] mx-auto mt-12 pt-8 border-t border-border-light text-center text-sm text-text-secondary-light">
-                © <span id="copyright-year"></span> Sparticle Inc. All rights reserved.
-            </div>
-            <script>
-                document.getElementById('copyright-year').textContent = new Date().getFullYear();
-            </script>
         </footer>
 
     </main>
