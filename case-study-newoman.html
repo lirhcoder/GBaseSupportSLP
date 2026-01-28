@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NEWoMan高輪 × GBase SUPPORT 導入事例</title>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <style>
+                :root {
+                              --primary: #1a237e;
+                              --primary-light: #534bae;
+                              --accent: #ff6f00;
+                              --accent-light: #ffa040;
+                              --bg-light: #f5f7fa;
+                              --text-dark: #1a1a2e;
+                              --text-light: #666;
+                              --white: #ffffff;
+                              --success: #00c853;
+                              --border: #e0e0e0;
+                }
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: 'Noto Sans JP', sans-serif; line-height: 1.8; color: var(--text-dark); background: var(--white); }
+                .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: var(--white); padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+                .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>') repeat; opacity: 0.3; }
+                .hero-content { position: relative; max-width: 900px; margin: 0 auto; }
+                .hero-badge { display: inline-block; background: var(--accent); color: var(--white); padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; margin-bottom: 20px; }
+                .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+                .hero p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+                .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+                .section { padding: 80px 0; }
+                .section-title { text-align: center; margin-bottom: 50px; }
+                .section-title h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+                .section-title p { color: var(--text-light); font-size: 1rem; }
+                .profile-card { background: var(--white); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); overflow: hidden; }
+                .profile-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: var(--white); padding: 30px; text-align: center; }
+                .profile-header h3 { font-size: 1.5rem; margin-bottom: 5px; }
+                .profile-table { padding: 30px; }
+                .profile-table table { width: 100%; border-collapse: collapse; }
+                .profile-table th, .profile-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border); }
+                .profile-table th { width: 30%; background: var(--bg-light); font-weight: 500; color: var(--primary); }
+                .challenge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+                .challenge-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 25px; text-align: center; transition: all 0.3s ease; }
+                .challenge-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+                .challenge-card .material-icons { font-size: 48px; color: var(--accent); margin-bottom: 15px; }
+                .challenge-card h4 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
+                .challenge-card p { font-size: 0.9rem; color: var(--text-light); }
+                .reason-list { display: flex; flex-direction: column; gap: 20px; }
+                .reason-item { display: flex; gap: 20px; background: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); align-items: flex-start; }
+                .reason-number { width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 700; flex-shrink: 0; }
+                .reason-content h4 { font-size: 1.1rem; color: var(--primary); margin-bottom: 8px; }
+                .reason-content p { color: var(--text-light); font-size: 0.95rem; }
+                .architecture-box { background: #1a1a2e; border-radius: 16px; padding: 40px; color: #e0e0e0; font-family: 'Courier New', monospace; overflow-x: auto; }
+                .architecture-box pre { white-space: pre; font-size: 0.85rem; line-height: 1.6; }
+                .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+                .feature-card { background: var(--white); border-radius: 16px; padding: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 4px solid var(--accent); }
+                .feature-card h4 { font-size: 1.2rem; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+                .feature-card h4 .material-icons { color: var(--accent); }
+                .feature-card ul { list-style: none; padding: 0; }
+                .feature-card ul li { padding: 8px 0; padding-left: 25px; position: relative; color: var(--text-light); font-size: 0.95rem; }
+                .feature-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: bold; }
+                .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+                @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+                .stat-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: var(--white); border-radius: 16px; padding: 30px 20px; text-align: center; }
+                .stat-card .number { font-size: 2.5rem; font-weight: 700; display: block; margin-bottom: 5px; }
+                .stat-card .label { font-size: 0.9rem; opacity: 0.9; }
+                .testimonial { background: var(--bg-light); border-radius: 16px; padding: 40px; position: relative; }
+                .testimonial::before { content: '"'; font-size: 100px; color: var(--accent); opacity: 0.2; position: absolute; top: 10px; left: 30px; font-family: Georgia, serif; }
+                .testimonial blockquote { font-size: 1.1rem; font-style: italic; color: var(--text-dark); margin-bottom: 20px; position: relative; z-index: 1; }
+                .testimonial cite { color: var(--primary); font-weight: 500; font-style: normal; }
+                .timeline { position: relative; padding-left: 40px; }
+                .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+                .timeline-item { position: relative; padding-bottom: 30px; }
+                .timeline-item::before { content: ''; position: absolute; left: -33px; top: 5px; width: 12px; height: 12px; background: var(--accent); border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 0 0 3px var(--accent); }
+                .timeline-item h4 { color: var(--primary); font-size: 1rem; margin-bottom: 5px; }
+                .timeline-item .period { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 5px; }
+                .timeline-item p { color: var(--text-light); font-size: 0.95rem; }
+                .summary-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+                .summary-item { display: flex; align-items: center; gap: 15px; background: var(--white); border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+                .summary-item .material-icons { color: var(--success); font-size: 28px; }
+                .summary-item span { font-size: 0.95rem; color: var(--text-dark); }
+                .cta-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: var(--white); padding: 60px 20px; text-align: center; }
+                .cta-section h2 { font-size: 1.8rem; margin-bottom: 15px; }
+                .cta-section p { opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+                .cta-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+                .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 30px; border-radius: 30px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: all 0.3s ease; }
+                .btn-primary { background: var(--accent); color: var(--white); }
+                .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+                .btn-secondary { background: var(--white); color: var(--primary); }
+                .btn-secondary:hover { background: var(--bg-light); transform: translateY(-2px); }
+                .footer { background: #1a1a2e; color: #a0a0a0; padding: 40px 20px; text-align: center; }
+                .footer a { color: var(--accent); text-decoration: none; }
+                .footer p { font-size: 0.9rem; }
+                @media (max-width: 768px) { .hero h1 { font-size: 1.8rem; } .section { padding: 50px 0; } .reason-item { flex-direction: column; align-items: center; text-align: center; } .architecture-box { padding: 20px; } .architecture-box pre { font-size: 0.7rem; } }
+            </style>
+  </head>
+  <body>
+        <section class="hero">
+                  <div class="hero-content">
+                                <span class="hero-badge">商業施設初導入</span>span>
+                                <h1>NEWoMan高輪 × GBase SUPPORT<br>導入事例</h1>
+                              <p>生成AIソリューション「GBase SUPPORT」により、案内所対応を70%削減。<br>人の温もりとデジタルの機能性を融合した、新しい顧客体験を実現。</p>
+                  </div>div>
+        </section>section>
+      <section class="section" style="background: var(--bg-light);">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">business</span>span>導入企業プロフィール</h2></div>div>
+                          <div class="profile-card">
+                                          <div class="profile-header"><h3>NEWoMan高輪（ニュウマン高輪）</h3><p>株式会社ルミネ</p></div>div>
+                                          <div class="profile-table">
+                                                              <table>
+                                                                                        <tr><th>開業日</th><td>2025年9月12日</td></tr>
+                                                                                      <tr><th>延床面積</th><td>約60,000㎡（South・North・LUFTBAUM・MIMURE含む）</td></tr>
+                                                                                      <tr><th>店舗数</th><td>約200店舗</td></tr>
+                                                                                      <tr><th>所在地</th><td>東京都港区高輪 TAKANAWA GATEWAY CITY内</td></tr>
+                                                                                      <tr><th>コンセプト</th><td>100年先へ継承する"まだ見ぬ生活価値づくり"</td></tr>
+                                                              </table>
+                                          </div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">error_outline</span>span>導入前の課題</h2><p>国際玄関口に位置する大規模商業施設ならではの課題</p></div>div>
+                          <div class="challenge-grid">
+                                          <div class="challenge-card"><span class="material-icons">square_foot</span>span><h4>広大な施設面積</h4><p>約60,000㎡、200店舗という規模で、案内所スタッフだけでは対応しきれない</p></div>div>
+                                          <div class="challenge-card"><span class="material-icons">translate</span>span><h4>多言語対応</h4><p>国際ゲートウェイとして、日本語以外での問い合わせ対応が必須</p></div>div>
+                                          <div class="challenge-card"><span class="material-icons">schedule</span>span><h4>24時間対応</h4><p>営業時間外でも施設情報へのアクセスニーズがある</p></div>div>
+                                          <div class="challenge-card"><span class="material-icons">favorite</span>span><h4>人とデジタルの両立</h4><p>効率化しながらも、心のこもった接客を維持したい</p></div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section" style="background: var(--bg-light);">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">lightbulb</span>span>GBase SUPPORTを選んだ理由</h2></div>div>
+                          <div class="reason-list">
+                                          <div class="reason-item"><div class="reason-number">1</div>div><div class="reason-content"><h4>専用端末不要、お客様のスマートフォンで利用可能</h4><p>お客様がQRコードを読み込むだけで、広い館内のどこにいても必要な情報にスマートにアクセス。高額な専用端末への投資は不要です。</p></div>div></div>div>
+                                          <div class="reason-item"><div class="reason-number">2</div>div><div class="reason-content"><h4>多言語リアルタイム対応</h4><p>日本語・英語・中国語・韓国語など10言語以上に自動対応。インバウンド対応が充実しています。</p></div>div></div>div>
+                                          <div class="reason-item"><div class="reason-number">3</div>div><div class="reason-content"><h4>独自のRAGシステム</h4><p>店舗・施設情報を事前に学習したナレッジベースにより、的確な問い合わせ対応を実現します。</p></div>div></div>div>
+                                          <div class="reason-item"><div class="reason-number">4</div>div><div class="reason-content"><h4>最短1週間での導入</h4><p>テナント情報（PDF/Web）を読み込ませるだけで迅速に構築。開業スケジュールに合わせた導入が可能でした。</p></div>div></div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">architecture</span>span>導入システム構成</h2></div>div>
+                          <div class="architecture-box">
+                          <pre>┌─────────────────────────────────────────────────────────────────┐
+                          │               NEWoMan高輪 AI案内システム                        │
+                          ├─────────────────────────────────────────────────────────────────┤
+                          │  【お客様側】                    【スタッフ側】                  │
+                          │  ┌─────────────────────┐        ┌─────────────────────┐        │
+                          │  │  お客様スマホ       │        │  スタッフ管理画面   │        │
+                          │  │  ・QRコード読取     │  ←→   │  ・会話履歴確認     │        │
+                          │  │  ・多言語AI対話     │        │  ・リアルタイム     │        │
+                          │  │  ・場所案内         │        │    モニタリング     │        │
+                          │  └─────────────────────┘        └─────────────────────┘        │
+                          │               ↓                          ↓                     │
+                          │  ┌─────────────────────────────────────────────────────┐        │
+                          │  │           GBase SUPPORT クラウド                    │        │
+                          │  │  ・生成AIによる自動応答 ・多言語翻訳（10言語以上）  │        │
+                          │  │  ・店舗情報ナレッジベース ・フロアマップ連携        │        │
+                          │  └─────────────────────────────────────────────────────┘        │
+                          └─────────────────────────────────────────────────────────────────┘</pre>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section" style="background: var(--bg-light);">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">auto_awesome</span>span>主な活用機能</h2></div>div>
+                          <div class="feature-grid">
+                                          <div class="feature-card"><h4><span class="material-icons">map</span>span>フロアマップ・ナビゲーション</h4><ul><li>現在地から目的地までの最短ルートを3Dマップと直感的な矢印でご案内</li><li>「子供の靴」など曖昧な要望からも最適な店舗を提案</li><li>エレベーター優先等のルート設定が可能</li></ul></div>div>
+                                          <div class="feature-card"><h4><span class="material-icons">chat</span>span>FAQ・施設案内AI</h4><ul><li>「トイレはどこ？」「営業時間は？」などの頻繁な質問を自動対応</li><li>AIが回答困難な場合は有人へ即座転送</li><li>LINE WORKS・電話連携も可能</li></ul></div>div>
+                                          <div class="feature-card"><h4><span class="material-icons">language</span>span>リアルタイム多言語会話</h4><ul><li>キーボード入力不要、話しかけるだけで対応</li><li>日本語・英語・中国語・韓国語など10言語以上</li><li>免税カウンター、外貨両替、Wi-Fi情報も多言語で案内</li></ul></div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">trending_up</span>span>導入効果</h2></div>div>
+                          <div class="stats-grid">
+                                          <div class="stat-card"><span class="number">70%</span>span><span class="label">案内所対応削減</span>span></div>div>
+                                          <div class="stat-card"><span class="number">92%</span>span><span class="label">顧客満足度</span>span></div>div>
+                                          <div class="stat-card"><span class="number">10+</span>span><span class="label">多言語対応</span>span></div>div>
+                                          <div class="stat-card"><span class="number">24h</span>span><span class="label">365日対応</span>span></div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section" style="background: var(--bg-light);">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">format_quote</span>span>お客様の声</h2></div>div>
+                          <div class="testimonial">
+                                          <blockquote>導入初月から効果を実感しました。案内所への問い合わせが大幅に減少し、スタッフは接客に集中できるようになりました。特にインバウンド対応では、多言語AIが活躍しています。</blockquote>
+                                          <cite>— NEWoMan高輪 運営担当者</cite>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="section">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">timeline</span>span>導入プロセス</h2></div>div>
+                          <div class="timeline">
+                                          <div class="timeline-item"><span class="period">STEP 1 - 1週間目</span>span><h4>要件ヒアリング・データ収集</h4><p>施設の課題や要望をヒアリングし、必要なデータを収集します。</p></div>div>
+                                          <div class="timeline-item"><span class="period">STEP 2 - 2週間目</span>span><h4>テナント情報・フロアマップ読み込み</h4><p>店舗情報やフロアマップをシステムに取り込みます。</p></div>div>
+                                          <div class="timeline-item"><span class="period">STEP 3 - 3週間目</span>span><h4>システム構築・カスタマイズ</h4><p>施設に合わせたAIのカスタマイズと設定を行います。</p></div>div>
+                                          <div class="timeline-item"><span class="period">STEP 4 - 4週間目</span>span><h4>テスト運用・スタッフ研修</h4><p>実際の環境でテストし、スタッフへの研修を実施します。</p></div>div>
+                                          <div class="timeline-item"><span class="period">STEP 5 - 開業日〜</span>span><h4>本番稼働・継続的改善</h4><p>本番運用開始後も、データ分析に基づき継続的に改善を行います。</p></div>div>
+                          </div>div>
+                          <p style="text-align: center; margin-top: 30px; color: var(--text-light); font-size: 0.9rem;">※最短1週間での導入も可能（施設規模・要件により異なる）</p>
+              </div>div>
+      </section>section>
+      <section class="section" style="background: var(--bg-light);">
+              <div class="container">
+                          <div class="section-title"><h2><span class="material-icons">checklist</span>span>GBase SUPPORTの特長まとめ</h2></div>div>
+                          <div class="summary-list">
+                                          <div class="summary-item"><span class="material-icons">check_circle</span>span><span><strong>専用端末不要</strong> - お客様のスマホ、iPad、既存サイネージで動作</span></div>div>
+                                          <div class="summary-item"><span class="material-icons">check_circle</span><span><strong>多言語対応</strong> - 10言語以上でインバウンド対応</span></div>div>
+                                          <div class="summary-item"><span class="material-icons">check_circle</span><span><strong>24時間365日</strong> - 無人対応で営業時間外も安心</span></div>div>
+                                          <div class="summary-item"><span class="material-icons">check_circle</span><span><strong>最短1週間導入</strong> - PDFやWebを読み込むだけ</span></div>div>
+                                          <div class="summary-item"><span class="material-icons">check_circle</span><span><strong>有人連携</strong> - AIで対応困難な場合はスタッフへ即時転送</span></div>div>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <section class="cta-section">
+              <div class="container">
+                          <h2>NEWoMan高輪と同じAIを導入しませんか？</h2>
+                          <p>14日間の無料トライアルで、効果を実感してください。<br>専用端末不要・クレジットカード登録不要・最短1週間で導入完了。</p>
+                          <div class="cta-buttons">
+                                          <a href="register.html" class="btn btn-primary"><span class="material-icons">rocket_launch</span>14日間無料トライアル開始</a>a>
+                                          <a href="download.html" class="btn btn-secondary"><span class="material-icons">description</span>導入事例PDFを入手</a>a>
+                          </div>div>
+              </div>div>
+      </section>section>
+      <footer class="footer">
+              <div class="container">
+                          <p><strong>GBase SUPPORT</strong> | 提供元: <a href="https://cs.gbase.ai/" target="_blank">Sparticle株式会社</a>a></p>
+                          <p style="margin-top: 10px; font-size: 0.85rem;">本事例は2025年9月開業のNEWoMan高輪における導入事例をもとに作成しています。</p>
+                          <p style="margin-top: 20px;">© Sparticle / GBase, All rights reserved.</p>
+              </div>div>
+      </footer>footer>
+  </body>
+</html>html></strong></p></p></strong></strong></span></p></p></cite></blockquote></li></li></ul></pre></p></p></td></th></tr></td></th></tr></td></th></tr></td></th></tr></td></th></tr>
+                                                              </table></p></p></h1>
+  </body>
+      </style></title>
+  </head>
