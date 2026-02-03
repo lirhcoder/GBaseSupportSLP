@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- WebView for GBase Bot -->
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Floating Overlay Panel -->
+    <LinearLayout
+        android:id="@+id/overlayPanel"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/overlay_background"
+        android:elevation="8dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="#15FFFFFF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🤖"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AIコンシェルジュ"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ニュウマン高輪"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Zone Buttons (Grid) -->
+        <GridLayout
+            android:id="@+id/zoneContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="3"
+            android:padding="8dp"
+            android:useDefaultMargins="true" />
+
+        <!-- Prompt Buttons -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/promptContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp" />
+        </ScrollView>
+
+        <!-- Footer -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Android Kiosk Mode"
+            android:textColor="#40FFFFFF"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#20000000" />
+    </LinearLayout>
+
+    <!-- Toggle Button (shown when overlay is hidden) -->
+    <Button
+        android:id="@+id/toggleButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/toggle_button_background"
+        android:text="☰"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:elevation="8dp"
+        android:visibility="gone" />
+</FrameLayout>

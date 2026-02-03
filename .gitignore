@@ -17,3 +17,14 @@ node_modules/
 
 # Playwright
 .playwright-mcp/
+
+# Android
+android-kiosk/.gradle/
+android-kiosk/.idea/
+android-kiosk/build/
+android-kiosk/app/build/
+android-kiosk/local.properties
+android-kiosk/*.iml
+android-kiosk/app/*.iml
+android-kiosk/captures/
+android-kiosk/.externalNativeBuild/
