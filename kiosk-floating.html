@@ -302,31 +302,27 @@
             font-size: 14px;
         }
 
-        /* Back button */
+        /* Back button in header */
         #back-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 99999;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.95);
-            border: none;
-            color: #333;
-            font-size: 13px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.8);
+            font-size: 11px;
             font-weight: 500;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             text-decoration: none;
             transition: all 0.2s;
+            margin-left: auto;
         }
 
         #back-btn:hover {
-            background: #fff;
-            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+            color: #fff;
         }
 
         /* Mobile responsive */
@@ -399,21 +395,13 @@
             }
 
             #back-btn {
-                top: 10px;
-                left: auto;
-                right: 10px;
-                padding: 6px 12px;
-                font-size: 11px;
+                padding: 4px 8px;
+                font-size: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Back button -->
-    <a id="back-btn" href="index.html">
-        ← ソリューションに戻る
-    </a>
-
     <!-- Bot iframe -->
     <iframe id="bot-frame" src=""></iframe>
 
@@ -430,6 +418,7 @@
                 <h1>🤖 AIコンシェルジュ</h1>
                 <p>ニュウマン高輪</p>
             </div>
+            <a id="back-btn" href="index.html">← 戻る</a>
         </div>
         <div id="kiosk-zones"></div>
         <div id="kiosk-prompts"></div>
