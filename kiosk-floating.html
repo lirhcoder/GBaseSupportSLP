@@ -581,15 +581,38 @@
                 label: 'その他',
                 color: '#8b5cf6',
                 prompts: ['Wi-Fiはありますか？', 'コインロッカーの場所', '車椅子の貸し出し', '忘れ物をしました']
+            },
+            {
+                icon: '🎤',
+                label: 'リアルタイム会話',
+                color: '#ef4444',
+                isRealtime: true,
+                realtimeUrl: 'https://gbase.ai/realtime/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
+                prompts: []
             }
         ];
 
         var currentZoneIndex = 0;
 
+        // Get zone from URL parameter
+        function getInitialZone() {
+            var params = new URLSearchParams(window.location.search);
+            var zone = params.get('zone');
+            if (zone !== null) {
+                var zoneIndex = parseInt(zone, 10);
+                if (zoneIndex >= 0 && zoneIndex < ZONES.length) {
+                    return zoneIndex;
+                }
+            }
+            return 0;
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            var initialZone = getInitialZone();
+            currentZoneIndex = initialZone;
             initZones();
-            renderPrompts(0);
+            renderPrompts(initialZone);
             loadBot();
             setupEventListeners();
         });
@@ -620,7 +643,7 @@
 
             ZONES.forEach(function(zone, index) {
                 var btn = document.createElement('button');
-                btn.className = 'kiosk-zone-btn' + (index === 0 ? ' active' : '');
+                btn.className = 'kiosk-zone-btn' + (index === currentZoneIndex ? ' active' : '');
                 btn.style.setProperty('--zone-color', zone.color);
 
                 var iconSpan = document.createElement('span');
@@ -665,6 +688,45 @@
             var container = document.getElementById('kiosk-prompts');
             container.textContent = '';
             container.style.setProperty('--zone-color', zone.color);
+
+            // Special handling for realtime zone
+            if (zone.isRealtime) {
+                var realtimeBtn = document.createElement('a');
+                realtimeBtn.href = zone.realtimeUrl;
+                realtimeBtn.target = '_blank';
+                realtimeBtn.className = 'kiosk-prompt-btn realtime-btn';
+                realtimeBtn.style.setProperty('--zone-color', zone.color);
+                realtimeBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                realtimeBtn.style.border = 'none';
+                realtimeBtn.style.textDecoration = 'none';
+                realtimeBtn.style.justifyContent = 'center';
+                realtimeBtn.style.padding = '16px';
+                realtimeBtn.style.fontSize = '14px';
+
+                var iconSpan = document.createElement('span');
+                iconSpan.textContent = '🎤 ';
+
+                var textSpan = document.createElement('span');
+                textSpan.textContent = '音声会話を開始';
+
+                realtimeBtn.appendChild(iconSpan);
+                realtimeBtn.appendChild(textSpan);
+
+                realtimeBtn.onclick = function() {
+                    setTimeout(function() { hideOverlay(); }, 300);
+                };
+                container.appendChild(realtimeBtn);
+
+                // Add description
+                var desc = document.createElement('p');
+                desc.style.color = 'rgba(255,255,255,0.6)';
+                desc.style.fontSize = '11px';
+                desc.style.textAlign = 'center';
+                desc.style.marginTop = '8px';
+                desc.textContent = 'マイクを使って直接AIと会話できます';
+                container.appendChild(desc);
+                return;
+            }
 
             zone.prompts.forEach(function(prompt) {
                 var btn = document.createElement('button');
