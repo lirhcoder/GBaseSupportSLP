@@ -7,3 +7,13 @@
 
 # Logs
 *.log
+
+# Sample assets
+assets/footer-sample.jpeg
+assets/header-sample.jpg
+
+# Node.js
+node_modules/
+
+# Playwright
+.playwright-mcp/

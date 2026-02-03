@@ -1,0 +1,13 @@
+{
+  "name": "gbase-kiosk-playwright",
+  "version": "1.0.0",
+  "description": "GBase AI Kiosk using Playwright for full bot functionality including canvas maps",
+  "main": "kiosk.js",
+  "scripts": {
+    "start": "node kiosk.js",
+    "install-browser": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}

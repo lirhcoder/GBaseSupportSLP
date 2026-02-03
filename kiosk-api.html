@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html class="light" lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport" />
+    <title>AIコンシェルジュ | GBase Support (API版)</title>
+    <meta name="description" content="商業施設向けAIコンシェルジュ。店舗検索、フロア案内、多言語対応など。">
+
+    <!-- Prevent zoom on touch devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Markdown parser and sanitizer -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee862b",
+                        "primary-dark": "#d9731e",
+                        "background": "#f5f5f5",
+                        "surface": "#ffffff",
+                        "text-main": "#1a1a1a",
+                        "text-secondary": "#666666",
+                        "border": "#e0e0e0",
+                    },
+                    fontFamily: {
+                        "sans": ["Noto Sans JP", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* Prevent text selection on touch */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Allow text selection in chat */
+        .chat-content {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        /* Zone card styles */
+        .zone-card { transition: all 0.2s ease; }
+        .zone-card:hover { transform: translateY(-4px); }
+        .zone-card:active { transform: scale(0.98); }
+
+        /* Prompt button styles */
+        .prompt-btn { transition: all 0.15s ease; }
+        .prompt-btn:hover { transform: translateX(4px); }
+        .prompt-btn:active { transform: scale(0.98); }
+        .prompt-btn.sending { background-color: #3b82f6 !important; color: white !important; }
+        .prompt-btn.success { background-color: #22c55e !important; color: white !important; }
+
+        /* Chat message animation */
+        .chat-message { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Typing indicator */
+        .typing-dot { animation: typingBounce 1.4s ease-in-out infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+
+        /* Markdown content */
+        .markdown-content ul, .markdown-content ol { margin-left: 1.5em; margin-top: 0.5em; margin-bottom: 0.5em; }
+        .markdown-content li { margin-bottom: 0.25em; }
+        .markdown-content p { margin-bottom: 0.75em; }
+        .markdown-content a { color: #3b82f6; text-decoration: underline; }
+        .markdown-content strong { font-weight: bold; color: #1a1a1a; }
+
+        /* Idle timer */
+        @keyframes countdown-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .countdown-pulse { animation: countdown-pulse 1s ease-in-out infinite; }
+    </style>
+</head>
+
+<body class="bg-background font-sans text-text-main h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-surface border-b border-border px-4 lg:px-6 py-3 flex items-center justify-between shrink-0">
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src="https://cs.gbase.ai/title-logo.png" alt="GBase Support" class="h-8 lg:h-10" />
+            <div class="hidden md:block">
+                <p class="text-base lg:text-lg font-bold text-text-main">AIコンシェルジュ</p>
+                <p class="text-xs text-primary">API Direct Mode</p>
+            </div>
+        </a>
+
+        <div class="relative">
+            <button id="lang-toggle" class="flex items-center gap-2 px-4 py-2 bg-background hover:bg-gray-200 rounded-xl border border-border transition-colors">
+                <span id="current-lang-flag" class="text-2xl">🇯🇵</span>
+                <span id="current-lang-name" class="text-sm font-medium hidden sm:inline">日本語</span>
+                <span class="material-symbols-outlined text-text-secondary text-lg">expand_more</span>
+            </button>
+            <div id="lang-dropdown" class="hidden absolute right-0 top-full mt-2 bg-surface rounded-xl shadow-2xl border border-border w-72 z-50 p-3">
+                <p class="text-xs text-text-secondary mb-2 px-2">言語を選択</p>
+                <div class="grid grid-cols-2 gap-1" id="lang-buttons"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+        <!-- Left Panel -->
+        <div class="w-full lg:w-[380px] xl:w-[420px] flex flex-col border-r border-border bg-surface shrink-0 overflow-hidden">
+            <div class="p-4 border-b border-border shrink-0">
+                <p class="text-sm font-bold text-text-secondary mb-3">体験を選択</p>
+                <div class="flex lg:grid lg:grid-cols-5 gap-2 overflow-x-auto pb-2 lg:pb-0" id="zone-cards"></div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-4" id="zone-detail">
+                <div class="mb-4">
+                    <div id="zone-badge" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold mb-2 bg-blue-100 text-blue-600">
+                        <span id="zone-icon">🎫</span>
+                        <span id="zone-label">総合案内</span>
+                    </div>
+                    <h2 id="zone-title" class="text-xl font-black text-text-main mb-2">総合案内デスク</h2>
+                    <p id="zone-description" class="text-sm text-text-secondary leading-relaxed"></p>
+                </div>
+
+                <div class="p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <h3 class="text-sm font-bold text-text-main mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">touch_app</span>
+                        タップして質問
+                    </h3>
+                    <div class="space-y-2" id="zone-prompts"></div>
+                    <p class="text-xs text-text-secondary mt-3 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">bolt</span>
+                        API直接接続 - 高速レスポンス
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-border bg-surface shrink-0 flex items-center justify-between">
+                <button id="prev-btn" class="flex items-center gap-1 px-3 py-2 text-sm text-text-secondary hover:text-text-main disabled:opacity-30 transition-colors" disabled>
+                    <span class="material-symbols-outlined text-lg">chevron_left</span>
+                    <span>前へ</span>
+                </button>
+                <div class="flex gap-1" id="zone-dots"></div>
+                <button id="next-btn" class="flex items-center gap-1 px-3 py-2 text-sm text-text-secondary hover:text-text-main transition-colors">
+                    <span>次へ</span>
+                    <span class="material-symbols-outlined text-lg">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel: Chat -->
+        <div class="flex-1 flex flex-col bg-background p-4 lg:p-6 min-h-0">
+            <div class="flex-1 bg-surface rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                <div id="chat-header" class="px-4 py-3 border-b border-border flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-600">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+                        <span id="chat-title" class="text-white font-bold">AI アシスタント</span>
+                    </div>
+                    <button id="clear-btn" class="p-2 hover:bg-white/20 rounded-lg transition-colors" title="会話をクリア">
+                        <span class="material-symbols-outlined text-white text-lg">delete_sweep</span>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto p-4 space-y-4" id="chat-messages"></div>
+
+                <div class="p-4 border-t border-border bg-gray-50">
+                    <div class="flex gap-2">
+                        <input type="text" id="chat-input" placeholder="メッセージを入力..."
+                            class="flex-1 px-4 py-3 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm">
+                        <button id="send-btn" class="px-4 py-3 bg-primary hover:bg-primary-dark text-white rounded-xl transition-colors">
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="idle-warning" class="hidden mt-4 p-3 bg-amber-100 border border-amber-300 rounded-xl text-center">
+                <p class="text-amber-800 text-sm font-medium countdown-pulse">
+                    <span class="material-symbols-outlined text-lg align-middle mr-1">timer</span>
+                    <span id="idle-countdown">30</span>秒後にホーム画面に戻ります
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ========== Configuration ==========
+        var CONFIG = {
+            apiKey: 'ak-xdVGAVu8Qq8H50FZ5jVYAiswGoSAmSs4X5iwQGa61lzEMb0N',
+            aiId: 'a182ac3e-0552-4fc0-aced-cd995e5f91c2',
+            apiEndpoint: 'https://api.gbase.ai/v1/question/',
+            idleTimeout: 120,
+            idleWarningAt: 15
+        };
+
+        var sessionId = generateUUID();
+        var currentZone = 0;
+        var currentLang = 'ja';
+        var isLoading = false;
+        var idleTimer = null;
+        var countdownTimer = null;
+
+        var zones = [
+            { id: 0, icon: '🎫', label: '総合案内', title: '総合案内デスク', color: 'blue', gradient: 'from-blue-500 to-blue-600',
+              description: '営業時間、イベント情報、施設の基本案内など。',
+              prompts: ['営業時間を教えて', '今日のイベントは？', '駐車場はありますか？', 'ベビーカーを借りたい'] },
+            { id: 1, icon: '🗺️', label: 'フロアナビ', title: 'フロアナビゲーション', color: 'orange', gradient: 'from-orange-500 to-orange-600',
+              description: '店舗の場所、フロアガイド、道順案内。',
+              prompts: ['スターバックスはどこ？', 'トイレに行きたい', 'ATMはありますか？', 'ユニクロへの行き方'] },
+            { id: 2, icon: '🛍️', label: '店舗検索', title: '店舗・商品検索', color: 'pink', gradient: 'from-pink-500 to-pink-600',
+              description: '店舗情報、商品検索、おすすめ案内。',
+              prompts: ['カフェを探して', 'レストランのおすすめ', '子供服のお店', 'お土産を買いたい'] },
+            { id: 3, icon: '🌍', label: '多言語', title: '多言語対応', color: 'green', gradient: 'from-green-500 to-green-600',
+              description: '10言語以上に対応。外国語でも質問OK。',
+              prompts: ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'] },
+            { id: 4, icon: '❓', label: 'その他', title: 'その他のご質問', color: 'purple', gradient: 'from-purple-500 to-purple-600',
+              description: 'Wi-Fi、ロッカー、サービスなど。',
+              prompts: ['Wi-Fiはありますか？', 'コインロッカーの場所', '車椅子の貸し出し', '忘れ物をしました'] }
+        ];
+
+        var languages = [
+            { code: 'ja', flag: '🇯🇵', name: '日本語' }, { code: 'en', flag: '🇺🇸', name: 'English' },
+            { code: 'zh', flag: '🇨🇳', name: '中文' }, { code: 'ko', flag: '🇰🇷', name: '한국어' },
+            { code: 'vi', flag: '🇻🇳', name: 'Tiếng Việt' }, { code: 'pt', flag: '🇧🇷', name: 'Português' },
+            { code: 'id', flag: '🇮🇩', name: 'Indonesia' }, { code: 'th', flag: '🇹🇭', name: 'ไทย' },
+            { code: 'ne', flag: '🇳🇵', name: 'नेपाली' }, { code: 'es', flag: '🇪🇸', name: 'Español' }
+        ];
+
+        var colorMap = {
+            blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200', ring: 'ring-blue-400' },
+            orange: { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200', ring: 'ring-orange-400' },
+            pink: { bg: 'bg-pink-100', text: 'text-pink-600', border: 'border-pink-200', ring: 'ring-pink-400' },
+            green: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-200', ring: 'ring-green-400' },
+            purple: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200', ring: 'ring-purple-400' }
+        };
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function safeMarkdown(text) {
+            var rawHtml = marked.parse(text);
+            return DOMPurify.sanitize(rawHtml, { ADD_ATTR: ['target'] });
+        }
+
+        function initZoneCards() {
+            var container = document.getElementById('zone-cards');
+            container.replaceChildren();
+            zones.forEach(function(zone, index) {
+                var colors = colorMap[zone.color];
+                var isActive = index === currentZone;
+                var card = document.createElement('button');
+                card.className = 'zone-card flex-shrink-0 w-16 lg:w-auto flex flex-col items-center gap-1 p-2 lg:p-3 rounded-xl border-2 transition-all ' +
+                    (isActive ? colors.bg + ' ' + colors.border + ' ring-2 ' + colors.ring : 'bg-white border-gray-200');
+                card.dataset.zone = index;
+
+                var iconSpan = document.createElement('span');
+                iconSpan.className = 'text-xl lg:text-2xl';
+                iconSpan.textContent = zone.icon;
+
+                var labelSpan = document.createElement('span');
+                labelSpan.className = 'text-xs font-medium ' + (isActive ? colors.text : 'text-text-secondary');
+                labelSpan.textContent = zone.label;
+
+                card.appendChild(iconSpan);
+                card.appendChild(labelSpan);
+                container.appendChild(card);
+            });
+        }
+
+        function initZoneDots() {
+            var container = document.getElementById('zone-dots');
+            container.replaceChildren();
+            zones.forEach(function(zone, index) {
+                var dot = document.createElement('button');
+                dot.className = 'w-2 h-2 rounded-full transition-all ' +
+                    (index === currentZone ? 'w-6 ' + colorMap[zone.color].bg.replace('100', '500') : 'bg-gray-300');
+                dot.dataset.zone = index;
+                container.appendChild(dot);
+            });
+        }
+
+        function selectZone(index) {
+            currentZone = index;
+            var zone = zones[index];
+            var colors = colorMap[zone.color];
+
+            initZoneCards();
+            initZoneDots();
+
+            var badge = document.getElementById('zone-badge');
+            badge.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold mb-2 ' + colors.bg + ' ' + colors.text;
+            document.getElementById('zone-icon').textContent = zone.icon;
+            document.getElementById('zone-label').textContent = zone.label;
+            document.getElementById('zone-title').textContent = zone.title;
+            document.getElementById('zone-description').textContent = zone.description;
+
+            var promptsContainer = document.getElementById('zone-prompts');
+            promptsContainer.replaceChildren();
+            zone.prompts.forEach(function(prompt, i) {
+                var btn = document.createElement('button');
+                btn.className = 'prompt-btn w-full text-left px-4 py-3 bg-white hover:bg-gray-50 border border-border rounded-xl text-sm text-text-main flex items-center gap-3 transition-all';
+                btn.dataset.prompt = prompt;
+
+                var num = document.createElement('span');
+                num.className = 'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ' + colors.bg + ' ' + colors.text;
+                num.textContent = i + 1;
+
+                var text = document.createElement('span');
+                text.className = 'flex-1';
+                text.textContent = prompt;
+
+                var arrow = document.createElement('span');
+                arrow.className = 'material-symbols-outlined text-text-secondary text-lg prompt-arrow';
+                arrow.textContent = 'send';
+
+                btn.appendChild(num);
+                btn.appendChild(text);
+                btn.appendChild(arrow);
+                promptsContainer.appendChild(btn);
+            });
+
+            var chatHeader = document.getElementById('chat-header');
+            chatHeader.className = 'px-4 py-3 border-b border-border flex items-center justify-between bg-gradient-to-r ' + zone.gradient;
+            document.getElementById('chat-title').textContent = zone.label + ' AI';
+
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === zones.length - 1;
+
+            resetIdleTimer();
+        }
+
+        async function sendPrompt(prompt, btn) {
+            if (isLoading) return;
+
+            btn.classList.add('sending');
+            var arrow = btn.querySelector('.prompt-arrow');
+            if (arrow) arrow.textContent = 'hourglass_empty';
+
+            addUserMessage(prompt);
+            showTypingIndicator();
+            isLoading = true;
+
+            try {
+                var response = await fetch(CONFIG.apiEndpoint + CONFIG.aiId, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.apiKey },
+                    body: JSON.stringify({ question: prompt, session_id: sessionId, stream: false, max_tokens: 3000, language: currentLang })
+                });
+
+                if (!response.ok) throw new Error('API failed: ' + response.status);
+
+                var data = await response.json();
+                removeTypingIndicator();
+
+                var answer = (data.answer || '回答を取得できませんでした。').replace(/^\[ANSWER\]\s*/i, '');
+                addBotMessage(answer);
+
+                btn.classList.remove('sending');
+                btn.classList.add('success');
+                if (arrow) arrow.textContent = 'check';
+                setTimeout(function() { btn.classList.remove('success'); if (arrow) arrow.textContent = 'send'; }, 2000);
+
+            } catch (error) {
+                console.error('API Error:', error);
+                removeTypingIndicator();
+                addBotMessage('エラーが発生しました。もう一度お試しください。');
+                btn.classList.remove('sending');
+                if (arrow) arrow.textContent = 'error';
+                setTimeout(function() { if (arrow) arrow.textContent = 'send'; }, 2000);
+            }
+
+            isLoading = false;
+            resetIdleTimer();
+        }
+
+        async function sendManualMessage() {
+            var input = document.getElementById('chat-input');
+            var message = input.value.trim();
+            if (!message || isLoading) return;
+
+            input.value = '';
+            addUserMessage(message);
+            showTypingIndicator();
+            isLoading = true;
+
+            try {
+                var response = await fetch(CONFIG.apiEndpoint + CONFIG.aiId, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + CONFIG.apiKey },
+                    body: JSON.stringify({ question: message, session_id: sessionId, stream: false, max_tokens: 3000, language: currentLang })
+                });
+
+                var data = await response.json();
+                removeTypingIndicator();
+                addBotMessage((data.answer || '回答を取得できませんでした。').replace(/^\[ANSWER\]\s*/i, ''));
+            } catch (error) {
+                removeTypingIndicator();
+                addBotMessage('エラーが発生しました。');
+            }
+            isLoading = false;
+            resetIdleTimer();
+        }
+
+        function addUserMessage(text) {
+            var container = document.getElementById('chat-messages');
+            var div = document.createElement('div');
+            div.className = 'chat-message flex gap-3 justify-end';
+
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'max-w-[80%] bg-primary text-white rounded-2xl rounded-tr-none p-4';
+            var p = document.createElement('p');
+            p.className = 'text-sm';
+            p.textContent = text;
+            msgDiv.appendChild(p);
+
+            var avatar = document.createElement('div');
+            avatar.className = 'w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center shrink-0';
+            var icon = document.createElement('span');
+            icon.className = 'material-symbols-outlined text-gray-600 text-lg';
+            icon.textContent = 'person';
+            avatar.appendChild(icon);
+
+            div.appendChild(msgDiv);
+            div.appendChild(avatar);
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function addBotMessage(text) {
+            var container = document.getElementById('chat-messages');
+            var div = document.createElement('div');
+            div.className = 'chat-message flex gap-3';
+
+            var avatar = document.createElement('div');
+            avatar.className = 'w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0';
+            var icon = document.createElement('span');
+            icon.className = 'material-symbols-outlined text-white text-lg';
+            icon.textContent = 'smart_toy';
+            avatar.appendChild(icon);
+
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'flex-1 bg-gray-100 rounded-2xl rounded-tl-none p-4 chat-content';
+            var content = document.createElement('div');
+            content.className = 'text-sm text-text-main markdown-content';
+            content.innerHTML = safeMarkdown(text);
+            msgDiv.appendChild(content);
+
+            div.appendChild(avatar);
+            div.appendChild(msgDiv);
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            var container = document.getElementById('chat-messages');
+            var div = document.createElement('div');
+            div.id = 'typing-indicator';
+            div.className = 'chat-message flex gap-3';
+
+            var avatar = document.createElement('div');
+            avatar.className = 'w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shrink-0';
+            var icon = document.createElement('span');
+            icon.className = 'material-symbols-outlined text-white text-lg';
+            icon.textContent = 'smart_toy';
+            avatar.appendChild(icon);
+
+            var dots = document.createElement('div');
+            dots.className = 'bg-gray-100 rounded-2xl rounded-tl-none p-4 flex gap-1';
+            for (var i = 0; i < 3; i++) {
+                var dot = document.createElement('span');
+                dot.className = 'typing-dot w-2 h-2 bg-gray-400 rounded-full';
+                dots.appendChild(dot);
+            }
+
+            div.appendChild(avatar);
+            div.appendChild(dots);
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            var indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function scrollToBottom() {
+            var container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearChat() {
+            sessionId = generateUUID();
+            var container = document.getElementById('chat-messages');
+            container.replaceChildren();
+            addBotMessage('会話をクリアしました。新しい質問をどうぞ！');
+        }
+
+        function addWelcomeMessage() {
+            addBotMessage('こんにちは！ニュウマン高輪のAIコンシェルジュです。\n\n左側のボタンをタップして、ご質問ください。店舗案内、フロアガイド、営業時間など、なんでもお気軽にどうぞ！');
+        }
+
+        function initLangButtons() {
+            var container = document.getElementById('lang-buttons');
+            container.replaceChildren();
+            languages.forEach(function(lang) {
+                var btn = document.createElement('button');
+                btn.className = 'flex flex-col items-center gap-1 p-2 rounded-lg transition-all ' +
+                    (lang.code === currentLang ? 'bg-primary/10 ring-2 ring-primary' : 'hover:bg-gray-100');
+                btn.dataset.lang = lang.code;
+
+                var flag = document.createElement('span');
+                flag.className = 'text-xl';
+                flag.textContent = lang.flag;
+
+                var name = document.createElement('span');
+                name.className = 'text-xs ' + (lang.code === currentLang ? 'text-primary font-bold' : 'text-text-secondary');
+                name.textContent = lang.name;
+
+                btn.appendChild(flag);
+                btn.appendChild(name);
+                container.appendChild(btn);
+            });
+        }
+
+        function changeLang(langCode) {
+            currentLang = langCode;
+            var lang = languages.find(function(l) { return l.code === langCode; });
+            if (lang) {
+                document.getElementById('current-lang-flag').textContent = lang.flag;
+                document.getElementById('current-lang-name').textContent = lang.name;
+            }
+            document.getElementById('lang-dropdown').classList.add('hidden');
+            initLangButtons();
+        }
+
+        function startIdleTimer() {
+            clearIdleTimer();
+            idleTimer = setTimeout(showIdleWarning, (CONFIG.idleTimeout - CONFIG.idleWarningAt) * 1000);
+        }
+
+        function showIdleWarning() {
+            var warning = document.getElementById('idle-warning');
+            var countdown = document.getElementById('idle-countdown');
+            var countdownValue = CONFIG.idleWarningAt;
+            countdown.textContent = countdownValue;
+            warning.classList.remove('hidden');
+
+            countdownTimer = setInterval(function() {
+                countdownValue--;
+                countdown.textContent = countdownValue;
+                if (countdownValue <= 0) { selectZone(0); clearChat(); clearIdleTimer(); }
+            }, 1000);
+        }
+
+        function clearIdleTimer() {
+            if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+            if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+            document.getElementById('idle-warning').classList.add('hidden');
+        }
+
+        function resetIdleTimer() { startIdleTimer(); }
+
+        // Event Listeners
+        document.getElementById('zone-cards').addEventListener('click', function(e) {
+            var card = e.target.closest('[data-zone]');
+            if (card) selectZone(parseInt(card.dataset.zone));
+        });
+
+        document.getElementById('zone-dots').addEventListener('click', function(e) {
+            var dot = e.target.closest('[data-zone]');
+            if (dot) selectZone(parseInt(dot.dataset.zone));
+        });
+
+        document.getElementById('zone-prompts').addEventListener('click', function(e) {
+            var btn = e.target.closest('[data-prompt]');
+            if (btn) sendPrompt(btn.dataset.prompt, btn);
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', function() { if (currentZone > 0) selectZone(currentZone - 1); });
+        document.getElementById('next-btn').addEventListener('click', function() { if (currentZone < zones.length - 1) selectZone(currentZone + 1); });
+        document.getElementById('clear-btn').addEventListener('click', clearChat);
+        document.getElementById('send-btn').addEventListener('click', sendManualMessage);
+        document.getElementById('chat-input').addEventListener('keypress', function(e) { if (e.key === 'Enter') sendManualMessage(); });
+
+        document.getElementById('lang-toggle').addEventListener('click', function() {
+            document.getElementById('lang-dropdown').classList.toggle('hidden');
+        });
+
+        document.getElementById('lang-buttons').addEventListener('click', function(e) {
+            var btn = e.target.closest('[data-lang]');
+            if (btn) changeLang(btn.dataset.lang);
+        });
+
+        document.addEventListener('click', function(e) {
+            var toggle = document.getElementById('lang-toggle');
+            var dropdown = document.getElementById('lang-dropdown');
+            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) dropdown.classList.add('hidden');
+            resetIdleTimer();
+        });
+
+        document.addEventListener('touchstart', resetIdleTimer);
+        document.addEventListener('keydown', function(e) {
+            resetIdleTimer();
+            if (e.key >= '1' && e.key <= '5') selectZone(parseInt(e.key) - 1);
+        });
+
+        // Initialize
+        initLangButtons();
+        initZoneCards();
+        initZoneDots();
+        selectZone(0);
+        addWelcomeMessage();
+    </script>
+
+</body>
+</html>

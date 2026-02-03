@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="light" lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport" />
+    <title>AIコンシェルジュ | GBase Support</title>
+    <meta name="description" content="商業施設向けAIコンシェルジュ。店舗検索、フロア案内、多言語対応など。">
+
+    <!-- Prevent zoom on touch devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee862b",
+                        "primary-dark": "#d9731e",
+                        "background": "#f5f5f5",
+                        "surface": "#ffffff",
+                        "text-main": "#1a1a1a",
+                        "text-secondary": "#666666",
+                        "border": "#e0e0e0",
+                    },
+                    fontFamily: {
+                        "sans": ["Noto Sans JP", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        /* Prevent text selection on touch */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Zone card styles */
+        .zone-card {
+            transition: all 0.2s ease;
+        }
+        .zone-card:hover {
+            transform: translateY(-4px);
+        }
+        .zone-card.active {
+            ring: 3px;
+            transform: translateY(-2px);
+        }
+        .zone-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Prompt button styles */
+        .prompt-btn {
+            transition: all 0.15s ease;
+        }
+        .prompt-btn:hover {
+            transform: translateX(4px);
+        }
+        .prompt-btn:active {
+            transform: scale(0.98);
+        }
+        .prompt-btn.sending {
+            background-color: #22c55e !important;
+            color: white !important;
+        }
+
+        /* Color themes */
+        .theme-blue { --theme-color: 59, 130, 246; }
+        .theme-orange { --theme-color: 249, 115, 22; }
+        .theme-pink { --theme-color: 236, 72, 153; }
+        .theme-green { --theme-color: 34, 197, 94; }
+        .theme-purple { --theme-color: 168, 85, 247; }
+
+        .ring-theme { ring-color: rgba(var(--theme-color), 0.5); }
+        .bg-theme-light { background-color: rgba(var(--theme-color), 0.1); }
+        .text-theme { color: rgb(var(--theme-color)); }
+        .border-theme { border-color: rgba(var(--theme-color), 0.3); }
+
+        /* Idle timer */
+        @keyframes countdown-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .countdown-pulse {
+            animation: countdown-pulse 1s ease-in-out infinite;
+        }
+
+        /* Toast animation */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+        .animate-fade-in {
+            animation: fade-in-up 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-background font-sans text-text-main h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-surface border-b border-border px-4 lg:px-6 py-3 flex items-center justify-between shrink-0">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src="https://cs.gbase.ai/title-logo.png" alt="GBase Support" class="h-8 lg:h-10" />
+            <div class="hidden md:block">
+                <p class="text-base lg:text-lg font-bold text-text-main">AIコンシェルジュ</p>
+            </div>
+        </a>
+
+        <!-- Language Selector -->
+        <div class="relative">
+            <button id="lang-toggle" onclick="toggleLangDropdown()" class="flex items-center gap-2 px-4 py-2 bg-background hover:bg-gray-200 rounded-xl border border-border transition-colors">
+                <span id="current-lang-flag" class="text-2xl">🇯🇵</span>
+                <span id="current-lang-name" class="text-sm font-medium hidden sm:inline">日本語</span>
+                <span class="material-symbols-outlined text-text-secondary text-lg">expand_more</span>
+            </button>
+            <!-- Language Dropdown -->
+            <div id="lang-dropdown" class="hidden absolute right-0 top-full mt-2 bg-surface rounded-xl shadow-2xl border border-border w-72 z-50 p-3">
+                <p class="text-xs text-text-secondary mb-2 px-2">言語を選択</p>
+                <div class="grid grid-cols-2 gap-1" id="lang-buttons"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+        <!-- Left Panel: Zone Cards & Info -->
+        <div class="w-full lg:w-[420px] xl:w-[480px] flex flex-col border-r border-border bg-surface shrink-0 overflow-hidden">
+
+            <!-- Zone Cards (horizontal scroll on mobile, grid on desktop) -->
+            <div class="p-4 border-b border-border shrink-0">
+                <p id="zone-cards-title" class="text-sm font-bold text-text-secondary mb-3">体験を選択</p>
+                <div class="flex lg:grid lg:grid-cols-5 gap-2 overflow-x-auto pb-2 lg:pb-0 lg:overflow-visible" id="zone-cards">
+                    <!-- Zone cards populated by JS -->
+                </div>
+            </div>
+
+            <!-- Zone Detail Info -->
+            <div class="flex-1 overflow-y-auto p-4 lg:p-5" id="zone-detail">
+                <!-- Header -->
+                <div class="mb-4">
+                    <div id="zone-badge" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold mb-2 bg-blue-100 text-blue-600">
+                        <span id="zone-icon">🎫</span>
+                        <span id="zone-label">総合案内</span>
+                    </div>
+                    <h2 id="zone-title" class="text-xl lg:text-2xl font-black text-text-main mb-2">総合案内デスク</h2>
+                    <p id="zone-description" class="text-sm text-text-secondary leading-relaxed">商業施設の入口に設置されたAIコンシェルジュ。</p>
+                </div>
+
+                <!-- Features -->
+                <div class="mb-4 p-4 bg-background rounded-xl">
+                    <h3 class="text-sm font-bold text-text-main mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">checklist</span>
+                        <span id="features-title">このエリアの機能</span>
+                    </h3>
+                    <ul class="space-y-2" id="zone-features"></ul>
+                </div>
+
+                <!-- Try Prompts -->
+                <div class="p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <h3 class="text-sm font-bold text-text-main mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">touch_app</span>
+                        <span id="prompts-title">タップして試す</span>
+                    </h3>
+                    <div class="space-y-2" id="zone-prompts"></div>
+                    <p id="prompts-hint" class="text-xs text-text-secondary mt-3 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">touch_app</span>
+                        タップで質問を直接送信（地図も表示可能）
+                    </p>
+                </div>
+
+                <!-- Language Selector for multilingual zone -->
+                <div id="zone-lang-selector" class="hidden mt-4 p-4 bg-surface rounded-xl border border-border">
+                    <h3 class="text-sm font-bold text-text-main mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">translate</span>
+                        言語を選択
+                    </h3>
+                    <div class="grid grid-cols-5 gap-2" id="zone-lang-buttons"></div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="p-4 border-t border-border bg-surface shrink-0 flex items-center justify-between">
+                <button onclick="prevZone()" id="prev-btn" class="flex items-center gap-1 px-3 py-2 text-sm text-text-secondary hover:text-text-main disabled:opacity-30 transition-colors" disabled>
+                    <span class="material-symbols-outlined text-lg">chevron_left</span>
+                    <span id="prev-text">前へ</span>
+                </button>
+                <div class="flex gap-1" id="zone-dots"></div>
+                <button onclick="nextZone()" id="next-btn" class="flex items-center gap-1 px-3 py-2 text-sm text-text-secondary hover:text-text-main transition-colors">
+                    <span id="next-text">次へ</span>
+                    <span class="material-symbols-outlined text-lg">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel: Bot iframe -->
+        <div class="flex-1 flex flex-col bg-background p-4 lg:p-6 min-h-0">
+            <div class="flex-1 bg-surface rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                <!-- Bot Header -->
+                <div id="bot-header" class="px-4 py-3 border-b border-border flex items-center justify-between bg-gradient-to-r from-blue-500 to-blue-600">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white text-xl">smart_toy</span>
+                        <span id="bot-title" class="text-white font-bold">総合案内 AI</span>
+                    </div>
+                    <button onclick="reloadBot()" class="p-2 hover:bg-white/20 rounded-lg transition-colors" title="リロード">
+                        <span class="material-symbols-outlined text-white text-lg">refresh</span>
+                    </button>
+                </div>
+                <!-- Bot iframe -->
+                <div class="flex-1 relative">
+                    <iframe
+                        id="bot-iframe"
+                        src=""
+                        class="w-full h-full border-0"
+                        allow="microphone"
+                        title="AI Bot">
+                    </iframe>
+                    <!-- Loading overlay -->
+                    <div id="bot-loading" class="absolute inset-0 bg-white flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-3"></div>
+                            <p class="text-text-secondary text-sm">読み込み中...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Idle Timer Warning -->
+            <div id="idle-warning" class="hidden mt-4 p-3 bg-amber-100 border border-amber-300 rounded-xl text-center">
+                <p class="text-amber-800 text-sm font-medium countdown-pulse">
+                    <span class="material-symbols-outlined text-lg align-middle mr-1">timer</span>
+                    <span id="idle-countdown">30</span>秒後にホーム画面に戻ります
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ========== Configuration ==========
+        var CONFIG = {
+            // GBase API configuration
+            apiKey: 'ak-xdVGAVu8Qq8H50FZ5jVYAiswGoSAmSs4X5iwQGa61lzEMb0N',
+            aiId: 'a182ac3e-0552-4fc0-aced-cd995e5f91c2',
+            apiEndpoint: 'https://api.gbase.ai/v1/question/',
+            // Widget wrapper for postMessage support
+            botBaseUrl: 'bot-wrapper.html',
+            realtimeUrl: 'https://gbase.ai/realtime/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
+            idleTimeout: 60,
+            idleWarningAt: 15
+        };
+
+        // Current session ID for API calls
+        var currentSessionId = null;
+
+        // ========== Zone Data (from mall.html) ==========
+        // All zones use full bot URL (supports canvas/maps)
+        var zones = [
+            {
+                id: 0,
+                icon: '🎫',
+                label: '総合案内',
+                title: '総合案内デスク',
+                color: 'blue',
+                gradient: 'from-blue-500 to-blue-600',
+                urlBase: CONFIG.botBaseUrl,
+                showLangSelector: true,
+                description: '商業施設の入口に設置されたAIコンシェルジュ。営業時間、イベント情報、施設の基本案内など、よくある質問に即座に回答します。',
+                features: ['営業時間・定休日の案内', 'イベント・セール情報', '駐車場・アクセス情報', '施設サービス案内'],
+                prompts: ['営業時間を教えて', '今日のイベントは？', '駐車場はありますか？', 'ベビーカーを借りたい']
+            },
+            {
+                id: 1,
+                icon: '🗺️',
+                label: 'フロアナビ',
+                title: 'フロアナビゲーション',
+                color: 'orange',
+                gradient: 'from-orange-500 to-orange-600',
+                urlBase: CONFIG.botBaseUrl,
+                showLangSelector: false,
+                description: '「ユニクロはどこ？」と聞くだけで、現在地から目的地までの最短ルートを3Dマップで表示します。',
+                features: ['店舗への道順案内', '3Dフロアマップ表示', 'エレベーター/階段の選択', '曖昧な要望から店舗提案'],
+                prompts: ['ユニクロはどこ？', 'トイレに行きたい', '子供服のお店を教えて', 'ATMはありますか？']
+            },
+            {
+                id: 2,
+                icon: '🛍️',
+                label: '商品検索',
+                title: '商品検索・在庫確認',
+                color: 'pink',
+                gradient: 'from-pink-500 to-pink-600',
+                urlBase: CONFIG.botBaseUrl,
+                showLangSelector: false,
+                description: '「赤いワンピースが欲しい」など曖昧な要望から、複数店舗の商品を横断検索。在庫状況もリアルタイムで確認できます。',
+                features: ['複数店舗横断検索', '曖昧な要望から商品提案', 'リアルタイム在庫確認', '価格帯・ブランド絞り込み'],
+                prompts: ['赤いワンピースが欲しい', '子供用の靴を探して', '予算5000円でプレゼント', '今セール中の商品は？']
+            },
+            {
+                id: 3,
+                icon: '🌍',
+                label: '多言語',
+                title: '多言語対応（10言語以上）',
+                color: 'green',
+                gradient: 'from-green-500 to-green-600',
+                urlBase: CONFIG.botBaseUrl,
+                showLangSelector: true,
+                description: '英語、中国語、韓国語など10言語以上に自動対応。外国人観光客も母国語で快適に利用できます。',
+                features: ['10言語以上の自動翻訳', '免税カウンター案内', '外貨両替所の案内', 'Wi-Fi・SIMカード情報'],
+                prompts: ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?']
+            },
+            {
+                id: 4,
+                icon: '🎤',
+                label: '音声会話',
+                title: '音声会話（ハンズフリー）',
+                color: 'purple',
+                gradient: 'from-purple-500 to-purple-600',
+                urlBase: CONFIG.realtimeUrl,
+                showLangSelector: false,
+                description: 'キーボード入力は不要。話しかけるだけで、AIが意図を理解し的確に案内します。高齢者や手がふさがっている方にも最適。',
+                features: ['ハンズフリー音声操作', '騒がしい環境でも認識', '方言・アクセント対応', '音声で回答読み上げ'],
+                prompts: ['🎙️ マイクボタンをタップ', '声で質問してみよう', '近くのカフェを教えて', 'お手洗いはどこですか']
+            }
+        ];
+
+        // ========== Language Data ==========
+        var languages = [
+            { code: 'ja', flag: '🇯🇵', name: '日本語' },
+            { code: 'en', flag: '🇺🇸', name: 'English' },
+            { code: 'zh', flag: '🇨🇳', name: '中文' },
+            { code: 'ko', flag: '🇰🇷', name: '한국어' },
+            { code: 'vi', flag: '🇻🇳', name: 'Tiếng Việt' },
+            { code: 'pt', flag: '🇧🇷', name: 'Português' },
+            { code: 'id', flag: '🇮🇩', name: 'Indonesia' },
+            { code: 'th', flag: '🇹🇭', name: 'ไทย' },
+            { code: 'ne', flag: '🇳🇵', name: 'नेपाली' },
+            { code: 'es', flag: '🇪🇸', name: 'Español' }
+        ];
+
+        // ========== State ==========
+        var currentZone = 0;
+        var currentLang = 'ja';
+        var idleTimer = null;
+        var countdownTimer = null;
+        var countdownValue = CONFIG.idleTimeout;
+
+        // ========== Color Maps ==========
+        var colorMap = {
+            blue: { bg: 'bg-blue-100', text: 'text-blue-600', border: 'border-blue-200', ring: 'ring-blue-400', icon: 'text-blue-500' },
+            orange: { bg: 'bg-orange-100', text: 'text-orange-600', border: 'border-orange-200', ring: 'ring-orange-400', icon: 'text-orange-500' },
+            pink: { bg: 'bg-pink-100', text: 'text-pink-600', border: 'border-pink-200', ring: 'ring-pink-400', icon: 'text-pink-500' },
+            green: { bg: 'bg-green-100', text: 'text-green-600', border: 'border-green-200', ring: 'ring-green-400', icon: 'text-green-500' },
+            purple: { bg: 'bg-purple-100', text: 'text-purple-600', border: 'border-purple-200', ring: 'ring-purple-400', icon: 'text-purple-500' }
+        };
+
+        // ========== Initialize Zone Cards ==========
+        function initZoneCards() {
+            var container = document.getElementById('zone-cards');
+            container.replaceChildren();
+
+            zones.forEach(function(zone, index) {
+                var colors = colorMap[zone.color];
+                var card = document.createElement('button');
+                card.className = 'zone-card flex-shrink-0 w-20 lg:w-auto flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all ' +
+                    (index === currentZone ? colors.bg + ' ' + colors.border + ' ring-2 ' + colors.ring : 'bg-white border-gray-200 hover:' + colors.border);
+                card.dataset.zone = index;
+                card.onclick = function() { selectZone(index); };
+
+                var icon = document.createElement('span');
+                icon.className = 'text-2xl lg:text-3xl';
+                icon.textContent = zone.icon;
+
+                var label = document.createElement('span');
+                label.className = 'text-xs font-medium ' + (index === currentZone ? colors.text : 'text-text-secondary');
+                label.textContent = zone.label;
+
+                card.appendChild(icon);
+                card.appendChild(label);
+                container.appendChild(card);
+            });
+        }
+
+        // ========== Initialize Zone Dots ==========
+        function initZoneDots() {
+            var container = document.getElementById('zone-dots');
+            container.replaceChildren();
+
+            zones.forEach(function(zone, index) {
+                var colors = colorMap[zone.color];
+                var dot = document.createElement('button');
+                dot.className = 'w-2 h-2 rounded-full transition-all ' +
+                    (index === currentZone ? 'w-6 ' + colors.bg.replace('100', '500') : 'bg-gray-300');
+                dot.onclick = function() { selectZone(index); };
+                container.appendChild(dot);
+            });
+        }
+
+        // ========== Select Zone ==========
+        function selectZone(index) {
+            currentZone = index;
+            var zone = zones[index];
+            var colors = colorMap[zone.color];
+
+            // Update cards
+            initZoneCards();
+            initZoneDots();
+
+            // Update badge
+            var badge = document.getElementById('zone-badge');
+            badge.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold mb-2 ' + colors.bg + ' ' + colors.text;
+            document.getElementById('zone-icon').textContent = zone.icon;
+            document.getElementById('zone-label').textContent = zone.label;
+
+            // Update text
+            document.getElementById('zone-title').textContent = zone.title;
+            document.getElementById('zone-description').textContent = zone.description;
+
+            // Update features
+            var featuresList = document.getElementById('zone-features');
+            featuresList.replaceChildren();
+            zone.features.forEach(function(feature) {
+                var li = document.createElement('li');
+                li.className = 'flex items-start gap-2 text-sm';
+
+                var icon = document.createElement('span');
+                icon.className = 'material-symbols-outlined text-base mt-0.5 ' + colors.icon;
+                icon.textContent = 'check_circle';
+
+                var text = document.createElement('span');
+                text.className = 'text-text-main';
+                text.textContent = feature;
+
+                li.appendChild(icon);
+                li.appendChild(text);
+                featuresList.appendChild(li);
+            });
+
+            // Update prompts
+            var promptsContainer = document.getElementById('zone-prompts');
+            promptsContainer.replaceChildren();
+            zone.prompts.forEach(function(prompt, i) {
+                var btn = document.createElement('button');
+                btn.className = 'prompt-btn w-full text-left px-4 py-3 bg-white hover:bg-gray-50 border border-border rounded-xl text-sm text-text-main flex items-center gap-3 transition-all';
+                btn.onclick = function() { sendPrompt(prompt, btn); };
+
+                var num = document.createElement('span');
+                num.className = 'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ' + colors.bg + ' ' + colors.text;
+                num.textContent = i + 1;
+
+                var text = document.createElement('span');
+                text.className = 'flex-1';
+                text.textContent = prompt;
+
+                var arrow = document.createElement('span');
+                arrow.className = 'material-symbols-outlined text-text-secondary text-lg';
+                arrow.textContent = 'send';
+
+                btn.appendChild(num);
+                btn.appendChild(text);
+                btn.appendChild(arrow);
+                promptsContainer.appendChild(btn);
+            });
+
+            // Update bot header
+            var botHeader = document.getElementById('bot-header');
+            botHeader.className = 'px-4 py-3 border-b border-border flex items-center justify-between bg-gradient-to-r ' + zone.gradient;
+            document.getElementById('bot-title').textContent = zone.label + ' AI';
+
+            // Show/hide language selector
+            var langSelector = document.getElementById('zone-lang-selector');
+            if (zone.showLangSelector) {
+                langSelector.classList.remove('hidden');
+                initZoneLangButtons();
+            } else {
+                langSelector.classList.add('hidden');
+            }
+
+            // Update navigation
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === zones.length - 1;
+
+            // Load bot
+            loadBot();
+            resetIdleTimer();
+        }
+
+        // ========== Load Bot ==========
+        function loadBot() {
+            var zone = zones[currentZone];
+            var iframe = document.getElementById('bot-iframe');
+            var loading = document.getElementById('bot-loading');
+
+            // Reset session when switching zones
+            currentSessionId = null;
+
+            loading.classList.remove('hidden');
+
+            // Use full bot URL for zones (supports canvas/maps)
+            // Voice zone uses realtime URL
+            var url = zone.urlBase;
+            if (url.includes('gbase.ai/bot/') || url.includes('gbase.ai/realtime/')) {
+                url = url + '?lang=' + currentLang;
+            } else {
+                url = url + '?lang=' + currentLang;
+            }
+            iframe.src = url;
+
+            iframe.onload = function() {
+                // Give bot time to initialize
+                setTimeout(function() {
+                    loading.classList.add('hidden');
+                }, 1000);
+            };
+        }
+
+        function reloadBot() {
+            loadBot();
+        }
+
+        // ========== Generate UUID ==========
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0;
+                var v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // ========== Send Prompt to Bot ==========
+        function sendPrompt(prompt, btn) {
+            // Skip if it's a voice instruction
+            if (prompt.includes('🎙️') || prompt.includes('マイク') || prompt.includes('声で')) {
+                return;
+            }
+
+            // Visual feedback - show sending state
+            btn.classList.add('sending');
+            var arrow = btn.querySelector('.material-symbols-outlined:last-child');
+            var originalText = arrow ? arrow.textContent : '';
+            if (arrow) arrow.textContent = 'hourglass_empty';
+
+            var iframe = document.getElementById('bot-iframe');
+
+            // Send message to bot-wrapper.html which forwards to widget
+            // The widget supports: { type: 'send', question: '...' }
+            try {
+                iframe.contentWindow.postMessage({ type: 'send', question: prompt }, '*');
+                console.log('PostMessage sent to bot wrapper:', prompt);
+
+                if (arrow) arrow.textContent = 'check';
+                showToast('質問を送信しました！');
+            } catch (error) {
+                console.error('PostMessage Error:', error);
+                if (arrow) arrow.textContent = 'error';
+                showToast('エラーが発生しました');
+            }
+
+            // Reset button after delay
+            setTimeout(function() {
+                btn.classList.remove('sending');
+                if (arrow) arrow.textContent = originalText;
+            }, 2000);
+
+            resetIdleTimer();
+        }
+
+        // ========== Toast Notification ==========
+        function showToast(message) {
+            // Remove existing toast
+            var existingToast = document.getElementById('toast');
+            if (existingToast) existingToast.remove();
+
+            // Create toast
+            var toast = document.createElement('div');
+            toast.id = 'toast';
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 z-50 animate-fade-in';
+
+            var icon = document.createElement('span');
+            icon.className = 'material-symbols-outlined text-green-400';
+            icon.textContent = 'check_circle';
+
+            var text = document.createElement('span');
+            text.className = 'text-sm font-medium';
+            text.textContent = message;
+
+            toast.appendChild(icon);
+            toast.appendChild(text);
+            document.body.appendChild(toast);
+
+            // Remove after delay
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 3000);
+        }
+
+        // ========== Language Functions ==========
+        function initLangButtons() {
+            var container = document.getElementById('lang-buttons');
+            container.replaceChildren();
+            languages.forEach(function(lang) {
+                container.appendChild(createLangButton(lang, lang.code === currentLang, function() {
+                    changeLang(lang.code);
+                }));
+            });
+        }
+
+        function initZoneLangButtons() {
+            var container = document.getElementById('zone-lang-buttons');
+            container.replaceChildren();
+            languages.forEach(function(lang) {
+                container.appendChild(createLangButton(lang, lang.code === currentLang, function() {
+                    changeLang(lang.code);
+                }));
+            });
+        }
+
+        function createLangButton(lang, isActive, onClick) {
+            var btn = document.createElement('button');
+            btn.className = 'flex flex-col items-center gap-1 p-2 rounded-lg transition-all ' +
+                (isActive ? 'bg-primary/10 ring-2 ring-primary' : 'hover:bg-gray-100');
+            btn.onclick = onClick;
+
+            var flag = document.createElement('span');
+            flag.className = 'text-xl';
+            flag.textContent = lang.flag;
+
+            var name = document.createElement('span');
+            name.className = 'text-xs ' + (isActive ? 'text-primary font-bold' : 'text-text-secondary');
+            name.textContent = lang.name;
+
+            btn.appendChild(flag);
+            btn.appendChild(name);
+            return btn;
+        }
+
+        function toggleLangDropdown() {
+            document.getElementById('lang-dropdown').classList.toggle('hidden');
+        }
+
+        function changeLang(langCode) {
+            currentLang = langCode;
+            var lang = languages.find(function(l) { return l.code === langCode; });
+            if (lang) {
+                document.getElementById('current-lang-flag').textContent = lang.flag;
+                document.getElementById('current-lang-name').textContent = lang.name;
+            }
+            document.getElementById('lang-dropdown').classList.add('hidden');
+            initLangButtons();
+            initZoneLangButtons();
+            loadBot();
+        }
+
+        // ========== Navigation ==========
+        function prevZone() {
+            if (currentZone > 0) selectZone(currentZone - 1);
+        }
+
+        function nextZone() {
+            if (currentZone < zones.length - 1) selectZone(currentZone + 1);
+        }
+
+        // ========== Idle Timer ==========
+        function startIdleTimer() {
+            clearIdleTimer();
+            countdownValue = CONFIG.idleTimeout;
+            idleTimer = setTimeout(showIdleWarning, (CONFIG.idleTimeout - CONFIG.idleWarningAt) * 1000);
+        }
+
+        function showIdleWarning() {
+            var warning = document.getElementById('idle-warning');
+            var countdown = document.getElementById('idle-countdown');
+            countdownValue = CONFIG.idleWarningAt;
+            countdown.textContent = countdownValue;
+            warning.classList.remove('hidden');
+
+            countdownTimer = setInterval(function() {
+                countdownValue--;
+                countdown.textContent = countdownValue;
+                if (countdownValue <= 0) {
+                    // Return to first zone
+                    selectZone(0);
+                    clearIdleTimer();
+                }
+            }, 1000);
+        }
+
+        function clearIdleTimer() {
+            if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+            if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+            document.getElementById('idle-warning').classList.add('hidden');
+        }
+
+        function resetIdleTimer() {
+            startIdleTimer();
+        }
+
+        // ========== Event Listeners ==========
+        document.addEventListener('click', function(e) {
+            var toggle = document.getElementById('lang-toggle');
+            var dropdown = document.getElementById('lang-dropdown');
+            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+            resetIdleTimer();
+        });
+
+        document.addEventListener('touchstart', resetIdleTimer);
+        document.addEventListener('keydown', function(e) {
+            resetIdleTimer();
+            if (e.key >= '1' && e.key <= '5') selectZone(parseInt(e.key) - 1);
+            else if (e.key === 'ArrowLeft') prevZone();
+            else if (e.key === 'ArrowRight') nextZone();
+        });
+
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        // ========== Initialize ==========
+        (function init() {
+            initLangButtons();
+            initZoneCards();
+            initZoneDots();
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var zoneParam = urlParams.get('zone');
+            var langParam = urlParams.get('lang');
+
+            if (langParam && languages.some(function(l) { return l.code === langParam; })) {
+                currentLang = langParam;
+                var lang = languages.find(function(l) { return l.code === langParam; });
+                document.getElementById('current-lang-flag').textContent = lang.flag;
+                document.getElementById('current-lang-name').textContent = lang.name;
+            }
+
+            var startZone = 0;
+            if (zoneParam !== null) {
+                var z = parseInt(zoneParam);
+                if (z >= 0 && z < zones.length) startZone = z;
+            }
+            selectZone(startZone);
+        })();
+    </script>
+
+</body>
+
+</html>
