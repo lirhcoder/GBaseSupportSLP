@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AIコンシェルジュ Kiosk | GBase</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #000;
+        }
+
+        /* Bot iframe - full screen */
+        #bot-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1;
+        }
+
+        /* Floating overlay panel - matches Playwright design */
+        #kiosk-overlay {
+            position: fixed;
+            left: 10px;
+            top: 70px;
+            bottom: 70px;
+            width: 280px;
+            background: rgba(26, 26, 46, 0.97);
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        #kiosk-overlay.hidden {
+            transform: translateX(calc(-100% - 20px));
+        }
+
+        /* Header */
+        #kiosk-header {
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #kiosk-header h1 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        #kiosk-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            margin: 0;
+        }
+
+        /* Zone buttons grid */
+        #kiosk-zones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .kiosk-zone-btn {
+            padding: 10px 8px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .kiosk-zone-btn .zone-icon {
+            font-size: 20px;
+        }
+
+        .kiosk-zone-btn .zone-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .kiosk-zone-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.02);
+        }
+
+        .kiosk-zone-btn.active {
+            background: var(--zone-color);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Prompts list */
+        #kiosk-prompts {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kiosk-prompt-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 13px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kiosk-prompt-btn:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--zone-color);
+        }
+
+        .kiosk-prompt-btn:active {
+            transform: scale(0.98);
+        }
+
+        .kiosk-prompt-btn.copied {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .kiosk-prompt-btn .arrow {
+            opacity: 0.4;
+            font-size: 12px;
+        }
+
+        .kiosk-prompt-btn:hover .arrow {
+            opacity: 1;
+        }
+
+        /* Footer */
+        #kiosk-footer {
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #kiosk-hint {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        #kiosk-hint .icon {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        #kiosk-status {
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            margin-top: 8px;
+        }
+
+        /* Toggle button */
+        #kiosk-toggle-btn {
+            position: fixed;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99998;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        #kiosk-toggle-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #kiosk-toggle-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.7);
+        }
+
+        /* Toast notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(34, 197, 94, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 100000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        #toast.show {
+            opacity: 1;
+        }
+
+        /* Loading state */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a2e;
+            z-index: 100001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        #loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #loading-overlay p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 16px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bot iframe -->
+    <iframe id="bot-frame" src=""></iframe>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>読み込み中...</p>
+    </div>
+
+    <!-- Floating overlay panel -->
+    <div id="kiosk-overlay">
+        <div id="kiosk-header">
+            <div>
+                <h1>🤖 AIコンシェルジュ</h1>
+                <p>ニュウマン高輪</p>
+            </div>
+        </div>
+        <div id="kiosk-zones"></div>
+        <div id="kiosk-prompts"></div>
+        <div id="kiosk-footer">
+            <div id="kiosk-hint">
+                <span class="icon">📋</span> タップでコピー → チャットに貼り付け
+            </div>
+            <div id="kiosk-status">GitHub Pages Edition</div>
+        </div>
+    </div>
+
+    <!-- Toggle button (shown when overlay is hidden) -->
+    <button id="kiosk-toggle-btn">☰</button>
+
+    <!-- Toast notification -->
+    <div id="toast">
+        <span>📋</span>
+        <span id="toast-text">コピーしました！</span>
+    </div>
+
+    <script>
+        // Configuration
+        var CONFIG = {
+            botUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2'
+        };
+
+        // Zone definitions (same as Playwright version)
+        var ZONES = [
+            {
+                icon: '🎫',
+                label: '総合案内',
+                color: '#3b82f6',
+                prompts: ['営業時間を教えて', '今日のイベントは？', '駐車場はありますか？', 'ベビーカーを借りたい']
+            },
+            {
+                icon: '🗺️',
+                label: 'フロアナビ',
+                color: '#f97316',
+                prompts: ['スターバックスはどこ？', 'トイレに行きたい', 'ATMはありますか？', 'ユニクロへの行き方']
+            },
+            {
+                icon: '🛍️',
+                label: '店舗検索',
+                color: '#ec4899',
+                prompts: ['カフェを探して', 'レストランのおすすめ', '子供服のお店', 'お土産を買いたい']
+            },
+            {
+                icon: '🌍',
+                label: '多言語',
+                color: '#22c55e',
+                prompts: ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?']
+            },
+            {
+                icon: '❓',
+                label: 'その他',
+                color: '#8b5cf6',
+                prompts: ['Wi-Fiはありますか？', 'コインロッカーの場所', '車椅子の貸し出し', '忘れ物をしました']
+            }
+        ];
+
+        var currentZoneIndex = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initZones();
+            renderPrompts(0);
+            loadBot();
+            setupEventListeners();
+        });
+
+        // Load bot iframe
+        function loadBot() {
+            var iframe = document.getElementById('bot-frame');
+            var loading = document.getElementById('loading-overlay');
+
+            iframe.src = CONFIG.botUrl;
+
+            iframe.onload = function() {
+                setTimeout(function() {
+                    loading.classList.add('hidden');
+                }, 1000);
+            };
+
+            // Fallback timeout
+            setTimeout(function() {
+                loading.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize zone buttons using safe DOM methods
+        function initZones() {
+            var container = document.getElementById('kiosk-zones');
+            container.textContent = '';
+
+            ZONES.forEach(function(zone, index) {
+                var btn = document.createElement('button');
+                btn.className = 'kiosk-zone-btn' + (index === 0 ? ' active' : '');
+                btn.style.setProperty('--zone-color', zone.color);
+
+                var iconSpan = document.createElement('span');
+                iconSpan.className = 'zone-icon';
+                iconSpan.textContent = zone.icon;
+
+                var labelSpan = document.createElement('span');
+                labelSpan.className = 'zone-label';
+                labelSpan.textContent = zone.label;
+
+                btn.appendChild(iconSpan);
+                btn.appendChild(labelSpan);
+
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    selectZone(index);
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Select zone
+        function selectZone(index) {
+            currentZoneIndex = index;
+
+            // Update active state
+            var buttons = document.querySelectorAll('.kiosk-zone-btn');
+            buttons.forEach(function(btn, i) {
+                if (i === index) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            renderPrompts(index);
+        }
+
+        // Render prompts for zone using safe DOM methods
+        function renderPrompts(zoneIndex) {
+            var zone = ZONES[zoneIndex];
+            var container = document.getElementById('kiosk-prompts');
+            container.textContent = '';
+            container.style.setProperty('--zone-color', zone.color);
+
+            zone.prompts.forEach(function(prompt) {
+                var btn = document.createElement('button');
+                btn.className = 'kiosk-prompt-btn';
+                btn.style.setProperty('--zone-color', zone.color);
+
+                var textSpan = document.createElement('span');
+                textSpan.textContent = prompt;
+
+                var arrowSpan = document.createElement('span');
+                arrowSpan.className = 'arrow';
+                arrowSpan.textContent = '📋';
+
+                btn.appendChild(textSpan);
+                btn.appendChild(arrowSpan);
+
+                btn.onclick = function() {
+                    copyPrompt(prompt, btn);
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Copy prompt to clipboard
+        function copyPrompt(prompt, btn) {
+            navigator.clipboard.writeText(prompt).then(function() {
+                btn.classList.add('copied');
+                var arrow = btn.querySelector('.arrow');
+                if (arrow) arrow.textContent = '✓';
+
+                showToast('コピーしました！右に貼り付けてください');
+
+                setTimeout(function() {
+                    btn.classList.remove('copied');
+                    if (arrow) arrow.textContent = '📋';
+                }, 2000);
+            }).catch(function(err) {
+                showToast('コピーに失敗しました');
+            });
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            var toast = document.getElementById('toast');
+            var text = document.getElementById('toast-text');
+            text.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            var overlay = document.getElementById('kiosk-overlay');
+            var toggleBtn = document.getElementById('kiosk-toggle-btn');
+
+            // Toggle button click
+            toggleBtn.onclick = function() {
+                showOverlay();
+            };
+
+            // Click outside to close
+            document.addEventListener('click', function(e) {
+                if (!overlay.classList.contains('hidden')) {
+                    if (!overlay.contains(e.target) && e.target !== toggleBtn) {
+                        hideOverlay();
+                    }
+                }
+            });
+
+            // Prevent clicks inside overlay from closing it
+            overlay.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+
+        // Show overlay
+        function showOverlay() {
+            document.getElementById('kiosk-overlay').classList.remove('hidden');
+            document.getElementById('kiosk-toggle-btn').classList.remove('visible');
+        }
+
+        // Hide overlay
+        function hideOverlay() {
+            document.getElementById('kiosk-overlay').classList.add('hidden');
+            document.getElementById('kiosk-toggle-btn').classList.add('visible');
+        }
+    </script>
+</body>
+</html>
