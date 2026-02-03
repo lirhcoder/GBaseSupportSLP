@@ -154,7 +154,7 @@
                 <div class="hidden md:flex items-center gap-3">
                     <a href="https://admin.gbase.ai/"
                         class="text-sm font-medium text-text-main-light hover:text-primary transition-colors">ログイン</a>
-                    <a href="https://cs.gbase.ai/contact"
+                    <a href="index.html#contact"
                         class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all text-white text-sm font-medium">
                         お問い合わせ
                     </a>
@@ -174,7 +174,7 @@
                 <a href="https://cs.gbase.ai/blog" class="text-sm font-medium text-text-main-light">リソース</a>
                 <hr class="border-border-light">
                 <a href="https://admin.gbase.ai/" class="text-sm font-medium text-text-main-light">ログイン</a>
-                <a href="https://cs.gbase.ai/contact"
+                <a href="index.html#contact"
                     class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium">
                     お問い合わせ
                 </a>
@@ -269,7 +269,10 @@
                         <!-- 右側: フォーム -->
                         <div class="bg-background-light p-8 lg:p-12 flex flex-col justify-center">
                             <h3 class="text-lg font-bold text-text-main-light mb-6">無料トライアルに登録</h3>
-                            <form class="space-y-4" action="https://cs.gbase.ai/contact" method="get">
+                            <form id="register-form" class="space-y-4">
+                                <input type="hidden" name="access_key" value="937807c3-360b-45db-ae1e-e314dce87234">
+                                <input type="hidden" name="subject" value="GBase Support - 無料トライアル登録">
+                                <input type="hidden" name="from_name" value="GBase Support トライアル登録フォーム">
                                 <div>
                                     <label class="block text-sm font-bold text-text-main-light mb-2">会社名 <span class="text-red-500">*</span></label>
                                     <input type="text" name="company" required
@@ -307,23 +310,64 @@
                                     <select name="industry"
                                         class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white">
                                         <option value="">選択してください</option>
-                                        <option value="commercial">商業施設・百貨店</option>
-                                        <option value="hotel">ホテル・旅館</option>
-                                        <option value="ec">EC・オンラインストア</option>
-                                        <option value="retail">小売・店舗</option>
-                                        <option value="medical">医療・クリニック</option>
-                                        <option value="other">その他</option>
+                                        <option value="商業施設・百貨店">商業施設・百貨店</option>
+                                        <option value="ホテル・旅館">ホテル・旅館</option>
+                                        <option value="EC・オンラインストア">EC・オンラインストア</option>
+                                        <option value="小売・店舗">小売・店舗</option>
+                                        <option value="医療・クリニック">医療・クリニック</option>
+                                        <option value="その他">その他</option>
                                     </select>
                                 </div>
-                                <button type="submit"
+                                <button type="submit" id="register-submit-btn"
                                     class="w-full flex items-center justify-center gap-2 rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/20 mt-6">
                                     <span class="material-symbols-outlined">rocket_launch</span>
                                     無料トライアルを開始
                                 </button>
+                                <div id="register-form-message" class="hidden mt-4 p-4 rounded-lg text-center"></div>
                                 <p class="text-xs text-text-secondary-light text-center mt-4">
                                     登録することで、<a href="https://cs.gbase.ai/terms-of-use" class="text-primary hover:underline">利用規約</a>および<a href="https://cs.gbase.ai/privacy-policy" class="text-primary hover:underline">プライバシーポリシー</a>に同意したものとみなされます。
                                 </p>
                             </form>
+                            <script>
+                            document.getElementById('register-form').addEventListener('submit', async function(e) {
+                                e.preventDefault();
+                                var form = e.target;
+                                var submitBtn = document.getElementById('register-submit-btn');
+                                var messageDiv = document.getElementById('register-form-message');
+                                var btnIcon = submitBtn.querySelector('.material-symbols-outlined');
+
+                                submitBtn.disabled = true;
+                                btnIcon.textContent = 'progress_activity';
+                                btnIcon.classList.add('animate-spin');
+                                submitBtn.childNodes[submitBtn.childNodes.length - 1].textContent = ' 送信中...';
+
+                                try {
+                                    var formData = new FormData(form);
+                                    var response = await fetch('https://api.web3forms.com/submit', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+                                    var result = await response.json();
+
+                                    if (result.success) {
+                                        messageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-800';
+                                        messageDiv.textContent = '登録ありがとうございます。担当者よりご連絡いたします。';
+                                        form.reset();
+                                    } else {
+                                        throw new Error(result.message || '送信に失敗しました');
+                                    }
+                                } catch (error) {
+                                    messageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-800';
+                                    messageDiv.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+                                } finally {
+                                    submitBtn.disabled = false;
+                                    btnIcon.textContent = 'rocket_launch';
+                                    btnIcon.classList.remove('animate-spin');
+                                    submitBtn.childNodes[submitBtn.childNodes.length - 1].textContent = ' 無料トライアルを開始';
+                                    messageDiv.classList.remove('hidden');
+                                }
+                            });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -431,7 +475,7 @@
                 </div>
 
                 <div class="mt-8 text-center">
-                    <a href="https://cs.gbase.ai/contact" class="inline-flex items-center gap-2 text-primary font-medium hover:underline">
+                    <a href="index.html#contact" class="inline-flex items-center gap-2 text-primary font-medium hover:underline">
                         <span>その他のご質問はお問い合わせください</span>
                         <span class="material-symbols-outlined text-lg">arrow_forward</span>
                     </a>
@@ -453,13 +497,13 @@
                                     class="text-sm text-text-secondary-light hover:text-primary">製品概要</a></li>
                             <li><a href="index.html#case-study"
                                     class="text-sm text-text-secondary-light hover:text-primary">ソリューション一覧</a></li>
-                            <li><a href="https://cs.gbase.ai/contact"
+                            <li><a href="index.html#contact"
                                     class="text-sm text-text-secondary-light hover:text-primary">コンサルティング向け</a></li>
                             <li><a href="https://cs.gbase.ai/price"
                                     class="text-sm text-text-secondary-light hover:text-primary">料金プラン</a></li>
                             <li><a href="https://cs.gbase.ai/blog"
                                     class="text-sm text-text-secondary-light hover:text-primary">ブログ・資料</a></li>
-                            <li><a href="https://cs.gbase.ai/contact"
+                            <li><a href="index.html#contact"
                                     class="text-sm text-text-secondary-light hover:text-primary">お問い合わせ</a></li>
                             <li><a href="https://admin.gbase.ai/"
                                     class="text-sm text-text-secondary-light hover:text-primary">ログイン</a></li>

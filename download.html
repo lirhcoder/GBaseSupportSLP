@@ -158,7 +158,7 @@
                         class="flex items-center justify-center rounded-full h-10 px-5 border border-border-light hover:border-text-main-light transition-colors text-text-main-light text-sm font-medium">
                         無料ではじめる
                     </a>
-                    <a href="https://cs.gbase.ai/contact"
+                    <a href="index.html#contact"
                         class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all text-white text-sm font-medium">
                         お問い合わせ
                     </a>
@@ -182,7 +182,7 @@
                     class="flex items-center justify-center rounded-full h-10 px-5 border border-border-light text-text-main-light text-sm font-medium">
                     無料ではじめる
                 </a>
-                <a href="https://cs.gbase.ai/contact"
+                <a href="index.html#contact"
                     class="flex items-center justify-center rounded-full h-10 px-5 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium">
                     お問い合わせ
                 </a>
@@ -266,7 +266,10 @@
                         <!-- 右側: フォーム -->
                         <div class="bg-background-light p-8 lg:p-12 flex flex-col justify-center">
                             <h3 class="text-lg font-bold text-text-main-light mb-6">フォームを入力して資料を入手</h3>
-                            <form class="space-y-4" action="https://cs.gbase.ai/contact" method="get">
+                            <form id="download-form" class="space-y-4">
+                                <input type="hidden" name="access_key" value="937807c3-360b-45db-ae1e-e314dce87234">
+                                <input type="hidden" name="subject" value="GBase Support - 資料請求">
+                                <input type="hidden" name="from_name" value="GBase Support 資料請求フォーム">
                                 <div>
                                     <label class="block text-sm font-bold text-text-main-light mb-2">会社名 <span class="text-red-500">*</span></label>
                                     <input type="text" name="company" required
@@ -291,15 +294,57 @@
                                         class="w-full px-4 py-3 rounded-lg border border-border-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white"
                                         placeholder="03-1234-5678">
                                 </div>
-                                <button type="submit"
+                                <button type="submit" id="download-submit-btn"
                                     class="w-full flex items-center justify-center gap-2 rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-lg font-bold shadow-lg shadow-primary/20 mt-6">
                                     <span class="material-symbols-outlined">download</span>
                                     無料で資料をダウンロード
                                 </button>
+                                <div id="download-form-message" class="hidden mt-4 p-4 rounded-lg text-center"></div>
                                 <p class="text-xs text-text-secondary-light text-center mt-4">
                                     ご入力いただいた情報は<a href="https://cs.gbase.ai/privacy-policy" class="text-primary hover:underline">プライバシーポリシー</a>に基づき適切に管理いたします。
                                 </p>
                             </form>
+                            <script>
+                            document.getElementById('download-form').addEventListener('submit', async function(e) {
+                                e.preventDefault();
+                                var form = e.target;
+                                var submitBtn = document.getElementById('download-submit-btn');
+                                var messageDiv = document.getElementById('download-form-message');
+                                var btnIcon = submitBtn.querySelector('.material-symbols-outlined');
+                                var originalBtnText = submitBtn.textContent;
+
+                                submitBtn.disabled = true;
+                                btnIcon.textContent = 'progress_activity';
+                                btnIcon.classList.add('animate-spin');
+                                submitBtn.childNodes[submitBtn.childNodes.length - 1].textContent = ' 送信中...';
+
+                                try {
+                                    var formData = new FormData(form);
+                                    var response = await fetch('https://api.web3forms.com/submit', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+                                    var result = await response.json();
+
+                                    if (result.success) {
+                                        messageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-800';
+                                        messageDiv.textContent = 'お申し込みありがとうございます。担当者より資料をお送りいたします。';
+                                        form.reset();
+                                    } else {
+                                        throw new Error(result.message || '送信に失敗しました');
+                                    }
+                                } catch (error) {
+                                    messageDiv.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-800';
+                                    messageDiv.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+                                } finally {
+                                    submitBtn.disabled = false;
+                                    btnIcon.textContent = 'download';
+                                    btnIcon.classList.remove('animate-spin');
+                                    submitBtn.childNodes[submitBtn.childNodes.length - 1].textContent = ' 無料で資料をダウンロード';
+                                    messageDiv.classList.remove('hidden');
+                                }
+                            });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -357,7 +402,7 @@
                         class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark transition-colors text-white text-base font-bold">
                         14日間無料トライアル開始
                     </a>
-                    <a href="https://cs.gbase.ai/contact"
+                    <a href="index.html#contact"
                         class="flex items-center justify-center rounded-lg h-12 px-8 bg-transparent border border-gray-600 hover:border-white transition-colors text-white text-base font-bold">
                         お問い合わせ
                     </a>
@@ -379,13 +424,13 @@
                                     class="text-sm text-text-secondary-light hover:text-primary">製品概要</a></li>
                             <li><a href="index.html#case-study"
                                     class="text-sm text-text-secondary-light hover:text-primary">ソリューション一覧</a></li>
-                            <li><a href="https://cs.gbase.ai/contact"
+                            <li><a href="index.html#contact"
                                     class="text-sm text-text-secondary-light hover:text-primary">コンサルティング向け</a></li>
                             <li><a href="https://cs.gbase.ai/price"
                                     class="text-sm text-text-secondary-light hover:text-primary">料金プラン</a></li>
                             <li><a href="https://cs.gbase.ai/blog"
                                     class="text-sm text-text-secondary-light hover:text-primary">ブログ・資料</a></li>
-                            <li><a href="https://cs.gbase.ai/contact"
+                            <li><a href="index.html#contact"
                                     class="text-sm text-text-secondary-light hover:text-primary">お問い合わせ</a></li>
                             <li><a href="https://admin.gbase.ai/"
                                     class="text-sm text-text-secondary-light hover:text-primary">ログイン</a></li>
