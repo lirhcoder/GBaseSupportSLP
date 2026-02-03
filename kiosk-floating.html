@@ -203,7 +203,7 @@
             margin-top: 8px;
         }
 
-        /* Toggle button */
+        /* Toggle button - desktop only */
         #kiosk-toggle-btn {
             position: fixed;
             left: 15px;
@@ -235,6 +235,11 @@
         #kiosk-toggle-btn:hover {
             transform: translateY(-50%) scale(1.1);
             box-shadow: 0 6px 25px rgba(102, 126, 234, 0.7);
+        }
+
+        /* Mobile peek tab - shown when drawer is hidden */
+        #kiosk-peek-tab {
+            display: none;
         }
 
         /* Toast notification */
@@ -440,30 +445,54 @@
                 display: none;
             }
 
-            /* Toggle button at bottom center */
+            /* Hide desktop toggle button on mobile */
             #kiosk-toggle-btn {
+                display: none !important;
+            }
+
+            /* Mobile peek tab - bottom center */
+            #kiosk-peek-tab {
+                display: flex;
+                position: fixed;
                 left: 50%;
-                top: auto;
-                bottom: 20px;
+                bottom: 0;
                 transform: translateX(-50%);
-                width: auto;
-                height: auto;
-                padding: 12px 24px;
-                border-radius: 30px;
-                font-size: 14px;
+                z-index: 99998;
+                padding: 8px 28px 12px;
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
+                background: rgba(26, 26, 46, 0.95);
+                backdrop-filter: blur(10px);
+                border-radius: 16px 16px 0 0;
+                border: none;
+                color: white;
+                font-size: 12px;
+                font-weight: 500;
+                cursor: pointer;
+                box-shadow: 0 -2px 20px rgba(0,0,0,0.3);
+                align-items: center;
+                gap: 6px;
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
             }
 
-            #kiosk-toggle-btn.visible {
-                transform: translateX(-50%);
+            #kiosk-peek-tab.visible {
+                opacity: 1;
+                pointer-events: auto;
             }
 
-            #kiosk-toggle-btn:hover {
-                transform: translateX(-50%) scale(1.05);
+            #kiosk-peek-tab .arrow {
+                font-size: 16px;
+                transition: transform 0.2s;
+            }
+
+            #kiosk-peek-tab:active .arrow {
+                transform: translateY(-2px);
             }
 
             /* Toast position */
             #toast {
-                bottom: 100px;
+                bottom: 80px;
             }
         }
     </style>
@@ -497,8 +526,14 @@
         </div>
     </div>
 
-    <!-- Toggle button (shown when overlay is hidden) -->
-    <button id="kiosk-toggle-btn">📋 質問を選ぶ</button>
+    <!-- Toggle button - desktop (shown when overlay is hidden) -->
+    <button id="kiosk-toggle-btn">☰</button>
+
+    <!-- Mobile peek tab (shown when drawer is hidden) -->
+    <button id="kiosk-peek-tab">
+        <span class="arrow">▲</span>
+        <span>質問メニュー</span>
+    </button>
 
     <!-- Toast notification -->
     <div id="toast">
@@ -692,16 +727,23 @@
         function setupEventListeners() {
             var overlay = document.getElementById('kiosk-overlay');
             var toggleBtn = document.getElementById('kiosk-toggle-btn');
+            var peekTab = document.getElementById('kiosk-peek-tab');
+            var header = document.getElementById('kiosk-header');
 
-            // Toggle button click
+            // Toggle button click (desktop)
             toggleBtn.onclick = function() {
+                showOverlay();
+            };
+
+            // Peek tab click (mobile)
+            peekTab.onclick = function() {
                 showOverlay();
             };
 
             // Click outside to close
             document.addEventListener('click', function(e) {
                 if (!overlay.classList.contains('hidden')) {
-                    if (!overlay.contains(e.target) && e.target !== toggleBtn) {
+                    if (!overlay.contains(e.target) && e.target !== toggleBtn && e.target !== peekTab) {
                         hideOverlay();
                     }
                 }
@@ -711,18 +753,46 @@
             overlay.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
+
+            // Touch swipe to close (mobile)
+            var touchStartY = 0;
+            var touchCurrentY = 0;
+
+            header.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            header.addEventListener('touchmove', function(e) {
+                touchCurrentY = e.touches[0].clientY;
+                var diff = touchCurrentY - touchStartY;
+                if (diff > 0) {
+                    overlay.style.transform = 'translateY(' + diff + 'px)';
+                }
+            }, { passive: true });
+
+            header.addEventListener('touchend', function(e) {
+                var diff = touchCurrentY - touchStartY;
+                overlay.style.transform = '';
+                if (diff > 50) {
+                    hideOverlay();
+                }
+                touchStartY = 0;
+                touchCurrentY = 0;
+            }, { passive: true });
         }
 
         // Show overlay
         function showOverlay() {
             document.getElementById('kiosk-overlay').classList.remove('hidden');
             document.getElementById('kiosk-toggle-btn').classList.remove('visible');
+            document.getElementById('kiosk-peek-tab').classList.remove('visible');
         }
 
         // Hide overlay
         function hideOverlay() {
             document.getElementById('kiosk-overlay').classList.add('hidden');
             document.getElementById('kiosk-toggle-btn').classList.add('visible');
+            document.getElementById('kiosk-peek-tab').classList.add('visible');
         }
     </script>
 </body>
