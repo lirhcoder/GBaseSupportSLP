@@ -83,6 +83,28 @@
             margin: 0;
         }
 
+        /* Language selector */
+        #lang-selector {
+            margin-left: auto;
+            padding: 6px 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #lang-selector:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        #lang-selector option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
         /* Zone buttons grid */
         #kiosk-zones {
             display: grid;
@@ -507,23 +529,35 @@
     <!-- Loading overlay -->
     <div id="loading-overlay">
         <div class="spinner"></div>
-        <p>読み込み中...</p>
+        <p data-i18n="loading">読み込み中...</p>
     </div>
 
     <!-- Floating overlay panel -->
     <div id="kiosk-overlay">
         <div id="kiosk-header">
             <div>
-                <h1>🤖 AIコンシェルジュ</h1>
+                <h1>🤖 <span data-i18n="title">AIコンシェルジュ</span></h1>
                 <p>ニュウマン高輪</p>
             </div>
-            <a id="back-btn" href="index.html">← 戻る</a>
+            <select id="lang-selector">
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="pt">🇵🇹 Português</option>
+                <option value="pt-br">🇧🇷 Português BR</option>
+                <option value="id">🇮🇩 Indonesia</option>
+                <option value="ne">🇳🇵 नेपाली</option>
+                <option value="es">🇪🇸 Español</option>
+            </select>
+            <a id="back-btn" href="index.html" data-i18n="back">← 戻る</a>
         </div>
         <div id="kiosk-zones"></div>
         <div id="kiosk-prompts"></div>
         <div id="kiosk-footer">
             <div id="kiosk-hint">
-                <span class="icon">👆</span> タップでコピー → 貼り付けて送信
+                <span class="icon">👆</span> <span data-i18n="hint">タップでコピー → 貼り付けて送信</span>
             </div>
             <div id="kiosk-status">Bot Share Mode</div>
         </div>
@@ -546,69 +580,263 @@
     <script>
         // Configuration
         var CONFIG = {
-            // Use direct bot share page (not digital avatar)
-            botUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2?lang=ja'
+            botBaseUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
+            realtimeBaseUrl: 'https://gbase.ai/realtime/a182ac3e-0552-4fc0-aced-cd995e5f91c2'
         };
 
-        // Zone definitions (same as Playwright version)
-        var ZONES = [
-            {
-                icon: '🎫',
-                label: '総合案内',
-                color: '#3b82f6',
-                prompts: ['営業時間を教えて', '今日のイベントは？', '駐車場はありますか？', 'ベビーカーを借りたい']
+        // Current language
+        var currentLang = 'ja';
+
+        // Translations
+        var TRANSLATIONS = {
+            ja: {
+                title: 'AIコンシェルジュ',
+                back: '← 戻る',
+                loading: '読み込み中...',
+                hint: 'タップでコピー → 貼り付けて送信',
+                copied: 'コピーしました！',
+                realtimeStart: 'リアルタイム会話を開始',
+                zones: ['総合案内', 'フロアナビ', '店舗検索', '多言語', 'その他', 'リアルタイム会話'],
+                prompts: [
+                    ['営業時間を教えて', '今日のイベントは？', '駐車場はありますか？', 'ベビーカーを借りたい'],
+                    ['スターバックスはどこ？', 'トイレに行きたい', 'ATMはありますか？', 'ユニクロへの行き方'],
+                    ['カフェを探して', 'レストランのおすすめ', '子供服のお店', 'お土産を買いたい'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Wi-Fiはありますか？', 'コインロッカーの場所', '車椅子の貸し出し', '忘れ物をしました'],
+                    []
+                ]
             },
-            {
-                icon: '🗺️',
-                label: 'フロアナビ',
-                color: '#f97316',
-                prompts: ['スターバックスはどこ？', 'トイレに行きたい', 'ATMはありますか？', 'ユニクロへの行き方']
+            en: {
+                title: 'AI Concierge',
+                back: '← Back',
+                loading: 'Loading...',
+                hint: 'Tap to copy → Paste and send',
+                copied: 'Copied!',
+                realtimeStart: 'Start Realtime Conversation',
+                zones: ['General Info', 'Floor Guide', 'Shop Search', 'Multilingual', 'Others', 'Realtime Chat'],
+                prompts: [
+                    ['What are the opening hours?', 'Any events today?', 'Is there parking?', 'Can I borrow a stroller?'],
+                    ['Where is Starbucks?', 'Where is the restroom?', 'Is there an ATM?', 'How to get to Uniqlo?'],
+                    ['Find a cafe', 'Restaurant recommendations', 'Kids clothing stores', 'I want to buy souvenirs'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Is there Wi-Fi?', 'Where are the lockers?', 'Wheelchair rental', 'I lost something'],
+                    []
+                ]
             },
-            {
-                icon: '🛍️',
-                label: '店舗検索',
-                color: '#ec4899',
-                prompts: ['カフェを探して', 'レストランのおすすめ', '子供服のお店', 'お土産を買いたい']
+            zh: {
+                title: 'AI礼宾服务',
+                back: '← 返回',
+                loading: '加载中...',
+                hint: '点击复制 → 粘贴并发送',
+                copied: '已复制！',
+                realtimeStart: '开始实时对话',
+                zones: ['综合咨询', '楼层导航', '店铺搜索', '多语言', '其他', '实时对话'],
+                prompts: [
+                    ['营业时间是几点？', '今天有什么活动？', '有停车场吗？', '可以借婴儿车吗？'],
+                    ['星巴克在哪里？', '洗手间在哪里？', '有ATM吗？', '优衣库怎么走？'],
+                    ['找咖啡厅', '推荐餐厅', '童装店', '想买纪念品'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['有Wi-Fi吗？', '储物柜在哪？', '轮椅租借', '我丢东西了'],
+                    []
+                ]
             },
-            {
-                icon: '🌍',
-                label: '多言語',
-                color: '#22c55e',
-                prompts: ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?']
+            ko: {
+                title: 'AI 컨시어지',
+                back: '← 뒤로',
+                loading: '로딩 중...',
+                hint: '탭하여 복사 → 붙여넣기하여 전송',
+                copied: '복사되었습니다!',
+                realtimeStart: '실시간 대화 시작',
+                zones: ['종합 안내', '플로어 가이드', '매장 검색', '다국어', '기타', '실시간 대화'],
+                prompts: [
+                    ['영업시간이 어떻게 되나요?', '오늘 이벤트가 있나요?', '주차장이 있나요?', '유모차를 빌릴 수 있나요?'],
+                    ['스타벅스는 어디인가요?', '화장실은 어디인가요?', 'ATM이 있나요?', '유니클로는 어떻게 가나요?'],
+                    ['카페를 찾아주세요', '레스토랑 추천', '아동복 매장', '기념품을 사고 싶어요'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Wi-Fi가 있나요?', '물품보관함은 어디인가요?', '휠체어 대여', '분실물이 있어요'],
+                    []
+                ]
             },
-            {
-                icon: '❓',
-                label: 'その他',
-                color: '#8b5cf6',
-                prompts: ['Wi-Fiはありますか？', 'コインロッカーの場所', '車椅子の貸し出し', '忘れ物をしました']
+            vi: {
+                title: 'Trợ lý AI',
+                back: '← Quay lại',
+                loading: 'Đang tải...',
+                hint: 'Nhấn để sao chép → Dán và gửi',
+                copied: 'Đã sao chép!',
+                realtimeStart: 'Bắt đầu hội thoại',
+                zones: ['Thông tin chung', 'Hướng dẫn tầng', 'Tìm cửa hàng', 'Đa ngôn ngữ', 'Khác', 'Trò chuyện trực tiếp'],
+                prompts: [
+                    ['Giờ mở cửa là mấy giờ?', 'Hôm nay có sự kiện gì?', 'Có bãi đỗ xe không?', 'Tôi có thể mượn xe đẩy không?'],
+                    ['Starbucks ở đâu?', 'Nhà vệ sinh ở đâu?', 'Có ATM không?', 'Đường đến Uniqlo?'],
+                    ['Tìm quán cà phê', 'Gợi ý nhà hàng', 'Cửa hàng quần áo trẻ em', 'Tôi muốn mua quà lưu niệm'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Có Wi-Fi không?', 'Tủ khóa ở đâu?', 'Thuê xe lăn', 'Tôi bị mất đồ'],
+                    []
+                ]
             },
-            {
-                icon: '🎤',
-                label: 'リアルタイム会話',
-                color: '#a855f7',
-                isRealtime: true,
-                realtimeUrl: 'https://gbase.ai/realtime/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
-                prompts: []
+            pt: {
+                title: 'Concierge IA',
+                back: '← Voltar',
+                loading: 'Carregando...',
+                hint: 'Toque para copiar → Cole e envie',
+                copied: 'Copiado!',
+                realtimeStart: 'Iniciar Conversa',
+                zones: ['Informações', 'Guia de Andares', 'Buscar Lojas', 'Multilíngue', 'Outros', 'Chat em Tempo Real'],
+                prompts: [
+                    ['Qual o horário de funcionamento?', 'Há eventos hoje?', 'Tem estacionamento?', 'Posso pegar um carrinho?'],
+                    ['Onde fica o Starbucks?', 'Onde é o banheiro?', 'Tem caixa eletrônico?', 'Como chego na Uniqlo?'],
+                    ['Procurar um café', 'Recomendações de restaurantes', 'Lojas de roupas infantis', 'Quero comprar lembranças'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Tem Wi-Fi?', 'Onde ficam os armários?', 'Aluguel de cadeira de rodas', 'Perdi algo'],
+                    []
+                ]
+            },
+            'pt-br': {
+                title: 'Concierge IA',
+                back: '← Voltar',
+                loading: 'Carregando...',
+                hint: 'Toque para copiar → Cole e envie',
+                copied: 'Copiado!',
+                realtimeStart: 'Iniciar Conversa',
+                zones: ['Informações', 'Guia de Andares', 'Buscar Lojas', 'Multilíngue', 'Outros', 'Chat em Tempo Real'],
+                prompts: [
+                    ['Qual o horário de funcionamento?', 'Tem eventos hoje?', 'Tem estacionamento?', 'Posso pegar um carrinho?'],
+                    ['Onde fica o Starbucks?', 'Onde é o banheiro?', 'Tem caixa eletrônico?', 'Como chego na Uniqlo?'],
+                    ['Procurar um café', 'Recomendações de restaurantes', 'Lojas de roupas infantis', 'Quero comprar lembranças'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Tem Wi-Fi?', 'Onde ficam os armários?', 'Aluguel de cadeira de rodas', 'Perdi algo'],
+                    []
+                ]
+            },
+            id: {
+                title: 'Asisten AI',
+                back: '← Kembali',
+                loading: 'Memuat...',
+                hint: 'Ketuk untuk menyalin → Tempel dan kirim',
+                copied: 'Tersalin!',
+                realtimeStart: 'Mulai Percakapan',
+                zones: ['Info Umum', 'Panduan Lantai', 'Cari Toko', 'Multibahasa', 'Lainnya', 'Obrolan Langsung'],
+                prompts: [
+                    ['Jam operasional?', 'Ada acara hari ini?', 'Ada parkir?', 'Bisa pinjam stroller?'],
+                    ['Starbucks di mana?', 'Toilet di mana?', 'Ada ATM?', 'Cara ke Uniqlo?'],
+                    ['Cari kafe', 'Rekomendasi restoran', 'Toko baju anak', 'Mau beli oleh-oleh'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Ada Wi-Fi?', 'Loker di mana?', 'Sewa kursi roda', 'Saya kehilangan barang'],
+                    []
+                ]
+            },
+            ne: {
+                title: 'AI सहायक',
+                back: '← पछाडि',
+                loading: 'लोड हुँदैछ...',
+                hint: 'प्रतिलिपि गर्न ट्याप गर्नुहोस् → टाँस्नुहोस् र पठाउनुहोस्',
+                copied: 'प्रतिलिपि गरियो!',
+                realtimeStart: 'कुराकानी सुरु गर्नुहोस्',
+                zones: ['सामान्य जानकारी', 'तल्ला गाइड', 'पसल खोज्नुहोस्', 'बहुभाषिक', 'अन्य', 'प्रत्यक्ष कुराकानी'],
+                prompts: [
+                    ['खुल्ने समय के हो?', 'आज कुनै कार्यक्रम छ?', 'पार्किङ छ?', 'के म स्ट्रोलर लिन सक्छु?'],
+                    ['Starbucks कहाँ छ?', 'शौचालय कहाँ छ?', 'ATM छ?', 'Uniqlo कसरी जाने?'],
+                    ['क्याफे खोज्नुहोस्', 'रेस्टुरेन्ट सिफारिसहरू', 'बच्चाको लुगा पसलहरू', 'म उपहार किन्न चाहन्छु'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['Wi-Fi छ?', 'लकर कहाँ छ?', 'व्हीलचेयर भाडामा', 'मैले केही हरायो'],
+                    []
+                ]
+            },
+            es: {
+                title: 'Conserje IA',
+                back: '← Volver',
+                loading: 'Cargando...',
+                hint: 'Toca para copiar → Pega y envía',
+                copied: '¡Copiado!',
+                realtimeStart: 'Iniciar Conversación',
+                zones: ['Info General', 'Guía de Pisos', 'Buscar Tiendas', 'Multilingüe', 'Otros', 'Chat en Vivo'],
+                prompts: [
+                    ['¿Cuál es el horario?', '¿Hay eventos hoy?', '¿Hay estacionamiento?', '¿Puedo usar un cochecito?'],
+                    ['¿Dónde está Starbucks?', '¿Dónde está el baño?', '¿Hay cajero automático?', '¿Cómo llego a Uniqlo?'],
+                    ['Buscar una cafetería', 'Recomendaciones de restaurantes', 'Tiendas de ropa infantil', 'Quiero comprar recuerdos'],
+                    ['Where is the restroom?', '免税柜台在哪里？', '화장실이 어디에요?', 'ห้องน้ำอยู่ที่ไหน?'],
+                    ['¿Hay Wi-Fi?', '¿Dónde están los casilleros?', 'Alquiler de silla de ruedas', 'Perdí algo'],
+                    []
+                ]
             }
-        ];
+        };
+
+        // Get ZONES for current language
+        function getZones() {
+            var t = TRANSLATIONS[currentLang] || TRANSLATIONS.ja;
+            return [
+                { icon: '🎫', label: t.zones[0], color: '#3b82f6', prompts: t.prompts[0] },
+                { icon: '🗺️', label: t.zones[1], color: '#f97316', prompts: t.prompts[1] },
+                { icon: '🛍️', label: t.zones[2], color: '#ec4899', prompts: t.prompts[2] },
+                { icon: '🌍', label: t.zones[3], color: '#22c55e', prompts: t.prompts[3] },
+                { icon: '❓', label: t.zones[4], color: '#8b5cf6', prompts: t.prompts[4] },
+                { icon: '🎤', label: t.zones[5], color: '#a855f7', isRealtime: true, realtimeUrl: CONFIG.realtimeBaseUrl + '?lang=' + currentLang, prompts: t.prompts[5] }
+            ];
+        }
 
         var currentZoneIndex = 0;
+
+        // Get language from URL parameter
+        function getInitialLang() {
+            var params = new URLSearchParams(window.location.search);
+            var lang = params.get('lang');
+            if (lang && TRANSLATIONS[lang]) {
+                return lang;
+            }
+            return 'ja';
+        }
 
         // Get zone from URL parameter
         function getInitialZone() {
             var params = new URLSearchParams(window.location.search);
             var zone = params.get('zone');
+            var zones = getZones();
             if (zone !== null) {
                 var zoneIndex = parseInt(zone, 10);
-                if (zoneIndex >= 0 && zoneIndex < ZONES.length) {
+                if (zoneIndex >= 0 && zoneIndex < zones.length) {
                     return zoneIndex;
                 }
             }
             return 0;
         }
 
+        // Apply translations to UI
+        function applyTranslations() {
+            var t = TRANSLATIONS[currentLang] || TRANSLATIONS.ja;
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+                var key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+        }
+
+        // Change language
+        function changeLanguage(lang) {
+            if (!TRANSLATIONS[lang]) return;
+            currentLang = lang;
+            applyTranslations();
+            initZones();
+            renderPrompts(currentZoneIndex);
+            loadBot();
+
+            // Update URL without reload
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', url);
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
+            currentLang = getInitialLang();
+            var langSelector = document.getElementById('lang-selector');
+            if (langSelector) {
+                langSelector.value = currentLang;
+                langSelector.addEventListener('change', function() {
+                    changeLanguage(this.value);
+                });
+            }
+            applyTranslations();
             var initialZone = getInitialZone();
             currentZoneIndex = initialZone;
             initZones();
@@ -622,7 +850,7 @@
             var iframe = document.getElementById('bot-frame');
             var loading = document.getElementById('loading-overlay');
 
-            iframe.src = CONFIG.botUrl;
+            iframe.src = CONFIG.botBaseUrl + '?lang=' + currentLang;
 
             iframe.onload = function() {
                 setTimeout(function() {
@@ -640,8 +868,9 @@
         function initZones() {
             var container = document.getElementById('kiosk-zones');
             container.textContent = '';
+            var zones = getZones();
 
-            ZONES.forEach(function(zone, index) {
+            zones.forEach(function(zone, index) {
                 var btn = document.createElement('button');
                 btn.className = 'kiosk-zone-btn' + (index === currentZoneIndex ? ' active' : '');
                 btn.style.setProperty('--zone-color', zone.color);
@@ -684,7 +913,9 @@
 
         // Render prompts for zone using safe DOM methods
         function renderPrompts(zoneIndex) {
-            var zone = ZONES[zoneIndex];
+            var zones = getZones();
+            var zone = zones[zoneIndex];
+            var t = TRANSLATIONS[currentLang] || TRANSLATIONS.ja;
             var container = document.getElementById('kiosk-prompts');
             container.textContent = '';
             container.style.setProperty('--zone-color', zone.color);
@@ -707,7 +938,7 @@
                 iconSpan.textContent = '🎤 ';
 
                 var textSpan = document.createElement('span');
-                textSpan.textContent = 'リアルタイム会話を開始';
+                textSpan.textContent = t.realtimeStart;
 
                 realtimeBtn.appendChild(iconSpan);
                 realtimeBtn.appendChild(textSpan);
@@ -716,15 +947,6 @@
                     setTimeout(function() { hideOverlay(); }, 300);
                 };
                 container.appendChild(realtimeBtn);
-
-                // Add description
-                var desc = document.createElement('p');
-                desc.style.color = 'rgba(255,255,255,0.6)';
-                desc.style.fontSize = '11px';
-                desc.style.textAlign = 'center';
-                desc.style.marginTop = '8px';
-                desc.textContent = 'マイクを使って直接AIと会話できます';
-                container.appendChild(desc);
                 return;
             }
 
@@ -752,13 +974,14 @@
 
         // Copy prompt to clipboard
         function sendPrompt(prompt, btn) {
+            var t = TRANSLATIONS[currentLang] || TRANSLATIONS.ja;
             btn.classList.add('copied');
             var arrow = btn.querySelector('.arrow');
             if (arrow) arrow.textContent = '⏳';
 
             navigator.clipboard.writeText(prompt).then(function() {
                 if (arrow) arrow.textContent = '✓';
-                showToast('コピーしました！Ctrl+Vで貼り付け');
+                showToast(t.copied);
 
                 // Auto-hide overlay after copying
                 setTimeout(function() {
@@ -766,7 +989,7 @@
                 }, 800);
             }).catch(function() {
                 if (arrow) arrow.textContent = '✗';
-                showToast('コピーに失敗しました');
+                showToast('Error');
             });
 
             setTimeout(function() {
