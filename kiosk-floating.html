@@ -83,28 +83,6 @@
             margin: 0;
         }
 
-        /* Language selector */
-        #lang-selector {
-            margin-left: auto;
-            padding: 6px 10px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-            outline: none;
-        }
-
-        #lang-selector:hover {
-            background: rgba(255,255,255,0.15);
-        }
-
-        #lang-selector option {
-            background: #1a1a2e;
-            color: #fff;
-        }
-
         /* Zone buttons grid */
         #kiosk-zones {
             display: grid;
@@ -539,18 +517,6 @@
                 <h1>🤖 <span data-i18n="title">AIコンシェルジュ</span></h1>
                 <p>ニュウマン高輪</p>
             </div>
-            <select id="lang-selector">
-                <option value="ja">🇯🇵 日本語</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="zh">🇨🇳 中文</option>
-                <option value="ko">🇰🇷 한국어</option>
-                <option value="vi">🇻🇳 Tiếng Việt</option>
-                <option value="pt">🇵🇹 Português</option>
-                <option value="pt-br">🇧🇷 Português BR</option>
-                <option value="id">🇮🇩 Indonesia</option>
-                <option value="ne">🇳🇵 नेपाली</option>
-                <option value="es">🇪🇸 Español</option>
-            </select>
             <a id="back-btn" href="index.html" data-i18n="back">← 戻る</a>
         </div>
         <div id="kiosk-zones"></div>
@@ -811,31 +777,9 @@
             });
         }
 
-        // Change language
-        function changeLanguage(lang) {
-            if (!TRANSLATIONS[lang]) return;
-            currentLang = lang;
-            applyTranslations();
-            initZones();
-            renderPrompts(currentZoneIndex);
-            loadBot();
-
-            // Update URL without reload
-            var url = new URL(window.location.href);
-            url.searchParams.set('lang', lang);
-            window.history.replaceState({}, '', url);
-        }
-
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             currentLang = getInitialLang();
-            var langSelector = document.getElementById('lang-selector');
-            if (langSelector) {
-                langSelector.value = currentLang;
-                langSelector.addEventListener('change', function() {
-                    changeLanguage(this.value);
-                });
-            }
             applyTranslations();
             var initialZone = getInitialZone();
             currentZoneIndex = initialZone;
