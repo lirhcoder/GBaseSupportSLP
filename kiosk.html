@@ -187,8 +187,8 @@
                     </h3>
                     <div class="space-y-2" id="zone-prompts"></div>
                     <p id="prompts-hint" class="text-xs text-text-secondary mt-3 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">touch_app</span>
-                        タップで質問を直接送信（地図も表示可能）
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        タップでコピー → 右のチャットに貼り付け（地図も表示可能）
                     </p>
                 </div>
 
@@ -245,6 +245,18 @@
                             <p class="text-text-secondary text-sm">読み込み中...</p>
                         </div>
                     </div>
+                    <!-- Fallback if iframe blocked -->
+                    <div id="bot-fallback" class="hidden absolute inset-0 bg-white flex items-center justify-center p-8">
+                        <div class="text-center max-w-md">
+                            <span class="material-symbols-outlined text-6xl text-primary mb-4">open_in_new</span>
+                            <h3 class="text-xl font-bold text-text-main mb-2">AIチャットを開く</h3>
+                            <p class="text-text-secondary text-sm mb-6">セキュリティ制限により、別タブでチャットを開きます。<br>左のメニューから質問をコピーしてご利用ください。</p>
+                            <a id="bot-direct-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-colors">
+                                <span>チャットを開く</span>
+                                <span class="material-symbols-outlined">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -266,8 +278,8 @@
             apiKey: 'ak-xdVGAVu8Qq8H50FZ5jVYAiswGoSAmSs4X5iwQGa61lzEMb0N',
             aiId: 'a182ac3e-0552-4fc0-aced-cd995e5f91c2',
             apiEndpoint: 'https://api.gbase.ai/v1/question/',
-            // Widget wrapper for postMessage support
-            botBaseUrl: 'bot-wrapper.html',
+            // Direct bot URL (supports Canvas maps)
+            botBaseUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
             realtimeUrl: 'https://gbase.ai/realtime/a182ac3e-0552-4fc0-aced-cd995e5f91c2',
             idleTimeout: 60,
             idleWarningAt: 15
@@ -278,6 +290,7 @@
 
         // ========== Zone Data (from mall.html) ==========
         // All zones use full bot URL (supports canvas/maps)
+        // Zone configuration - using direct bot URL for Canvas map support
         var zones = [
             {
                 id: 0,
@@ -476,7 +489,7 @@
 
                 var arrow = document.createElement('span');
                 arrow.className = 'material-symbols-outlined text-text-secondary text-lg';
-                arrow.textContent = 'send';
+                arrow.textContent = 'content_copy';
 
                 btn.appendChild(num);
                 btn.appendChild(text);
@@ -512,28 +525,62 @@
             var zone = zones[currentZone];
             var iframe = document.getElementById('bot-iframe');
             var loading = document.getElementById('bot-loading');
+            var fallback = document.getElementById('bot-fallback');
+            var directLink = document.getElementById('bot-direct-link');
 
             // Reset session when switching zones
             currentSessionId = null;
 
             loading.classList.remove('hidden');
+            fallback.classList.add('hidden');
+            iframe.classList.remove('hidden');
 
-            // Use full bot URL for zones (supports canvas/maps)
-            // Voice zone uses realtime URL
+            // Build URL with language parameter
             var url = zone.urlBase;
-            if (url.includes('gbase.ai/bot/') || url.includes('gbase.ai/realtime/')) {
-                url = url + '?lang=' + currentLang;
-            } else {
+            if (url.includes('gbase.ai')) {
                 url = url + '?lang=' + currentLang;
             }
+
+            // Set direct link for fallback
+            directLink.href = url;
+
             iframe.src = url;
 
+            // Check if iframe loaded successfully
+            var loadTimeout = setTimeout(function() {
+                // If still loading after 8 seconds, show fallback
+                showBotFallback();
+            }, 8000);
+
             iframe.onload = function() {
-                // Give bot time to initialize
-                setTimeout(function() {
+                clearTimeout(loadTimeout);
+                // Check if iframe content is accessible (same-origin check)
+                try {
+                    // This will throw if cross-origin blocked differently
+                    var test = iframe.contentWindow.location.href;
                     loading.classList.add('hidden');
-                }, 1000);
+                } catch (e) {
+                    // Cross-origin is expected, just hide loading
+                    setTimeout(function() {
+                        loading.classList.add('hidden');
+                    }, 1000);
+                }
             };
+
+            iframe.onerror = function() {
+                clearTimeout(loadTimeout);
+                showBotFallback();
+            };
+        }
+
+        function showBotFallback() {
+            var loading = document.getElementById('bot-loading');
+            var fallback = document.getElementById('bot-fallback');
+            var iframe = document.getElementById('bot-iframe');
+
+            loading.classList.add('hidden');
+            iframe.classList.add('hidden');
+            fallback.classList.remove('hidden');
         }
 
         function reloadBot() {
@@ -562,21 +609,16 @@
             var originalText = arrow ? arrow.textContent : '';
             if (arrow) arrow.textContent = 'hourglass_empty';
 
-            var iframe = document.getElementById('bot-iframe');
-
-            // Send message to bot-wrapper.html which forwards to widget
-            // The widget supports: { type: 'send', question: '...' }
-            try {
-                iframe.contentWindow.postMessage({ type: 'send', question: prompt }, '*');
-                console.log('PostMessage sent to bot wrapper:', prompt);
-
+            // Copy prompt to clipboard for user to paste
+            navigator.clipboard.writeText(prompt).then(function() {
                 if (arrow) arrow.textContent = 'check';
-                showToast('質問を送信しました！');
-            } catch (error) {
-                console.error('PostMessage Error:', error);
-                if (arrow) arrow.textContent = 'error';
-                showToast('エラーが発生しました');
-            }
+                showToast('📋 コピーしました！右のチャットに貼り付けてください');
+            }).catch(function(error) {
+                console.error('Clipboard Error:', error);
+                if (arrow) arrow.textContent = 'content_copy';
+                // Fallback: show prompt in alert
+                showToast('質問: ' + prompt);
+            });
 
             // Reset button after delay
             setTimeout(function() {
