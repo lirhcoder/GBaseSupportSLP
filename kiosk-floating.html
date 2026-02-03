@@ -301,9 +301,119 @@
             margin-top: 16px;
             font-size: 14px;
         }
+
+        /* Back button */
+        #back-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 99999;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            color: #333;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        #back-btn:hover {
+            background: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            #kiosk-overlay {
+                left: 5px;
+                right: 5px;
+                top: 60px;
+                bottom: 20px;
+                width: auto;
+                max-width: 200px;
+            }
+
+            #kiosk-header {
+                padding: 8px 12px;
+            }
+
+            #kiosk-header h1 {
+                font-size: 12px;
+            }
+
+            #kiosk-header p {
+                font-size: 10px;
+            }
+
+            #kiosk-zones {
+                gap: 4px;
+                padding: 8px;
+            }
+
+            .kiosk-zone-btn {
+                padding: 6px 4px;
+            }
+
+            .kiosk-zone-btn .zone-icon {
+                font-size: 16px;
+            }
+
+            .kiosk-zone-btn .zone-label {
+                font-size: 9px;
+            }
+
+            #kiosk-prompts {
+                padding: 8px;
+                gap: 6px;
+            }
+
+            .kiosk-prompt-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            #kiosk-footer {
+                padding: 8px;
+            }
+
+            #kiosk-hint {
+                font-size: 10px;
+            }
+
+            #kiosk-status {
+                font-size: 9px;
+            }
+
+            #kiosk-toggle-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+                left: 10px;
+            }
+
+            #back-btn {
+                top: 10px;
+                left: auto;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Back button -->
+    <a id="back-btn" href="index.html">
+        ← ソリューションに戻る
+    </a>
+
     <!-- Bot iframe -->
     <iframe id="bot-frame" src=""></iframe>
 
@@ -325,9 +435,9 @@
         <div id="kiosk-prompts"></div>
         <div id="kiosk-footer">
             <div id="kiosk-hint">
-                <span class="icon">👆</span> タップで質問を自動送信
+                <span class="icon">👆</span> タップでコピー → 貼り付けて送信
             </div>
-            <div id="kiosk-status">Widget Mode (Auto-Send)</div>
+            <div id="kiosk-status">Bot Share Mode</div>
         </div>
     </div>
 
@@ -343,9 +453,8 @@
     <script>
         // Configuration
         var CONFIG = {
-            // Use bot-wrapper.html for postMessage support (auto-send)
-            // Note: Widget mode does not support Canvas maps
-            botUrl: 'bot-wrapper.html'
+            // Use direct bot share page (not digital avatar)
+            botUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2?lang=ja'
         };
 
         // Zone definitions (same as Playwright version)
@@ -486,32 +595,24 @@
             });
         }
 
-        // Send prompt to bot via postMessage
+        // Copy prompt to clipboard
         function sendPrompt(prompt, btn) {
-            var iframe = document.getElementById('bot-frame');
-
             btn.classList.add('copied');
             var arrow = btn.querySelector('.arrow');
             if (arrow) arrow.textContent = '⏳';
 
-            try {
-                // Send message to bot-wrapper which forwards to widget
-                iframe.contentWindow.postMessage({ type: 'send', question: prompt }, '*');
+            navigator.clipboard.writeText(prompt).then(function() {
+                if (arrow) arrow.textContent = '✓';
+                showToast('コピーしました！Ctrl+Vで貼り付け');
 
+                // Auto-hide overlay after copying
                 setTimeout(function() {
-                    if (arrow) arrow.textContent = '✓';
-                    showToast('送信しました！');
-
-                    // Auto-hide overlay after sending
-                    setTimeout(function() {
-                        hideOverlay();
-                    }, 500);
-                }, 300);
-
-            } catch (err) {
+                    hideOverlay();
+                }, 800);
+            }).catch(function() {
                 if (arrow) arrow.textContent = '✗';
-                showToast('送信に失敗しました');
-            }
+                showToast('コピーに失敗しました');
+            });
 
             setTimeout(function() {
                 btn.classList.remove('copied');
