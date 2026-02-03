@@ -325,9 +325,9 @@
         <div id="kiosk-prompts"></div>
         <div id="kiosk-footer">
             <div id="kiosk-hint">
-                <span class="icon">📋</span> タップでコピー → チャットに貼り付け
+                <span class="icon">👆</span> タップで質問を自動送信
             </div>
-            <div id="kiosk-status">GitHub Pages Edition</div>
+            <div id="kiosk-status">Widget Mode (Auto-Send)</div>
         </div>
     </div>
 
@@ -343,7 +343,9 @@
     <script>
         // Configuration
         var CONFIG = {
-            botUrl: 'https://gbase.ai/bot/a182ac3e-0552-4fc0-aced-cd995e5f91c2'
+            // Use bot-wrapper.html for postMessage support (auto-send)
+            // Note: Widget mode does not support Canvas maps
+            botUrl: 'bot-wrapper.html'
         };
 
         // Zone definitions (same as Playwright version)
@@ -472,34 +474,49 @@
 
                 var arrowSpan = document.createElement('span');
                 arrowSpan.className = 'arrow';
-                arrowSpan.textContent = '📋';
+                arrowSpan.textContent = '→';
 
                 btn.appendChild(textSpan);
                 btn.appendChild(arrowSpan);
 
                 btn.onclick = function() {
-                    copyPrompt(prompt, btn);
+                    sendPrompt(prompt, btn);
                 };
                 container.appendChild(btn);
             });
         }
 
-        // Copy prompt to clipboard
-        function copyPrompt(prompt, btn) {
-            navigator.clipboard.writeText(prompt).then(function() {
-                btn.classList.add('copied');
-                var arrow = btn.querySelector('.arrow');
-                if (arrow) arrow.textContent = '✓';
+        // Send prompt to bot via postMessage
+        function sendPrompt(prompt, btn) {
+            var iframe = document.getElementById('bot-frame');
 
-                showToast('コピーしました！右に貼り付けてください');
+            btn.classList.add('copied');
+            var arrow = btn.querySelector('.arrow');
+            if (arrow) arrow.textContent = '⏳';
+
+            try {
+                // Send message to bot-wrapper which forwards to widget
+                iframe.contentWindow.postMessage({ type: 'send', question: prompt }, '*');
 
                 setTimeout(function() {
-                    btn.classList.remove('copied');
-                    if (arrow) arrow.textContent = '📋';
-                }, 2000);
-            }).catch(function(err) {
-                showToast('コピーに失敗しました');
-            });
+                    if (arrow) arrow.textContent = '✓';
+                    showToast('送信しました！');
+
+                    // Auto-hide overlay after sending
+                    setTimeout(function() {
+                        hideOverlay();
+                    }, 500);
+                }, 300);
+
+            } catch (err) {
+                if (arrow) arrow.textContent = '✗';
+                showToast('送信に失敗しました');
+            }
+
+            setTimeout(function() {
+                btn.classList.remove('copied');
+                if (arrow) arrow.textContent = '→';
+            }, 2000);
         }
 
         // Show toast notification

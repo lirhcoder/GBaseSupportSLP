@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <!-- GBase Widget Embed Script (same as HIS Mobile) -->
+    <!-- GBase Widget Embed Script -->
     <script>
         window.gptbaseConfig = {
             chatbotId: 'a182ac3e-0552-4fc0-aced-cd995e5f91c2'
@@ -47,18 +47,76 @@
             if (widgetWindow) {
                 // Widget is ready, send openChat message
                 widgetWindow.contentWindow.postMessage({ openChat: true }, '*');
+                console.log('Widget found, opening chat');
             } else {
                 // Wait and try again
                 setTimeout(waitForWidget, 100);
             }
         }
 
+        // Send message to widget by finding and filling input
+        function sendMessageToWidget(question) {
+            var widgetIframe = document.getElementById('gptbase-bubble-window');
+            if (!widgetIframe) {
+                console.log('Widget iframe not found');
+                return false;
+            }
+
+            try {
+                var widgetDoc = widgetIframe.contentDocument || widgetIframe.contentWindow.document;
+
+                // Find textarea in widget
+                var textarea = widgetDoc.querySelector('textarea');
+                if (!textarea) {
+                    console.log('Textarea not found in widget');
+                    return false;
+                }
+
+                // Set value using native setter to trigger React state
+                var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                    window.HTMLTextAreaElement.prototype, 'value'
+                ).set;
+                nativeInputValueSetter.call(textarea, question);
+
+                // Dispatch input event
+                var inputEvent = new Event('input', { bubbles: true });
+                textarea.dispatchEvent(inputEvent);
+
+                // Find and click send button after short delay
+                setTimeout(function() {
+                    // Look for send button (usually has SVG icon)
+                    var buttons = widgetDoc.querySelectorAll('button');
+                    for (var i = 0; i < buttons.length; i++) {
+                        var btn = buttons[i];
+                        // Send button is typically on the right side of input
+                        var rect = btn.getBoundingClientRect();
+                        if (rect.right > widgetDoc.body.clientWidth - 100) {
+                            if (btn.querySelector('svg') || btn.textContent.includes('送信')) {
+                                btn.click();
+                                console.log('Send button clicked');
+                                break;
+                            }
+                        }
+                    }
+                }, 200);
+
+                console.log('Message sent:', question);
+                return true;
+
+            } catch (e) {
+                console.log('Error accessing widget:', e.message);
+                // Fallback: try postMessage
+                widgetIframe.contentWindow.postMessage({ type: 'send', question: question }, '*');
+                return false;
+            }
+        }
+
         // Listen for messages from parent (kiosk page)
         window.addEventListener('message', function(event) {
-            var widgetWindow = document.getElementById('gptbase-bubble-window');
-            if (widgetWindow && event.data && event.data.type === 'send') {
-                // Forward the message to the widget
-                widgetWindow.contentWindow.postMessage(event.data, '*');
+            console.log('Received message:', event.data);
+
+            if (event.data && event.data.type === 'send' && event.data.question) {
+                sendMessageToWidget(event.data.question);
             }
         });
 
