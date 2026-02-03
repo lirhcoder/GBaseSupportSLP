@@ -450,7 +450,7 @@
                 display: none !important;
             }
 
-            /* Mobile peek tab - bottom center */
+            /* Mobile peek tab - minimal handle */
             #kiosk-peek-tab {
                 display: flex;
                 position: fixed;
@@ -458,19 +458,16 @@
                 bottom: 0;
                 transform: translateX(-50%);
                 z-index: 99998;
-                padding: 8px 28px 12px;
-                padding-bottom: max(12px, env(safe-area-inset-bottom));
-                background: rgba(26, 26, 46, 0.95);
-                backdrop-filter: blur(10px);
-                border-radius: 16px 16px 0 0;
+                width: 60px;
+                height: 20px;
+                padding-bottom: env(safe-area-inset-bottom);
+                background: rgba(26, 26, 46, 0.9);
+                border-radius: 10px 10px 0 0;
                 border: none;
-                color: white;
-                font-size: 12px;
-                font-weight: 500;
                 cursor: pointer;
-                box-shadow: 0 -2px 20px rgba(0,0,0,0.3);
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
                 align-items: center;
-                gap: 6px;
+                justify-content: center;
                 opacity: 0;
                 pointer-events: none;
                 transition: all 0.3s ease;
@@ -481,13 +478,19 @@
                 pointer-events: auto;
             }
 
-            #kiosk-peek-tab .arrow {
-                font-size: 16px;
-                transition: transform 0.2s;
+            #kiosk-peek-tab .handle {
+                width: 32px;
+                height: 4px;
+                background: rgba(255,255,255,0.5);
+                border-radius: 2px;
             }
 
-            #kiosk-peek-tab:active .arrow {
-                transform: translateY(-2px);
+            #kiosk-peek-tab:active .handle {
+                background: rgba(255,255,255,0.8);
+            }
+
+            #kiosk-peek-tab .label {
+                display: none;
             }
 
             /* Toast position */
@@ -529,10 +532,9 @@
     <!-- Toggle button - desktop (shown when overlay is hidden) -->
     <button id="kiosk-toggle-btn">☰</button>
 
-    <!-- Mobile peek tab (shown when drawer is hidden) -->
+    <!-- Mobile peek tab - minimal handle -->
     <button id="kiosk-peek-tab">
-        <span class="arrow">▲</span>
-        <span>質問メニュー</span>
+        <span class="handle"></span>
     </button>
 
     <!-- Toast notification -->
