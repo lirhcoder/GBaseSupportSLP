@@ -304,21 +304,16 @@
             margin: 0;
         }
 
-        /* System Architecture */
+        /* System Architecture - 修改为图片样式 */
         .system-diagram {
-            background: var(--text-dark);
-            color: white;
-            padding: 40px;
-            border-radius: 16px;
             margin: 30px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            overflow-x: auto;
+            text-align: center;
         }
 
-        .system-diagram pre {
-            white-space: pre;
+        .system-diagram img {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         /* Features */
@@ -679,7 +674,8 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop" alt="NEWoMan高輪 商業施設" />
+                <!-- 修改：将原图片改为 banner.jpg -->
+                <img src="banner.jpg" alt="NEWoMan高輪 商業施設" />
             </div>
         </div>
     </section>
@@ -771,33 +767,11 @@
             </div>
         </section>
 
-        <!-- System Architecture -->
+        <!-- System Architecture - 修改：将ASCII代码改为图片 -->
         <section>
             <h2>導入システム構成</h2>
             <div class="system-diagram">
-<pre>
-┌─────────────────────────────────────────────────────────────────┐
-│                    NEWoMan高輪 AI案内システム                      │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                   │
-│   【お客様側】              │       【スタッフ側】                │
-│   ┌──────────────┐          │       ┌──────────────┐             │
-│   │ お客様スマホ │          │       │スタッフ管理画面│           │
-│   │ ・QRコード読取│   ←───→ │       │ ・会話履歴確認 │           │
-│   │ ・多言語AI対話│          │       │ ・リアルタイム │           │
-│   │ ・場所案内   │          │       │   モニタリング │           │
-│   └──────────────┘          │       └──────────────┘             │
-│          ↓                  │              ↓                     │
-├─────────────────────────────┴──────────────────────────────────┤
-│                     GBase SUPPORT クラウド                       │
-│   ┌─────────────────────────────────────────────────────────┐   │
-│   │  ・生成AIによる自動応答                                 │   │
-│   │  ・多言語翻訳（10言語以上）                             │   │
-│   │  ・店舗情報ナレッジベース                               │   │
-│   │  ・フロアマップ連携                                     │   │
-│   └─────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-</pre>
+                <img src="system.jpg" alt="NEWoMan高輪 AI案内システム構成図" />
             </div>
         </section>
 
@@ -1006,3 +980,17 @@
     </footer>
 </body>
 </html>
+```
+
+---
+
+**上传到 GitHub 时的注意事项：**
+
+1. 将此 HTML 代码保存为 `case-study-newoman.html`
+2. 确保将 `banner.jpg`（您上传的第一张市场广场图片）和 `system.jpg`（您上传的第二张系统架构图）放在同一目录下
+3. 文件结构应该是：
+```
+   /GBaseSupportSLP/
+   ├── case-study-newoman.html
+   ├── banner.jpg
+   └── system.jpg
