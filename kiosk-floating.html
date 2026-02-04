@@ -806,6 +806,8 @@
             renderPrompts(initialZone);
             loadBot();
             setupEventListeners();
+            // Show backdrop on initial load (panel starts open)
+            document.getElementById('kiosk-backdrop').classList.add('visible');
         });
 
         // Load bot iframe
