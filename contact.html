@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="light scroll-smooth" lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>お問い合わせ | GBase Support</title>
+    <meta name="description" content="GBase Supportへのお問い合わせ。無料デモ、資料請求、導入相談など、お気軽にご連絡ください。">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee862b",
+                        "primary-dark": "#d9731e",
+                        "navy": "#1a2840",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221810",
+                        "text-main-light": "#1b140d",
+                        "text-main-dark": "#fcfaf8",
+                        "text-secondary-light": "#666666",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2f2219",
+                        "border-light": "#e7dacf",
+                        "border-dark": "#4a3b32"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "Noto Sans JP", "sans-serif"],
+                        "body": ["Plus Jakarta Sans", "Noto Sans JP", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light font-body text-text-main-light min-h-screen flex flex-col">
+
+    <!-- Simple Header -->
+    <header class="w-full border-b border-border-light bg-surface-light/95 backdrop-blur-sm">
+        <div class="w-full px-4 md:px-10 lg:px-40 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-text-main-light hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">arrow_back</span>
+                <span class="font-bold">GBase Support</span>
+            </a>
+            <a href="https://cs.gbase.ai/" class="text-sm text-text-secondary-light hover:text-primary transition-colors">
+                公式サイト
+            </a>
+        </div>
+    </header>
+
+    <!-- Contact Form Section -->
+    <main class="flex-1 w-full px-4 md:px-10 lg:px-40 py-16 md:py-20">
+        <div class="max-w-[800px] mx-auto">
+            <div class="text-center mb-12">
+                <p class="text-primary font-bold text-sm uppercase tracking-wider mb-3">Contact Us</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-text-main-light mb-4">お問い合わせ</h1>
+                <p class="text-text-secondary-light">ご質問・ご相談はこちらからお気軽にどうぞ</p>
+            </div>
+
+            <form id="contact-form" class="bg-white rounded-2xl p-6 md:p-10 border border-border-light shadow-sm">
+                <!-- Hidden Web3Forms fields -->
+                <input type="hidden" name="access_key" value="937807c3-360b-45db-ae1e-e314dce87234">
+                <input type="hidden" name="subject" value="GBase Support - 新規お問い合わせ">
+                <input type="hidden" name="from_name" value="GBase Support Website">
+
+                <!-- Inquiry Type -->
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-text-main-light mb-3">
+                        お問い合わせ種別 <span class="text-red-500">*</span>
+                    </label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="inquiry_type" value="無料デモ" class="w-4 h-4 text-primary" checked>
+                            <span class="text-text-main-light">無料デモ</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="inquiry_type" value="資料請求" class="w-4 h-4 text-primary">
+                            <span class="text-text-main-light">資料請求</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="inquiry_type" value="導入相談" class="w-4 h-4 text-primary">
+                            <span class="text-text-main-light">導入相談</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="inquiry_type" value="その他" class="w-4 h-4 text-primary">
+                            <span class="text-text-main-light">その他</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Name & Company Row -->
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            お名前 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="name" required placeholder="例：山田太郎"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            会社名 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="company" required placeholder="例：株式会社GBase"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                </div>
+
+                <!-- Department & Position Row -->
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            部署
+                        </label>
+                        <input type="text" name="department" placeholder="例：経営企画室"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            役職
+                        </label>
+                        <input type="text" name="position" placeholder="例：部長"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                </div>
+
+                <!-- Email & Phone Row -->
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            メールアドレス <span class="text-red-500">*</span>
+                        </label>
+                        <input type="email" name="email" required placeholder="例：yamada@example.com"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-text-main-light mb-2">
+                            電話番号
+                        </label>
+                        <input type="tel" name="phone" placeholder="例：03-1234-5678"
+                            class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-text-main-light mb-2">
+                        お問い合わせ内容
+                    </label>
+                    <textarea name="message" rows="4" placeholder="ご質問やご要望をお書きください"
+                        class="w-full px-4 py-3 rounded-lg border border-border-light bg-white text-text-main-light placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <!-- Privacy Policy -->
+                <div class="mb-6">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" name="privacy_agreed" required class="w-4 h-4 mt-1 text-primary rounded">
+                        <span class="text-sm text-text-secondary-light">
+                            <a href="https://gbase.ai/privacy-policy" target="_blank" class="text-primary hover:underline">プライバシーポリシー</a>に同意します
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="contact-submit"
+                    class="w-full flex items-center justify-center gap-2 rounded-lg h-14 px-8 bg-primary hover:bg-primary-dark transition-all text-white text-lg font-bold shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span class="material-symbols-outlined">send</span>
+                    <span id="submit-text">送信する</span>
+                </button>
+
+                <!-- Success/Error Messages -->
+                <div id="form-message" class="hidden mt-4 p-4 rounded-lg text-center"></div>
+            </form>
+
+            <p class="text-xs text-text-secondary-light text-center mt-4">
+                ※営業目的のお問い合わせはお断りしております
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Contact Form Handler
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = document.getElementById('contact-submit');
+            const submitText = document.getElementById('submit-text');
+            const formMessage = document.getElementById('form-message');
+
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitText.textContent = '送信中...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    formMessage.className = 'mt-4 p-4 rounded-lg text-center bg-green-100 text-green-700';
+                    formMessage.textContent = 'お問い合わせありがとうございます。送信が完了しました。';
+                    formMessage.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    throw new Error(result.message || '送信に失敗しました');
+                }
+            } catch (error) {
+                formMessage.className = 'mt-4 p-4 rounded-lg text-center bg-red-100 text-red-700';
+                formMessage.textContent = 'エラーが発生しました。しばらく経ってから再度お試しください。';
+                formMessage.classList.remove('hidden');
+            }
+
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitText.textContent = '送信する';
+        });
+    </script>
+
+    <!-- Simple Footer -->
+    <footer class="w-full bg-white border-t border-border-light py-6">
+        <div class="w-full px-4 md:px-10 lg:px-40 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-text-secondary-light">
+                &copy; 2025 Sparticle Inc. All rights reserved.
+            </p>
+            <div class="flex items-center gap-6">
+                <a href="https://gbase.ai/privacy-policy" target="_blank" class="text-sm text-text-secondary-light hover:text-primary transition-colors">
+                    プライバシーポリシー
+                </a>
+                <a href="https://gbase.ai/terms" target="_blank" class="text-sm text-text-secondary-light hover:text-primary transition-colors">
+                    利用規約
+                </a>
+                <a href="index.html" class="text-sm text-text-secondary-light hover:text-primary transition-colors">
+                    ソリューション
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
