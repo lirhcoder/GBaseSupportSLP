@@ -5,11 +5,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>NEWoMan高輪 導入事例｜GBase SUPPORT</title>
     <meta name="description" content="NEWoMan高輪がGBase SUPPORTを導入し、案内所対応を70%削減した事例をご紹介します。">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <style>
@@ -24,923 +22,154 @@
             --orange: #F97316;
             --orange-light: #FED7AA;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.8;
-            color: var(--text-dark);
-            background: #ffffff;
-        }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-
-        /* ========== HEADER ========== */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 0.75rem 2rem;
-        }
-
-        .header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 32px;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            margin-left: 8px;
-        }
-
-        .logo-gbase {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            line-height: 1.2;
-        }
-
-        .logo-support {
-            font-size: 0.65rem;
-            color: var(--text-gray);
-            letter-spacing: 0.15em;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .nav-btn {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .nav-btn-outline {
-            border: 1px solid var(--text-dark);
-            color: var(--text-dark);
-            background: transparent;
-        }
-
-        .nav-btn-outline:hover {
-            background: var(--text-dark);
-            color: white;
-        }
-
-        .nav-btn-primary {
-            background: var(--orange);
-            color: white;
-            border: none;
-        }
-
-        .nav-btn-primary:hover {
-            background: #EA580C;
-        }
-
-        /* ========== HERO SECTION ========== */
-        .hero {
-            background: linear-gradient(135deg, #F9FAFB 0%, #F3E8FF 100%);
-            padding: 4rem 2rem;
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .hero-content {
-            max-width: 600px;
-        }
-
-        .tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            line-height: 1.3;
-            margin-bottom: 2rem;
-            color: var(--text-dark);
-        }
-
-        .hero h1 .highlight {
-            color: var(--orange);
-        }
-
-        .stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .stat {
-            text-align: left;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--orange);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-        }
-
-        .hero-image {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.15);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* ========== MAIN CONTENT ========== */
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        section {
-            padding: 4rem 0;
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 2px;
-        }
-
-        /* Profile Table */
-        .profile-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .profile-table tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .profile-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .profile-table th {
-            background: var(--bg-light);
-            padding: 1rem 1.5rem;
-            text-align: left;
-            font-weight: 600;
-            width: 180px;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-
-        .profile-table td {
-            padding: 1rem 1.5rem;
-            color: var(--text-dark);
-        }
-
-        /* Background Section */
-        .background-section {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .background-section p {
-            color: var(--text-gray);
-            font-size: 1rem;
-            line-height: 1.9;
-        }
-
-        /* Challenges */
-        .challenges {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .challenge-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .challenge-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-dark);
-        }
-
-        .challenge-card p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-
-        /* Reasons */
-        .reasons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .reason-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .reason-number {
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .reason-card h3 {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            margin-top: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .reason-card p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-
-        .reason-note {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            margin-top: 0.5rem;
-            font-style: italic;
-        }
-
-        /* System Architecture */
-        .system-image {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 16px;
-            padding: 2rem;
-        }
-
-        .system-diagram {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            color: var(--text-dark);
-        }
-
-        .system-diagram h4 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        .diagram-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .diagram-box {
-            background: var(--bg-light);
-            border-radius: 8px;
-            padding: 1.25rem;
-        }
-
-        .diagram-box h5 {
-            color: var(--primary-color);
-            margin-bottom: 0.75rem;
-            font-size: 0.85rem;
-        }
-
-        .diagram-item {
-            background: white;
-            padding: 0.6rem 0.8rem;
-            border-radius: 6px;
-            margin-bottom: 0.4rem;
-            font-size: 0.85rem;
-            border: 1px solid #e0e0e0;
-        }
-
-        .cloud-box {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-            border-radius: 12px;
-            padding: 1.25rem;
-        }
-
-        .cloud-box h5 {
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-        }
-
-        .cloud-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.6rem;
-        }
-
-        .cloud-feature {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.85rem;
-        }
-
-        /* Features */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-dark);
-        }
-
-        .feature-card p {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-        }
-
-        .feature-note {
-            margin-top: 1.5rem;
-            text-align: center;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-
-        /* Results Table */
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .results-table thead {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-        }
-
-        .results-table th {
-            padding: 1rem 1.5rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .results-table td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .results-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .result-value {
-            color: var(--orange);
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        /* Testimonial */
-        .testimonial {
-            background: linear-gradient(135deg, #F9FAFB, #F3E8FF);
-            border-radius: 16px;
-            padding: 2.5rem;
-            position: relative;
-        }
-
-        .testimonial::before {
-            content: '"';
-            font-size: 5rem;
-            color: var(--primary-color);
-            opacity: 0.15;
-            position: absolute;
-            top: 0;
-            left: 20px;
-            line-height: 1;
-        }
-
-        .testimonial p {
-            font-size: 1rem;
-            color: var(--text-gray);
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
-            margin-top: 1.25rem;
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Strategy Section */
-        .strategy-section {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .strategy-section p {
-            color: var(--text-gray);
-            font-size: 1rem;
-            line-height: 1.9;
-        }
-
-        /* Future Vision Section */
-        .future-section {
-            background: linear-gradient(135deg, #F9FAFB, #FEF3C7);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-
-        .future-section > h3 {
-            color: var(--text-dark);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .future-items {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .future-item {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .future-item h4 {
-            color: var(--primary-color);
-            font-size: 0.95rem;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .future-item p {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-        }
-
-        /* Summary */
-        .summary-list {
-            list-style: none;
-        }
-
-        .summary-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .summary-list li:last-child {
-            border-bottom: none;
-        }
-
-        .check-icon {
-            width: 22px;
-            height: 22px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.75rem;
-            flex-shrink: 0;
-        }
-
-        .summary-list strong {
-            color: var(--text-dark);
-        }
-
-        .summary-list span {
-            color: var(--text-gray);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background: var(--bg-dark);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .contact-section h2 {
-            color: white;
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-section h2::after {
-            display: none;
-        }
-
-        .contact-section > p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 2rem;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.875rem 1.75rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-        }
-
-        .contact-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .contact-btn.primary {
-            background: var(--orange);
-            color: white;
-        }
-
-        .contact-btn.secondary {
-            background: white;
-            color: var(--text-dark);
-        }
-
-        /* ========== FOOTER ========== */
-        footer {
-            background: var(--bg-dark);
-            color: white;
-            padding: 4rem 2rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .footer-brand .logo-text {
-            margin-left: 0;
-            margin-top: 0.5rem;
-        }
-
-        .footer-brand .logo-gbase {
-            color: white;
-        }
-
-        .footer-brand .logo-support {
-            color: rgba(255,255,255,0.6);
-        }
-
-        .footer-brand > p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.85rem;
-            margin-top: 1rem;
-        }
-
-        .footer-links h4 {
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.6rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-bottom-left {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .footer-bottom-left img {
-            height: 28px;
-            opacity: 0.8;
-        }
-
-        .footer-bottom p {
-            color: rgba(255,255,255,0.4);
-            font-size: 0.8rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .footer-social a:hover {
-            border-color: white;
-            color: white;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .footer-legal a {
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: color 0.2s;
-        }
-
-        .footer-legal a:hover {
-            color: white;
-        }
-
-        /* ========== RESPONSIVE ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.8; color: var(--text-dark); background: #ffffff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        header { position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); padding: 0.75rem 2rem; }
+        .header-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 32px; }
+        nav { display: flex; align-items: center; gap: 1.5rem; }
+        nav a { text-decoration: none; color: var(--text-dark); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        nav a:hover { color: var(--primary-color); }
+        .nav-btn { padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; }
+        .nav-btn-outline { border: 1px solid var(--text-dark); color: var(--text-dark); background: transparent; }
+        .nav-btn-outline:hover { background: var(--text-dark); color: white; }
+        .nav-btn-primary { background: var(--orange); color: white; border: none; }
+        .nav-btn-primary:hover { background: #EA580C; }
+        .hero { background: linear-gradient(135deg, #F9FAFB 0%, #F3E8FF 100%); padding: 4rem 2rem; }
+        .hero-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .hero-content { max-width: 600px; }
+        .tag { display: inline-block; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 2.5rem; line-height: 1.3; margin-bottom: 2rem; color: var(--text-dark); }
+        .hero h1 .highlight { color: var(--orange); }
+        .stats { display: flex; gap: 2rem; }
+        .stat { text-align: left; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--orange); }
+        .stat-label { font-size: 0.85rem; color: var(--text-gray); }
+        .hero-image { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(124, 58, 237, 0.15); }
+        .hero-image img { width: 100%; height: auto; display: block; }
+        main { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 4rem 0; }
+        .section-title { font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); position: relative; padding-bottom: 1rem; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 4px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 2px; }
+        .profile-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .profile-table tr { border-bottom: 1px solid #f0f0f0; }
+        .profile-table tr:last-child { border-bottom: none; }
+        .profile-table th { background: var(--bg-light); padding: 1rem 1.5rem; text-align: left; font-weight: 600; width: 180px; color: var(--text-gray); font-size: 0.9rem; }
+        .profile-table td { padding: 1rem 1.5rem; color: var(--text-dark); }
+        .background-section { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .background-section p { color: var(--text-gray); font-size: 1rem; line-height: 1.9; }
+        .challenges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .challenge-card { background: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color); }
+        .challenge-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-dark); }
+        .challenge-card p { color: var(--text-gray); font-size: 0.9rem; }
+        .reasons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .reason-card { background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: relative; }
+        .reason-number { position: absolute; top: -12px; left: 20px; width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; }
+        .reason-card h3 { font-size: 1rem; margin-bottom: 0.75rem; margin-top: 0.5rem; color: var(--text-dark); }
+        .reason-card p { color: var(--text-gray); font-size: 0.9rem; }
+        .reason-note { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.5rem; font-style: italic; }
+        .system-image { background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 16px; padding: 2rem; }
+        .system-diagram { background: white; border-radius: 12px; padding: 2rem; color: var(--text-dark); }
+        .system-diagram h4 { color: var(--primary-color); margin-bottom: 1.5rem; font-size: 1.1rem; text-align: center; }
+        .diagram-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .diagram-box { background: var(--bg-light); border-radius: 8px; padding: 1.25rem; }
+        .diagram-box h5 { color: var(--primary-color); margin-bottom: 0.75rem; font-size: 0.85rem; }
+        .diagram-item { background: white; padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.4rem; font-size: 0.85rem; border: 1px solid #e0e0e0; }
+        .cloud-box { background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; border-radius: 12px; padding: 1.25rem; }
+        .cloud-box h5 { margin-bottom: 0.75rem; font-size: 0.9rem; }
+        .cloud-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .cloud-feature { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; }
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .feature-card { background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1rem; margin-bottom: 0.75rem; color: var(--text-dark); }
+        .feature-card p { color: var(--text-gray); font-size: 0.85rem; }
+        .feature-note { margin-top: 1.5rem; text-align: center; color: var(--text-gray); font-size: 0.9rem; }
+        .results-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .results-table thead { background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white; }
+        .results-table th { padding: 1rem 1.5rem; text-align: left; font-weight: 600; }
+        .results-table td { padding: 1rem 1.5rem; border-bottom: 1px solid #f0f0f0; }
+        .results-table tr:last-child td { border-bottom: none; }
+        .result-value { color: var(--orange); font-weight: 700; font-size: 1.1rem; }
+        .testimonial { background: linear-gradient(135deg, #F9FAFB, #F3E8FF); border-radius: 16px; padding: 2.5rem; position: relative; }
+        .testimonial::before { content: '"'; font-size: 5rem; color: var(--primary-color); opacity: 0.15; position: absolute; top: 0; left: 20px; line-height: 1; }
+        .testimonial p { font-size: 1rem; color: var(--text-gray); position: relative; z-index: 1; }
+        .testimonial-author { margin-top: 1.25rem; color: var(--text-dark); font-weight: 600; font-size: 0.9rem; }
+        .strategy-section { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .strategy-section p { color: var(--text-gray); font-size: 1rem; line-height: 1.9; }
+        .future-section { background: linear-gradient(135deg, #F9FAFB, #FEF3C7); border-radius: 16px; padding: 2rem; }
+        .future-section > h3 { color: var(--text-dark); font-size: 1.2rem; margin-bottom: 1.5rem; }
+        .future-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .future-item { background: white; padding: 1.25rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .future-item h4 { color: var(--primary-color); font-size: 0.95rem; margin-bottom: 0.6rem; }
+        .future-item p { color: var(--text-gray); font-size: 0.85rem; }
+        .summary-list { list-style: none; }
+        .summary-list li { display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; }
+        .summary-list li:last-child { border-bottom: none; }
+        .check-icon { width: 22px; height: 22px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; flex-shrink: 0; }
+        .summary-list strong { color: var(--text-dark); }
+        .summary-list span { color: var(--text-gray); }
+        .contact-section { background: var(--bg-dark); border-radius: 20px; padding: 3rem; text-align: center; margin-top: 2rem; }
+        .contact-section h2 { color: white; font-size: 1.75rem; margin-bottom: 1rem; }
+        .contact-section > p { color: rgba(255,255,255,0.7); margin-bottom: 2rem; }
+        .contact-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .contact-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.75rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: transform 0.2s; }
+        .contact-btn:hover { transform: translateY(-2px); }
+        .contact-btn.primary { background: var(--orange); color: white; }
+        .contact-btn.secondary { background: white; color: var(--text-dark); }
+        footer { background: var(--bg-dark); color: white; padding: 4rem 2rem 2rem; margin-top: 4rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 1rem; }
+        .footer-links h4 { margin-bottom: 1.25rem; font-size: 0.95rem; font-weight: 600; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.6rem; }
+        .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { max-width: 1200px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom-left { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-bottom-left img { height: 28px; opacity: 0.8; }
+        .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+        .footer-social { display: flex; gap: 1rem; }
+        .footer-social a { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+        .footer-social a:hover { border-color: white; color: white; }
+        .footer-legal { display: flex; gap: 1.5rem; }
+        .footer-legal a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+        .footer-legal a:hover { color: white; }
         @media (max-width: 1024px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content {
-                max-width: 100%;
-            }
-
-            .stats {
-                justify-content: center;
-            }
-
-            .hero-image {
-                max-width: 500px;
-                margin: 0 auto;
-            }
-
-            .challenges {
-                grid-template-columns: 1fr;
-            }
-
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .reasons {
-                grid-template-columns: 1fr;
-            }
-
-            .future-items {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content { max-width: 100%; }
+            .stats { justify-content: center; }
+            .hero-image { max-width: 500px; margin: 0 auto; }
+            .challenges { grid-template-columns: 1fr; }
+            .features { grid-template-columns: repeat(2, 1fr); }
+            .reasons { grid-template-columns: 1fr; }
+            .future-items { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 768px) {
-            header {
-                padding: 0.75rem 1rem;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .hero {
-                padding: 2rem 1rem;
-            }
-
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .stats {
-                flex-wrap: wrap;
-                gap: 1.5rem;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            main {
-                padding: 0 1rem;
-            }
-
-            section {
-                padding: 2.5rem 0;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .diagram-container {
-                grid-template-columns: 1fr;
-            }
-
-            .cloud-features {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-section {
-                padding: 2rem 1.5rem;
-            }
-
-            .contact-buttons {
-                flex-direction: column;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-bottom-left {
-                flex-direction: column;
-            }
-
-            .footer-legal {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+            header { padding: 0.75rem 1rem; }
+            nav { display: none; }
+            .hero { padding: 2rem 1rem; }
+            .hero h1 { font-size: 1.75rem; }
+            .stats { flex-wrap: wrap; gap: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+            main { padding: 0 1rem; }
+            section { padding: 2.5rem 0; }
+            .features { grid-template-columns: 1fr; }
+            .diagram-container { grid-template-columns: 1fr; }
+            .cloud-features { grid-template-columns: 1fr; }
+            .contact-section { padding: 2rem 1.5rem; }
+            .contact-buttons { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom-left { flex-direction: column; }
+            .footer-legal { flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-container">
             <a href="https://cs.gbase.ai/" class="logo">
@@ -957,26 +186,15 @@
             </nav>
         </div>
     </header>
-
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
                 <div class="tag">NEWoMan高輪</div>
                 <h1>案内所対応<span class="highlight">70%削減</span>！<br>NEWoMan高輪がGBase SUPPORTで実現した多言語AI案内</h1>
                 <div class="stats">
-                    <div class="stat">
-                        <div class="stat-number">70%</div>
-                        <div class="stat-label">案内所対応削減</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">92%</div>
-                        <div class="stat-label">顧客満足度</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">多言語対応</div>
-                    </div>
+                    <div class="stat"><div class="stat-number">70%</div><div class="stat-label">案内所対応削減</div></div>
+                    <div class="stat"><div class="stat-number">92%</div><div class="stat-label">顧客満足度</div></div>
+                    <div class="stat"><div class="stat-number">10+</div><div class="stat-label">多言語対応</div></div>
                 </div>
             </div>
             <div class="hero-image">
@@ -984,67 +202,32 @@
             </div>
         </div>
     </section>
-
     <main>
-        <!-- Company Profile -->
         <section>
             <h2 class="section-title">導入企業プロフィール</h2>
             <table class="profile-table">
-                <tr>
-                    <th>施設名</th>
-                    <td>NEWoMan高輪（ニュウマン高輪）</td>
-                </tr>
-                <tr>
-                    <th>運営会社</th>
-                    <td>株式会社ルミネ</td>
-                </tr>
-                <tr>
-                    <th>開業日</th>
-                    <td>2025年9月12日</td>
-                </tr>
-                <tr>
-                    <th>延床面積</th>
-                    <td>約60,000㎡（South・North・LUFTBAUM・MIMURE含む）</td>
-                </tr>
-                <tr>
-                    <th>店舗数</th>
-                    <td>約200店舗</td>
-                </tr>
-                <tr>
-                    <th>所在地</th>
-                    <td>東京都港区高輪 TAKANAWA GATEWAY CITY内</td>
-                </tr>
+                <tr><th>施設名</th><td>NEWoMan高輪（ニュウマン高輪）</td></tr>
+                <tr><th>運営会社</th><td>株式会社ルミネ</td></tr>
+                <tr><th>開業日</th><td>2025年9月12日</td></tr>
+                <tr><th>延床面積</th><td>約60,000㎡（South・North・LUFTBAUM・MIMURE含む）</td></tr>
+                <tr><th>店舗数</th><td>約200店舗</td></tr>
+                <tr><th>所在地</th><td>東京都港区高輪 TAKANAWA GATEWAY CITY内</td></tr>
             </table>
         </section>
-
-        <!-- Background -->
         <section>
             <h2 class="section-title">導入の背景</h2>
             <div class="background-section">
                 <p>NEWoMan高輪は、ルミネ史上最大規模の商業施設として、「100年先へ継承する"まだ見ぬ生活価値づくり"」をコンセプトに開業しました。国際玄関口である高輪ゲートウェイに位置し、インバウンド観光客を含む多様なお客様への対応が求められていました。</p>
             </div>
         </section>
-
-        <!-- Challenges -->
         <section>
             <h2 class="section-title">導入前の課題</h2>
             <div class="challenges">
-                <div class="challenge-card">
-                    <h3>多言語対応の限界</h3>
-                    <p>インバウンド観光客からの問い合わせ増加に対し、多言語対応スタッフの確保が困難でした。</p>
-                </div>
-                <div class="challenge-card">
-                    <h3>案内所の混雑</h3>
-                    <p>広大な施設内での道案内や店舗情報の問い合わせで案内所が常に混雑状態でした。</p>
-                </div>
-                <div class="challenge-card">
-                    <h3>多様な利用シーンへの対応</h3>
-                    <p>通常営業時間以外にも、早朝や深夜の訪問客など、様々な時間帯・シーンでの案内ニーズに十分に対応できていませんでした。</p>
-                </div>
+                <div class="challenge-card"><h3>多言語対応の限界</h3><p>インバウンド観光客からの問い合わせ増加に対し、多言語対応スタッフの確保が困難でした。</p></div>
+                <div class="challenge-card"><h3>案内所の混雑</h3><p>広大な施設内での道案内や店舗情報の問い合わせで案内所が常に混雑状態でした。</p></div>
+                <div class="challenge-card"><h3>多様な利用シーンへの対応</h3><p>通常営業時間以外にも、早朝や深夜の訪問客など、様々な時間帯・シーンでの案内ニーズに十分に対応できていませんでした。</p></div>
             </div>
         </section>
-
-        <!-- Reasons for Choosing -->
         <section>
             <h2 class="section-title">GBase SUPPORTを選んだ理由</h2>
             <div class="reasons">
@@ -1071,8 +254,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- System Architecture -->
         <section>
             <h2 class="section-title">導入システム構成</h2>
             <div class="system-image">
@@ -1105,8 +286,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Features -->
         <section>
             <h2 class="section-title">主な活用機能</h2>
             <div class="features">
@@ -1128,18 +307,150 @@
             </div>
             <p class="feature-note">その他、免税カウンター、外貨両替、Wi-Fi情報なども多言語で案内</p>
         </section>
-
-        <!-- Results -->
         <section>
             <h2 class="section-title">導入効果</h2>
             <table class="results-table">
                 <thead>
-                    <tr>
-                        <th>指標</th>
-                        <th>効果</th>
-                    </tr>
+                    <tr><th>指標</th><th>効果</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>案内所対応</td>
-                        <td class="result
+                    <tr><td>案内所対応</td><td class="result-value">70%削減</td></tr>
+                    <tr><td>顧客満足度</td><td class="result-value">92%</td></tr>
+                    <tr><td>多言語対応</td><td class="result-value">10言語以上</td></tr>
+                    <tr><td>対応時間</td><td class="result-value">24時間365日</td></tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2 class="section-title">お客様の声</h2>
+            <div class="testimonial">
+                <p>導入初月から効果を実感しました。案内所への問い合わせが大幅に減少し、スタッフは接客に集中できるようになりました。特にインバウンド対応では、多言語AIが活躍しています。</p>
+                <p class="testimonial-author">— NEWoMan高輪 運営担当者</p>
+            </div>
+        </section>
+        <section>
+            <h2 class="section-title">NEWoMan高輪の「人×デジタル」戦略</h2>
+            <div class="strategy-section">
+                <p>NEWoMan高輪では、GBase SUPPORTによるAI案内を導入しつつも、「人にしかできないおもてなし」を大切にしています。定型的な問い合わせはAIが対応し、複雑なご要望や特別なサービスは、スタッフが心を込めて対応。デジタルと人の力を組み合わせることで、すべてのお客様に最高の体験を提供しています。</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">今後の展望</h2>
+            <div class="future-section">
+                <h3>さらなる顧客体験の向上を目指して</h3>
+                <div class="future-items">
+                    <div class="future-item">
+                        <h4>🔄 有人連携機能の強化</h4>
+                        <p>AIで対応困難な複雑なお問い合わせや、よりきめ細やかなサービスが必要な場合に、スムーズにスタッフへ転送できる有人連携機能の強化を検討しています。</p>
+                    </div>
+                    <div class="future-item">
+                        <h4>🗺️ Landworks連携</h4>
+                        <p>施設内のより詳細なナビゲーションや、リアルタイムの混雑状況表示など、Landworksとの連携によるさらなる機能拡張を計画しています。</p>
+                    </div>
+                    <div class="future-item">
+                        <h4>🛍️ 商品検索・在庫確認</h4>
+                        <p>AIを活用した商品検索や在庫確認機能の追加により、お客様のショッピング体験をさらに向上させることを目指しています。</p>
+                    </div>
+                    <div class="future-item">
+                        <h4>📊 データ活用の深化</h4>
+                        <p>蓄積された問い合わせデータを分析し、お客様のニーズをより深く理解することで、施設運営の改善に活かしていきます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2 class="section-title">GBase SUPPORTの特長まとめ</h2>
+            <ul class="summary-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div><strong>専用端末不要</strong><span> - お客様のスマホ、iPad、既存サイネージで動作</span></div>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div><strong>多言語対応</strong><span> - 10言語以上でインバウンド対応</span></div>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div><strong>24時間365日</strong><span> - 無人対応で営業時間外も安心</span></div>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div><strong>スピーディ導入</strong><span> - PDFやWebを読み込むだけ</span></div>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <div><strong>有人連携</strong><span> - AIで対応困難な場合はスタッフへ即時転送</span></div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <div class="contact-section">
+                <h2>お問い合わせ</h2>
+                <p>GBase SUPPORTについての詳細は、以下よりお問い合わせください。</p>
+                <div class="contact-buttons">
+                    <a href="https://cs.gbase.ai/" class="contact-btn primary">🌐 公式サイト</a>
+                    <a href="register.html" class="contact-btn secondary">💻 14日間無料トライアル</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="https://cs.gbase.ai/" class="logo">
+                    <img src="assets/logo.svg" alt="GBase Support">
+                </a>
+                <p>AIナレッジエージェントで<br>社内外の問い合わせ対応を自動化</p>
+            </div>
+            <div class="footer-links">
+                <h4>GBase Support</h4>
+                <ul>
+                    <li><a href="https://cs.gbase.ai/">トップ</a></li>
+                    <li><a href="https://gbase.ai/#features">製品概要</a></li>
+                    <li><a href="index.html#case-study">ソリューション一覧</a></li>
+                    <li><a href="contact.html">コンサルティング向け</a></li>
+                    <li><a href="https://cs.gbase.ai/price">料金プラン</a></li>
+                    <li><a href="https://cs.gbase.ai/blog">ブログ・資料</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                    <li><a href="https://admin.gbase.ai/">ログイン</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Sparticle について</h4>
+                <ul>
+                    <li><a href="https://sparticle.com">会社概要</a></li>
+                    <li><a href="https://www.sparticle.com/ja/recruit">採用情報</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>その他のプロダクト</h4>
+                <ul>
+                    <li><a href="https://gbase.ai/">GBase（AIナレッジエージェント）</a></li>
+                    <li><a href="https://subtitles.felo.me/">Felo Subtitles（多言語字幕会議エージェント）</a></li>
+                    <li><a href="https://s.gbase.ai/">GBase GTM（顧客リーチAIエージェント）</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-left">
+                <a href="https://cs.gbase.ai/">
+                    <img src="assets/logo.svg" alt="GBase Support">
+                </a>
+                <p>© Sparticle / GBase, All rights reserved.</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://x.com/GBaseHub">𝕏</a>
+                <a href="https://linkedin.com/company/sparticle">in</a>
+                <a href="https://note.com/sparticle_gbase">n</a>
+            </div>
+            <div class="footer-legal">
+                <a href="https://cs.gbase.ai/terms-of-use">利用規約</a>
+                <a href="https://cs.gbase.ai/privacy-policy">プライバシーポリシー</a>
+                <a href="https://cs.gbase.ai/security">セキュリティ</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
