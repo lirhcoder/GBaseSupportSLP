@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWoMan高輪 導入事例｜GBase SUPPORT</title>
+    <style>
+        :root {
+            --primary-color: #7C3AED;
+            --primary-light: #A78BFA;
+            --text-dark: #1F2937;
+            --text-gray: #6B7280;
+            --bg-light: #F9FAFB;
+            --bg-white: #FFFFFF;
+            --border-color: #E5E7EB;
+            --accent-green: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic, Verdana, Meiryo, "M+ 1p", sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--bg-white);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo span { color: var(--primary-color); }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--primary-color); }
+
+        .nav-cta {
+            background: var(--text-dark);
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .nav-cta:hover { background: var(--primary-color); }
+
+        .hero {
+            margin-top: 70px;
+            background: linear-gradient(135deg, #F3E8FF 0%, #E0E7FF 100%);
+            padding: 80px 40px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero-text h1 .highlight { color: var(--primary-color); }
+
+        .company-tag {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .hero-image { position: relative; }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        section { margin-bottom: 80px; }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-gray);
+        }
+
+        .profile-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .profile-table th,
+        .profile-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+            width: 150px;
+            color: var(--text-dark);
+        }
+
+        .profile-table tr:last-child th,
+        .profile-table tr:last-child td { border-bottom: none; }
+
+        .challenge-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .challenge-item {
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .challenge-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .challenge-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .reason-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .reason-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .reason-card:hover {
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+            border-color: var(--primary-light);
+            transform: translateY(-5px);
+        }
+
+        .reason-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .reason-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .reason-card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .system-diagram {
+            background: var(--text-dark);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .system-diagram pre { white-space: pre; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .results-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .results-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-table tr:last-child td { border-bottom: none; }
+
+        .results-table .value {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #F3E8FF 0%, #E0E7FF 100%);
+            padding: 40px;
+            border-radius: 16px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 80px;
+            color: var(--primary-light);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            padding-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .process-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .process-table th,
+        .process-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .process-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+        }
+
+        .step-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .summary-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .summary-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-list li:last-child { border-bottom: none; }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .summary-list strong { color: var(--text-dark); }
+
+        .cta-section {
+            background: var(--text-dark);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 24px;
+            margin: 60px 0;
+        }
+
+        .cta-section h2 {
+            color: white;
+            border-bottom-color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .cta-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .cta-btn-primary:hover { background: var(--primary-light); }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .cta-btn-secondary:hover { border-color: white; }
+
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        .footer-links h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul { list-style: none; }
+
+        .footer-links li { margin-bottom: 10px; }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0 20px; }
+            nav { display: none; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-stats { justify-content: center; }
+            main { padding: 40px 20px; }
+            .reason-grid, .feature-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="https://cs.gbase.ai/" class="logo">
+            <div class="logo-icon">G</div>
+            GBase<span>SUPPORT</span>
+        </a>
+        <nav>
+            <a href="#">製品紹介</a>
+            <a href="#">機能</a>
+            <a href="#">導入事例</a>
+            <a href="#">料金</a>
+            <a href="#" class="nav-cta">お問い合わせ</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="company-tag">NEWoMan高輪</span>
+                <h1>
+                    案内所対応<span class="highlight">70%削減</span>！<br>
+                    NEWoMan高輪がGBase SUPPORTで実現した<br>
+                    多言語AI案内
+                </h1>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">70%</div>
+                        <div class="stat-label">案内所対応削減</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">顧客満足度</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">多言語対応</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop" alt="NEWoMan高輪 商業施設" />
+            </div>
+        </div>
+    </section>
+    <main>
+        <section>
+            <h2>導入企業プロフィール</h2>
+            <table class="profile-table">
+                <tr><th>施設名</th><td>NEWoMan高輪（ニュウマン高輪）</td></tr>
+                <tr><th>運営会社</th><td>株式会社ルミネ</td></tr>
+                <tr><th>開業日</th><td>2025年9月12日</td></tr>
+                <tr><th>延床面積</th><td>約60,000㎡（South・North・LUFTBAUM・MIMURE含む）</td></tr>
+                <tr><th>店舗数</th><td>約200店舗</td></tr>
+                <tr><th>所在地</th><td>東京都港区高輪 TAKANAWA GATEWAY CITY内</td></tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>導入の背景</h2>
+            <p>NEWoMan高輪は、ルミネ史上最大規模の商業施設として、「100年先へ継承する"まだ見ぬ生活価値づくり"」をコンセプトに開業しました。国際玄関口である高輪ゲートウェイに位置し、インバウンド観光客を含む多様なお客様への対応が求められていました。</p>
+        </section>
+
+        <section>
+            <h2>導入前の課題</h2>
+            <div class="challenge-list">
+                <div class="challenge-item">
+                    <h4>多言語対応の限界</h4>
+                    <p>インバウンド観光客からの問い合わせ増加に対し、多言語対応スタッフの確保が困難でした。</p>
+                </div>
+                <div class="challenge-item">
+                    <h4>案内所の混雑</h4>
+                    <p>広大な施設内での道案内や店舗情報の問い合わせで案内所が常に混雑状態でした。</p>
+                </div>
+                <div class="challenge-item">
+                    <h4>営業時間外の対応</h4>
+                    <p>早朝・深夜の利用客への案内が十分に提供できていませんでした。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>GBase SUPPORTを選んだ理由</h2>
+            <div class="reason-grid">
+                <div class="reason-card">
+                    <div class="reason-number">1</div>
+                    <h4>専用端末不要、お客様のスマートフォンで利用可能</h4>
+                    <p>お客様がQRコードを読み込むだけで、広い館内のどこにいても必要な情報にスマートにアクセスできます。高額な専用端末への投資は不要でした。</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-number">2</div>
+                    <h4>多言語リアルタイム対応</h4>
+                    <p>日本語・英語・中国語・韓国語など10言語以上に自動対応。インバウンド対応が充実しています。</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-number">3</div>
+                    <h4>独自のRAGシステム</h4>
+                    <p>店舗・施設情報を事前に学習したナレッジベースにより、的確な問い合わせ対応を実現します。</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-number">4</div>
+                    <h4>最短1週間での導入</h4>
+                    <p>テナント情報（PDF/Web）を読み込ませるだけで迅速に構築。開業スケジュールに合わせた導入が可能でした。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>導入システム構成</h2>
+            <div class="system-diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                    NEWoMan高輪 AI案内システム                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  【お客様側】              │      【スタッフ側】                   │
+│  ┌──────────────┐         │      ┌──────────────┐              │
+│  │ お客様スマホ  │         │      │スタッフ管理画面│              │
+│  │ ・QRコード読取│  ←───→  │      │ ・会話履歴確認 │              │
+│  │ ・多言語AI対話│         │      │ ・リアルタイム │              │
+│  │ ・場所案内    │         │      │   モニタリング │              │
+│  └──────────────┘         │      └──────────────┘              │
+│         ↓                 │             ↓                      │
+├─────────────────────────────┴──────────────────────────────────┤
+│                    GBase SUPPORT クラウド                        │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  ・生成AIによる自動応答                                    │   │
+│  │  ・多言語翻訳（10言語以上）                                │   │
+│  │  ・店舗情報ナレッジベース                                  │   │
+│  │  ・フロアマップ連携                                        │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>主な活用機能</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h4>フロアマップ・ナビゲーション</h4>
+                    <p>お客様の現在地から目的店舗まで、わかりやすいルート案内を提供</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h4>FAQ・施設案内AI</h4>
+                    <p>店舗情報、営業時間、イベント情報などをAIが自動回答</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h4>リアルタイム多言語会話</h4>
+                    <p>日本語・英語・中国語・韓国語・ベトナム語・ポルトガル語など10言語以上に対応</p>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">その他、免税カウンター、外貨両替、Wi-Fi情報なども多言語で案内</p>
+        </section>
+
+        <section>
+            <h2>導入効果</h2>
+            <table class="results-table">
+                <tr><th>指標</th><th>効果</th></tr>
+                <tr><td>案内所対応</td><td class="value">70%削減</td></tr>
+                <tr><td>顧客満足度</td><td class="value">92%</td></tr>
+                <tr><td>多言語対応</td><td class="value">10言語以上</td></tr>
+                <tr><td>対応時間</td><td class="value">24時間365日</td></tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>お客様の声</h2>
+            <div class="quote-box">
+                <p class="quote-text">導入初月から効果を実感しました。案内所への問い合わせが大幅に減少し、スタッフは接客に集中できるようになりました。特にインバウンド対応では、多言語AIが活躍しています。</p>
+                <p class="quote-author">— NEWoMan高輪 運営担当者</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>NEWoMan高輪の「人×デジタル」戦略</h2>
+            <p>NEWoMan高輪では、GBase SUPPORTによるAI案内を導入しつつも、「人にしかできないおもてなし」を大切にしています。定型的な問い合わせはAIが対応し、複雑なご要望や特別なサービスは、スタッフが心を込めて対応。デジタルと人の力を組み合わせることで、すべてのお客様に最高の体験を提供しています。</p>
+        </section>
+
+        <section>
+            <h2>導入プロセス</h2>
+            <table class="process-table">
+                <tr><th>ステップ</th><th>期間</th><th>内容</th></tr>
+                <tr><td><span class="step-badge">STEP 1</span></td><td>1日目</td><td>ヒアリング・要件定義</td></tr>
+                <tr><td><span class="step-badge">STEP 2</span></td><td>2〜3日目</td><td>テナント情報・FAQ取り込み</td></tr>
+                <tr><td><span class="step-badge">STEP 3</span></td><td>4〜5日目</td><td>AI応答テスト・チューニング</td></tr>
+                <tr><td><span class="step-badge">STEP 4</span></td><td>6日目</td><td>フロア配置・スタッフ研修</td></tr>
+                <tr><td><span class="step-badge">STEP 5</span></td><td>開業日〜</td><td>本番稼働・継続的改善</td></tr>
+            </table>
+            <p style="font-size: 14px; color: var(--text-gray);">※最短1週間での導入も可能（施設規模・要件により異なる）</p>
+        </section>
+
+        <section>
+            <h2>GBase SUPPORTの特長まとめ</h2>
+            <ul class="summary-list">
+                <li><span class="check-icon">✓</span><div><strong>専用端末不要</strong> - お客様のスマホ、iPad、既存サイネージで動作</div></li>
+                <li><span class="check-icon">✓</span><div><strong>多言語対応</strong> - 10言語以上でインバウンド対応</div></li>
+                <li><span class="check-icon">✓</span><div><strong>24時間365日</strong> - 無人対応で営業時間外も安心</div></li>
+                <li><span class="check-icon">✓</span><div><strong>最短1週間導入</strong> - PDFやWebを読み込むだけ</div></li>
+                <li><span class="check-icon">✓</span><div><strong>有人連携</strong> - AIで対応困難な場合はスタッフへ即時転送</div></li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <h2>お問い合わせ</h2>
+            <p>GBase SUPPORTについての詳細は、以下よりお問い合わせください。</p>
+            <div class="cta-buttons">
+                <a href="https://cs.gbase.ai/" class="cta-btn cta-btn-primary">🌐 公式サイト</a>
+                <a href="#" class="cta-btn cta-btn-secondary">💻 14日間無料トライアル</a>
+                <a href="#" class="cta-btn cta-btn-secondary">📄 導入事例PDFダウンロード</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="https://cs.gbase.ai/" class="logo">
+                    <div class="logo-icon">G</div>
+                    GBase<span>SUPPORT</span>
+                </a>
+                <p>AIナレッジエージェントで<br>社内外の問い合わせ対応を自動化</p>
+            </div>
+            <div class="footer-links">
+                <h4>製品</h4>
+                <ul>
+                    <li><a href="#">GBase</a></li>
+                    <li><a href="#">GBase Support</a></li>
+                    <li><a href="#">Felo Subtitles</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>リソース</h4>
+                <ul>
+                    <li><a href="#">ブログ</a></li>
+                    <li><a href="#">リリースノート</a></li>
+                    <li><a href="#">導入事例</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>企業情報</h4>
+                <ul>
+                    <li><a href="#">会社概要</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 GBase. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
